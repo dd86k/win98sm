@@ -1,0 +1,408 @@
+﻿@charset "utf-8";
+
+/*
+ * Author: guitarxhero
+ */
+
+/*
+TODO List:
+- Stylize Radio buttons
+*/
+
+@font-face
+{
+    font-family: 'fft';
+    src: url('../fonts/Igiari.woff');
+}
+
+body
+{
+    font-family: monospace;
+    margin: 0;
+    padding: 0;
+    background-color: #008080;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+#devmenu
+{
+    color: white;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 0.8em;
+}
+
+#devmenu span
+{
+    border: 1px solid white;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+#desktop
+{
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+}
+
+img
+{ /* IE9/10 fix */
+    border: 0;
+}
+
+#desktopversion
+{
+    color: white;
+    text-shadow: 3px 3px 0px black;
+    position: fixed;
+    bottom: 20px;
+    right: 5px;
+    font-size: 1.2em;
+    z-index: -1;
+}
+
+/*
+ * Form related stuff.
+ */
+
+.atitlebar
+{
+    background: linear-gradient(to right, #00007B, #0884CE);
+}
+
+.ititlebar
+{
+    background: linear-gradient(to right, #7B7B7B, #ADADAD);
+}
+
+.atitlebar, .ititlebar
+{
+    height: 18px;
+    margin: 3px 3px 0 3px;
+    padding: 0;
+}
+
+.atitlebar span, .ititlebar span
+{
+    color: white;
+    font-size: 11px;
+    position: absolute;
+    margin: 3px 0 0 2px;
+}
+
+.windowicon
+{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: 1px 3px 1px 2px;
+    padding: 0;
+}
+
+.window
+{
+    background:
+        url('../images/window/topleft.png') no-repeat top left,
+        url('../images/window/topright.png') no-repeat top right,
+        url('../images/window/bottomleft.png') no-repeat bottom left,
+        url('../images/window/bottomright.png') no-repeat bottom right,
+        url('../images/window/left.png') repeat-y left,
+        url('../images/window/right.png') repeat-y right,
+        url('../images/window/bottom.png') repeat-x bottom,
+        url('../images/window/top.png') repeat-x top;
+    background-color: #C0C0C0;
+    padding: 0;
+}
+
+.windowarea, .AboutDialog
+{
+    padding: 0;
+    margin: 0 4px 4px 4px;
+    font-size: 12px;
+}
+
+/* Controlbox */
+
+.ctrlboxbutton, .ctrlboxbuttonm
+{
+    float: right;
+}
+
+.ctrlboxbutton
+{
+    margin: 2px 2px 0 0;
+}
+
+.ctrlboxbuttonm
+{
+    margin: 2px 0 0 0;
+}
+
+/* Form controls */
+
+.menubar
+{
+    width: 100%;
+}
+
+.button
+{
+    background:
+    url('../images/button/topright.png') no-repeat right top,
+    url('../images/button/topleft.png') no-repeat left top,
+    url('../images/button/bottomright.png') no-repeat right bottom,
+    url('../images/button/bottomleft.png') no-repeat left bottom,
+    url('../images/button/right.png') repeat-y right,
+    url('../images/button/top.png') repeat-x top,
+    url('../images/button/left.png') repeat-y left,
+    url('../images/button/bottom.png') repeat-x bottom,
+    #C0C0C0;
+}
+
+.buttondown
+{
+    background:
+    url('../images/button/n.png') repeat-x top,
+    url('../images/button/n.png') repeat-x bottom,
+    url('../images/button/n.png') repeat-y left,
+    url('../images/button/n.png') repeat-y right,
+    #C0C0C0;
+}
+
+.button, .buttondown
+{
+    font-size: 12px;
+    padding: 3px;
+    border: 1px solid black;
+    display: inline-block;
+}
+
+/* -- Radio and checkbox -- */
+label {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  padding-left: 25px;
+  margin-right: 15px;
+  font-size: 13px;
+  margin: 5px;
+}
+input[type=radio],
+input[type=checkbox] {
+  display: none;
+}
+label:before {
+  content: "";
+  display: inline-block;
+ 
+  width: 16px;
+  height: 16px;
+ 
+  margin-right: 10px;
+  position: absolute;
+  left: 0;
+  bottom: 1px;
+  background-color: #aaa;
+  box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+}
+input[type=radio] label:before,
+input[type=checkbox] label:before {
+  border-radius: 8px;
+}
+input[type=radio]:checked + label:before,
+input[type=checkbox]:checked + label:before {
+    content: "\2022";
+    color: #f3f3f3;
+    font-size: 30px;
+    text-align: center;
+    line-height: 18px;
+}
+
+/*
+ * Apps
+ */
+
+.terminal /* Command prompt */
+{
+    font-family: monospace;
+    position: relative;
+    margin: 0;
+    color: #A8A8A8;
+    word-wrap: break-word;
+    overflow-y: scroll;
+    font-size: 12px;
+    color: white;
+    background-color: black;
+    border: 1px solid #808080;
+    padding: 2px;
+}
+
+.input /* Textbox */
+{
+    display: inline-block;
+    min-width: 1px;
+    color: white;
+}
+
+/* MessageBox */
+
+.msgboxMsg
+{
+    font-size: 11px;
+    max-width: 300px;
+    display: inline-block;
+    margin: 20px 12px 12px 0;
+}
+
+.msgboxIcon
+{
+    width: 32px;
+    height: 32px;
+    margin: 12px;
+    float: left;
+}
+
+/* Shutdown */
+
+/*
+.shutdownbg
+{
+    z-index: 8000000;
+}
+.shutdowndialog
+{
+    
+}
+*/
+/*
+ * Taskbar
+ */
+
+#taskbar
+{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 28px;
+    background:
+    url('../images/startmenu/bar3.png') no-repeat bottom right,
+    url('../images/startmenu/bar2.png') repeat-x top;
+    background-color: #C0C0C0;
+    
+    z-index: 4999999;
+}
+
+#taskbar img#startbutton
+{
+    display: inline-block;
+    width: 54px;
+    height: 22px;
+    margin: 4px 0 2px 2px;
+}
+
+.taskbarbuttonsep
+{
+    display: inline-block;
+    width: 7px;
+    height: 18px;
+    margin: 0 0 4px -6px;
+    background: url('../images/startmenu/taskbarbuttonsep.png') no-repeat center;
+}
+
+/*
+ * Start menu.
+ */
+
+#taskbar div#startmenu
+{
+    position: fixed;
+    bottom: 24px;
+    left: 2px;
+    background:
+    url('../images/startmenu/startmenu-top.png') no-repeat top center,
+    url('../images/startmenu/startmenu-bottom-left.png') no-repeat left bottom,
+    url('../images/startmenu/startmenu-left.png') repeat-y left,
+    url('../images/startmenu/startmenu-bottom.png') no-repeat bottom,
+    url('../images/startmenu/startmenu-right.png') repeat-y right,
+    #C0C0C0;
+    width: 176px;
+    padding: 3px 3px 3px 24px;
+
+    z-index: 5000000;
+}
+
+#taskbar div#startmenu a
+{
+    display: block;
+    color: black;
+    margin: 0;
+    width: 175px;
+    height: 28px;
+    font-size: 12px;
+    text-decoration: none;
+    padding: 4px 0px 0px 0px;
+    cursor: default;
+}
+
+#taskbar div#startmenu a:hover
+{
+    color: white;
+    background-color: #000080;
+    cursor: default;
+}
+
+#taskbar div#startmenu img
+{
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin: 0px 6px 0px 6px;
+}
+
+#taskbar div#startmenu span
+{
+    position: relative;
+    top: -25%;
+    font-size: 11px;
+}
+
+.seperator
+{
+    height: 8px;
+    background: url('../images/startmenu/sep.png') no-repeat center;
+}
+
+.StartMenuFolder
+{ 
+    background: url('../images/misc/subfolder.png') no-repeat right center;
+
+}
+
+.StartMenuFolder:hover
+{
+    background: url('../images/misc/subfolderi.png') no-repeat right center;
+}
+   
+
+/* The time! */
+ 
+span#time
+{
+    position: fixed;
+    bottom: 6px;
+    right: 12px;
+    font-size: 11.5px;
+}
+
+/* Specials/Animations */
+
+@keyframes spin
+{
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}

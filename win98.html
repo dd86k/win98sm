@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- Shell bomb proof! -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Windows 98 Web Simulator, only with HTML5, CSS3, and Javascript technologies.">
+    <meta name="keywords" content="Windows 98,win98,simulator">
+    <meta name="author" content="DD~!">
+    <title>Windows 98 WebSim</title>
+    <link href="styles/win98.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" href="favicon.png"/>
+</head>
+<body>
+    <div id="desktop">
+        <div id="devmenu">
+            MsgBox:
+            <span onclick="WindowManager.showInfo('Info test','I like tacos')">info</span>
+            <span onclick="WindowManager.showWarning('Warning test','Oh hi. Since you\'re here, you might as well check the information file.')">warning</span>
+            <span onclick="WindowManager.showError('Error test','Something went wrong!')">error</span>
+            <br/><br/>
+            <span onclick="WindowManager.showInfo(prompt('Title:'),prompt('Message:'))">custom info</span>
+            <span onclick="WindowManager.showWarning(prompt('Title:'),prompt('Message:'))">custom warning</span>
+            <span onclick="WindowManager.showError(prompt('Title:'),prompt('Message:'))">custom error</span>
+            <br/><br/>
+            Tests:
+            <span onclick="WindowManager.createWindow('Tests',50,50,'test')">Control test</span>
+            <span onclick="WindowManager.killAllWindows()">Close all</span>
+        </div>
+    </div>
+    
+    <p id="desktopversion"></p>
+
+    <div id="taskbar">
+        <div id="startmenu" style="visibility: hidden;">
+            <a href="#" onclick="Shell.run('aboutdialog')">
+                <img src="images/startmenu/item11.png"/>
+                <span>About</span>
+            </a>
+            <a href="info.txt" target="_blank">
+                <img src="images/startmenu/item10.png"/>
+                <span>Information</span>
+            </a>
+            <div class="seperator"></div>
+            <a href="#" class="StartMenuFolder">
+                <img src="images/startmenu/item09.png"/>
+                <span>Programs</span>
+            </a>
+            <a href="#" class="StartMenuFolder">
+                <img src="images/startmenu/item08.png"/>
+                <span>Favorites</span>
+            </a>
+            <a href="#" class="StartMenuFolder">
+                <img src="images/startmenu/item07.png"/>
+                <span>Documents</span>
+            </a>
+            <a href="#" class="StartMenuFolder">
+                <img src="images/startmenu/item06.png"/>
+                <span>Settings</span>
+            </a>
+            <a href="#" class="StartMenuFolder">
+                <img src="images/startmenu/item05.png"/>
+                <span>Find</span>
+            </a>
+            <a href="#">
+                <img src="images/startmenu/item04.png"/>
+                <span>Help</span>
+            </a>
+            <a href="#" onclick="Shell.run('rundialog')">
+                <img src="images/startmenu/item03.png"/>
+                <span>Run...</span>
+            </a>
+            <div class="seperator"></div>
+            <a href="#">
+                <img src="images/startmenu/item02.png"/>
+                <span>Log Off...</span>
+            </a>
+            <a href="../index.html">
+                <img src="images/startmenu/item01.png"/>
+                <span>Shut Down...</span>
+            </a>
+        </div>
+        <img id="startbutton" src="images/startmenu/off.png" alt="Start"
+                title="Click here to start."/>
+        <div class="taskbarbuttonsep"></div>
+        <span id="time">#NOJS</span>
+    </footer>
+
+    <script src="scripts/win98.js"></script>
+    <script src="scripts/win98dwm.js"></script>
+    <!--<script src="scripts/win98con.js"></script>-->
+</body>
+</html>
