@@ -4,11 +4,6 @@
  * Author: guitarxhero
  */
 
-/*
-TODO List:
-- Stylize Radio buttons
-*/
-
 @font-face
 {
     font-family: 'fft';
@@ -180,6 +175,12 @@ img
     padding: 3px;
     border: 1px solid black;
     display: inline-block;
+    text-align: center;
+}
+
+.innerbutton
+{
+    border: 1px dotted black;
 }
 
 /* -- Radio and checkbox -- */

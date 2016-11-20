@@ -425,27 +425,26 @@ monitize it." + dnl +
     },
     */
     makeButton: function(text, width, height) {
-        var divbutton = document.createElement("div");
-        divbutton.className = "button";
-        divbutton.style.width =
+        var b = document.createElement("div");
+        b.className = "button";
+        b.style.width =
             (width === undefined ? 72 : width < 72 ? 72 : width) + "px";
         //divbutton.style.height =
             //(height === undefined ? 22 : height < 22 ? 22 : height) + "px";
-        divbutton.onmousedown = function () {
-            divbutton.className = "buttondown";
+        b.onmousedown = function () {
+            b.className = "buttondown";
         };
-        divbutton.onmouseup = function () {
-            divbutton.className = "button";
+        b.onmouseup = function () {
+            b.className = "button";
         };
 
-        var divtext = document.createElement("div");
-        divtext.style.textAlign = "center";
-        divtext.style.border = "1px dotted black";
-        divtext.innerText = text;
+        var t = document.createElement("div");
+        t.className = "innerbutton";
+        t.innerText = text;
 
-        divbutton.appendChild(divtext);
+        b.appendChild(t);
 
-        return divbutton;
+        return b;
     },
 
     deleteWindow: function(div) {
