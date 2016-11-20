@@ -6,10 +6,6 @@
  */
 
 /* TODOs:
-- Run textbox auto focus
-- Taskbar buttons
-- Taskbar focus
-- Minimize
 - Start menu new design (HTML) for submenus:
 <div class="smi">
   <img/><span>Test</span>
@@ -21,13 +17,6 @@
 </div>
 - win98wsh.js (Windows Scripting Host)
 - IE4 (iexplore)
-*/
-
-/* Bugs:
-- Warning, Run, and Error right bounce
-  - min-width is playing with this, a fixed and specified width fixes this
-    issue.
-- Input buttons styles not working.
 */
 
 /**
