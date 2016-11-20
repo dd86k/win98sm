@@ -101,16 +101,16 @@ form.prototype = {
     /*setTitle: function (title) {
         this.divObject.childNodes[0].childNodes[ 0 or 1 ..
     },*/
-    
+
     setSize: function (w, h) {
         this.divObject.style.width = w + "px";
         this.divObject.style.height = h + "px";
     },
-    
+
     setWidth: function (w) {
         this.divObject.style.width = w + "px";
     },
-    
+
     setHeight: function (h) {
         this.divObject.style.height = h + "px";
     },
@@ -181,7 +181,7 @@ var WindowManager = {
 
         var divmsgtext = document.createTextNode(msg);
         divmsg.appendChild(divmsgtext);
-    
+
         var divmsgicon = document.createElement("img");
         divmsgicon.className = "msgboxIcon";
 
@@ -219,7 +219,7 @@ var WindowManager = {
         var f = new form(title);
 
         f.setLocation(x, y);
-        
+
         switch (type) {
             case "rundialog":
                 f.removeIcon();
@@ -290,35 +290,35 @@ document, or Internet resource, and Windows will open it for you.";
             case "notepad":
                 f.setIcon("images/notepad/titleleft.png");
                 //divwindow.className = "window";
-            
+
                 var divmenu = document.createElement("div");
                 divmenu.className = "menubar";
 
                 var divtmp = document.createElement("img");
                 divtmp.src = "images/notepad/menu.png";
-            
+
                 var divinput = document.createElement("textarea");
                 divinput.className = "notepadinput";
                 divinput.style.width = "200px";
                 divinput.style.height = "125px";
-            
+
                 divmenu.appendChild(divtmp);
                 f.addNode(divmenu);
                 f.addNode(divinput);
                 break;
             case "cmd":
                 f.setIcon("images/cmd/titleleft.png");
-            
+
                 var divcmdmenu = document.createElement("img");
                 divcmdmenu.src = "images/cmd/menu.png";
                 divcmdmenu.style.marginTop = "2px";
-            
+
                 //TODO: Make a function from win98con.js to make
                 //      a console window instead. (Alloc)
                 var divcmd = document.createElement("div");
                 divcmd.className = "terminal";
                 divcmd.style.height = "250px";
-            
+
                 f.addNode(divcmdmenu);
                 f.addNode(divcmd);
                 break;
@@ -368,7 +368,7 @@ document, or Internet resource, and Windows will open it for you.";
                 break;
             case "aboutdialog":
                 f.setWidth(400);
-            
+
                 var dnl = "<br/><br/>";
 
                 var lblAbout = document.createElement("p");
@@ -386,10 +386,10 @@ monitize it." + dnl +
                 var bottomlayout = document.createElement("div");
                 bottomlayout.style.width = "100%";
                 bottomlayout.style.textAlign = "center";
-                
+
                 var btnOK = WindowManager.makeButton("Close");
                 btnOK.onclick = function() { f.close(); };
-                
+
                 var btnSpin = WindowManager.makeButton("Spin!");
                 btnSpin.onclick = function() {
                     f.divObject.style.animation = "spin 1s";
@@ -397,7 +397,7 @@ monitize it." + dnl +
                         f.divObject.style.animation = "";
                     }, 1000);
                 };
-                
+
                 bottomlayout.appendChild(btnSpin);
                 bottomlayout.appendChild(btnOK);
                 f.addNode(lblAbout);
@@ -420,7 +420,7 @@ monitize it." + dnl +
     addTaskbarButton: function(form)
     { //TODO
         var divTaskbarButton
-        
+
         taskbar.appendChild();
     },
     */
@@ -437,14 +437,14 @@ monitize it." + dnl +
         divbutton.onmouseup = function () {
             divbutton.className = "button";
         };
-    
+
         var divtext = document.createElement("div");
         divtext.style.textAlign = "center";
         divtext.style.border = "1px dotted black";
         divtext.innerText = text;
-        
+
         divbutton.appendChild(divtext);
-    
+
         return divbutton;
     },
 
@@ -470,10 +470,10 @@ monitize it." + dnl +
             classes[i].className = "ititlebar";
         }
     },
-    
+
     killAllWindows: function() {
         var ws = document.getElementsByClassName("window");
-        for(var i = 0; i < ws.length; ++i) {
+        for(var i = ws.length-1; i >= 0; --i) {
             ws[i].remove();
         }
     },
