@@ -47,6 +47,7 @@ function form(title) {
 
     // Text
     var divtitletext = document.createElement("span");
+    divtitletext.className = "titlebartext";
     divtitletext.innerText = title;
     divtitletext.style.fontWeight = "bold";
 
@@ -96,7 +97,9 @@ function form(title) {
 }
 
 form.prototype = {
+    /* Window properties */
     divObject: null,
+    iconExists: true,
 
     /*setTitle: function (title) {
         this.divObject.childNodes[0].childNodes[ 0 or 1 ..
@@ -114,23 +117,45 @@ form.prototype = {
     setHeight: function (h) {
         this.divObject.style.height = h + "px";
     },
+    
+    /* Window text */
+    setTitle: function (t) {
+        var div = this.divObject.getElementsByClassName("titlebartext");
+        div[0].innerText = t;
+    },
+    getTitle: function (t) {
+        var div = this.divObject.getElementsByClassName("titlebartext");
+        return div[0].innerText;
+    },
 
+    /* Window icon */
     setIcon: function (path) {
-        //TODO: Checking for tag first.
-        this.divObject.childNodes[0].childNodes[0].src = path;
+        if (this.iconExists)
+            this.divObject.childNodes[0].childNodes[0].src = path;
+    },
+    getIcon: function () {
+        if (this.iconExists)
+            return this.divObject.childNodes[0].childNodes[0].src;
+        else return null;
     },
     hideIcon: function () {
-        this.divObject.childNodes[0].childNodes[0].style.display = "none";
+        if (this.iconExists)
+            this.divObject.childNodes[0].childNodes[0].style.display = "none";
     },
     removeIcon: function () {
-        this.divObject.childNodes[0].childNodes[0].remove();
+        if (this.iconExists) {
+            this.divObject.childNodes[0].childNodes[0].remove();
+            this.iconExists = false;
+        }
     },
 
+    /* Location */
     setLocation: function (x, y) {
         this.divObject.style.left = x + "px";
         this.divObject.style.top = y + "px";
     },
 
+    /* Functions */
     addNode: function (node) {
         // Main window area.
         this.divObject.childNodes[1].appendChild(node);
@@ -410,20 +435,20 @@ monitize it." + dnl +
     },
 
     addFormToDesktop: function(form) {
-        // Taskbar button .. In Form ctor instead?
-        //WindowAPI.addTaskbar();
+        if (form.iconExists)
+            WindowManager.addTaskbarButton(form);
         desktop.appendChild(form.divObject);
-        WindowManager.giveFocus(form.divObject);
+        //WindowManager.giveFocus(form.divObject);
         StartMenu.hide();
     },
-    /*
+    
     addTaskbarButton: function(form)
-    { //TODO
-        var divTaskbarButton
-
-        taskbar.appendChild();
+    {
+        taskbarcont.appendChild(
+            WindowManager.makeTaskbarButton(form)
+        );
     },
-    */
+    
     makeButton: function(text, width, height) {
         var b = document.createElement("div");
         b.className = "button";
@@ -443,6 +468,22 @@ monitize it." + dnl +
         t.innerText = text;
 
         b.appendChild(t);
+
+        return b;
+    },
+
+    makeTaskbarButton: function(form) {
+        var b = document.createElement("div");
+        b.className = "taskbarbutton";
+        
+        var bi = document.createElement("img");
+        bi.src = form.getIcon();
+
+        var bt = document.createElement("span");
+        bt.innerText = form.getTitle();
+
+        b.appendChild(bi);
+        b.appendChild(bt);
 
         return b;
     },
@@ -472,7 +513,7 @@ monitize it." + dnl +
 
     killAllWindows: function() {
         var ws = document.getElementsByClassName("window");
-        for(var i = ws.length-1; i >= 0; --i) {
+        for(var i = ws.length - 1; i >= 0; --i) {
             ws[i].remove();
         }
     },

@@ -306,13 +306,34 @@ input[type=checkbox]:checked + label:before {
     margin: 4px 0 2px 2px;
 }
 
-.taskbarbuttonsep
+#taskbar .taskbarbuttonsep
 {
     display: inline-block;
     width: 7px;
     height: 18px;
-    margin: 0 0 4px -6px;
+    margin: 4px;
     background: url('../images/startmenu/taskbarbuttonsep.png') no-repeat center;
+}
+
+#taskbarcont
+{
+    position: fixed;
+    display: inline-block;
+    bottom: -2px;
+}
+
+.taskbarbutton img
+{
+    width: 16px;
+    height: 16px;
+}
+
+.taskbarbutton, .taskbarbuttondown, .taskbarbuttonactive
+{
+    display: inline-block;
+    max-width: 160px;
+    width: 160px;
+    height: 22px;
 }
 
 /*
