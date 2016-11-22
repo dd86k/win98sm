@@ -11,9 +11,8 @@
  * @class
  */
 function Form(title) {
-    // Form frame
-    var obj = this.divObject = // Reference
-        document.createElement("div");
+    // Make the window, and make a reference.
+    var obj = this.divObject = document.createElement("div");
 
     //divwindow.id = "form" + windowid;
     obj.className = "window";

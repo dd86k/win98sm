@@ -4,11 +4,11 @@
  * Author: guitarxhero
  */
 
-@font-face
+/*@font-face
 {
     font-family: 'fft';
-    src: url('../fonts/Igiari.woff');
-}
+    src: url('../fonts/');
+}*/
 
 body
 {
@@ -327,7 +327,7 @@ input[type=checkbox]:checked + label:before {
 #taskbarcont .taskbarbuttonactive,
 #taskbarcont .taskbarbuttondown
 {
-    margin-right: 3px;
+    margin-left: 3px;
 }
 
 .taskbarbutton
@@ -344,11 +344,11 @@ input[type=checkbox]:checked + label:before {
     #C0C0C0;
 }
 
-.taskbarbutton img
+/*.taskbarbutton img
 {
-    /*width: 16px;
-    height: 16px;*/
-}
+    width: 16px;
+    height: 16px;
+}*/
 
 .taskbarbutton, .taskbarbuttondown, .taskbarbuttonactive
 {
