@@ -24,12 +24,11 @@
  */
 var Project = {
     productName: "Windows 98 WebSim",
-    version: "0.4.0-dev"
+    version: "0.4.0-git"
 };
 
 function start() {
-    desktopversion.innerHTML =
-        Project.productName + " " + Project.version;
+    desktopversion.innerHTML = Project.productName + " " + Project.version;
     updateTime();
 }
 
@@ -108,35 +107,42 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function () {
 var Shell = {
     /**
      * Run a file.
-     * @param {string} path The virtual path to the file.
-     * @returns {boolean} True if found.
+     * @param {String} path The virtual path to the file.
+     * @returns {Number} Error code.
      */
-    run: function(command) {
-        if (command != null && command.length > 0) {
-            var s = command.split(" ", 128);
+    run: function(file, args) {
+        if (file != null && file.length > 0) {
+            
+            var s = file.split(" ", 128);
             switch (s[0].toLowerCase()) {
                 case "command":
                     WindowManager.createWindow('MS-DOS Prompt',Utils.r(200),Utils.r(200),'cmd');
-                    return true;
+                    return 0;
                 case "notepad": case "notepad.exe":
                     WindowManager.createWindow(
                         'Untitled - Notepad',Utils.r(200),Utils.r(200),'notepad');
-                    return true;
-                case "rundialog":
+                    return 0;
+                case "shell:run":
                     WindowManager.createWindow('Run',150,50,'rundialog');
-                    return true;
-                case "aboutdialog": case "aboutdialog.exe":
+                    return 0;
+                case "shell:about":
                     WindowManager.createWindow('About',150,50,'aboutdialog');
-                    return true;
+                    return 0;
+                case "shell:tests":
+                    WindowManager.createWindow("Tests",50,50,"tests");
+                    return 0;
                 default:
-                    WindowManager.showError(command,
-                        "The file \"" + command + "\" (or one of its components) cannot \
+                    WindowManager.showError(file,
+                        "The file \"" + file + "\" (or one of its components) cannot \
                         be found. Verify the path and the filename are correct, \
                         and all the libraries required are available.");
                     return false;
             }
         }
-        else WindowManager.showError("Shell", "Empty command");
+        else {
+            WindowManager.showError("Shell", "Empty command");
+            return 2;
+        }
     }
 }
 

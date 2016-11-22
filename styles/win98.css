@@ -16,6 +16,7 @@ body
     margin: 0;
     padding: 0;
     background-color: #008080;
+    -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -298,7 +299,7 @@ input[type=checkbox]:checked + label:before {
     z-index: 4999999;
 }
 
-#taskbar img#startbutton
+#startbutton
 {
     display: inline-block;
     width: 54px;
@@ -311,7 +312,7 @@ input[type=checkbox]:checked + label:before {
     display: inline-block;
     width: 7px;
     height: 18px;
-    margin: 4px;
+    margin: 0 4px 4px -6px;
     background: url('../images/startmenu/taskbarbuttonsep.png') no-repeat center;
 }
 
@@ -319,13 +320,34 @@ input[type=checkbox]:checked + label:before {
 {
     position: fixed;
     display: inline-block;
-    bottom: -2px;
+    bottom: 2px;
+}
+
+#taskbarcont .taskbarbutton,
+#taskbarcont .taskbarbuttonactive,
+#taskbarcont .taskbarbuttondown
+{
+    margin-right: 3px;
+}
+
+.taskbarbutton
+{
+    background:
+    url('../images/button/topright.png') no-repeat right top,
+    url('../images/button/topleft.png') no-repeat left top,
+    url('../images/button/bottomright.png') no-repeat right bottom,
+    url('../images/button/bottomleft.png') no-repeat left bottom,
+    url('../images/button/right.png') repeat-y right,
+    url('../images/button/top.png') repeat-x top,
+    url('../images/button/left.png') repeat-y left,
+    url('../images/button/bottom.png') repeat-x bottom,
+    #C0C0C0;
 }
 
 .taskbarbutton img
 {
-    width: 16px;
-    height: 16px;
+    /*width: 16px;
+    height: 16px;*/
 }
 
 .taskbarbutton, .taskbarbuttondown, .taskbarbuttonactive
@@ -340,7 +362,7 @@ input[type=checkbox]:checked + label:before {
  * Start menu.
  */
 
-#taskbar div#startmenu
+#startmenu
 {
     position: fixed;
     bottom: 24px;
@@ -358,7 +380,7 @@ input[type=checkbox]:checked + label:before {
     z-index: 5000000;
 }
 
-#taskbar div#startmenu a
+#startmenu>div
 {
     display: block;
     color: black;
@@ -371,14 +393,14 @@ input[type=checkbox]:checked + label:before {
     cursor: default;
 }
 
-#taskbar div#startmenu a:hover
+div#startmenu>div:hover:not(.sep)
 {
     color: white;
     background-color: #000080;
     cursor: default;
 }
 
-#taskbar div#startmenu img
+div#startmenu img
 {
     display: inline-block;
     width: 24px;
@@ -386,14 +408,14 @@ input[type=checkbox]:checked + label:before {
     margin: 0px 6px 0px 6px;
 }
 
-#taskbar div#startmenu span
+div#startmenu span
 {
     position: relative;
     top: -25%;
     font-size: 11px;
 }
 
-.seperator
+#startmenu .sep
 {
     height: 8px;
     background: url('../images/startmenu/sep.png') no-repeat center;

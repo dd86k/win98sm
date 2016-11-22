@@ -6,10 +6,11 @@
  */
 
 /**
- * Form object.
+ * Creates a new Form.
  * @param {string} title Title.
+ * @class
  */
-function form(title) {
+function Form(title) {
     // Form frame
     var obj = this.divObject = // Reference
         document.createElement("div");
@@ -96,7 +97,7 @@ function form(title) {
     obj.appendChild(divwindowarea);
 }
 
-form.prototype = {
+Form.prototype = {
     /* Window properties */
     divObject: null,
     iconExists: true,
@@ -174,21 +175,21 @@ var WindowzIndex = 0, activeDiv = null;
 
 var WindowManager = {
     showInfo: function(title, msg) {
-        var f = new form(title);
+        var f = new Form(title);
         f.removeIcon();
         WindowManager.makeMsgBox(f, msg, 0);
         WindowManager.addFormToDesktop(f);
     },
 
     showWarning: function(title, msg) {
-        var f = new form(title);
+        var f = new Form(title);
         f.removeIcon();
         WindowManager.makeMsgBox(f, msg, 1);
         WindowManager.addFormToDesktop(f);
     },
 
     showError: function(title, msg) {
-        var f = new form(title);
+        var f = new Form(title);
         f.removeIcon();
         WindowManager.makeMsgBox(f, msg, 2);
         WindowManager.addFormToDesktop(f);
@@ -241,7 +242,7 @@ var WindowManager = {
 
     // For compability.
     createWindow: function(title, x, y, type) {
-        var f = new form(title);
+        var f = new Form(title);
 
         f.setLocation(x, y);
 
@@ -250,19 +251,18 @@ var WindowManager = {
                 f.removeIcon();
 
                 var body = document.createElement("div");
-                body.style.display = "inline-flex";
                 var subbody = document.createElement("div");
 
                 var img = document.createElement("img");
                 img.src = "images/run/item.png";
                 img.style.margin = "14px";
-                //img.style.cssFloat = "left";
 
                 var desc = document.createElement("p");
                 desc.innerText = "Type the name of a program, folder, \
 document, or Internet resource, and Windows will open it for you.";
                 desc.style.fontSize = "11px";
                 desc.style.maxWidth = "300px";
+                desc.style.cssFloat = "right";
 
                 var open = document.createElement("p");
                 open.innerText = "Open:";
@@ -271,16 +271,17 @@ document, or Internet resource, and Windows will open it for you.";
 
                 var input = document.createElement("textarea");
                 input.onkeydown = function (e) {
-                    if (e.which == 13) {
-                        f.close();
+                    if (e.which == 13) { // Enter/Return
                         Shell.run(input.value);
+                        f.close();
                     }
                 };
                 input.rows = 1;
                 input.style.marginBottom = "-7px";
                 input.style.resize = "none";
-                input.style.width = "80%";
-                input.onload = function () { input.select(); };
+                input.style.width = "290px";
+                input.onload = function () { input.focus(); };
+                input.autofocus = true;
 
                 var buttons = document.createElement("div");
                 buttons.style.width = "98%";
@@ -289,15 +290,15 @@ document, or Internet resource, and Windows will open it for you.";
 
                 var okbut = WindowManager.makeButton("OK");
                 okbut.style.marginRight = "6px";
-                okbut.addEventListener("click", function() {
+                okbut.onclick = function() {
                     f.close();
                     Shell.run(input.value);
-                });
+                };
                 var canbut = WindowManager.makeButton("Cancel");
                 canbut.style.marginRight = "6px";
-                canbut.addEventListener("click", function() {
+                canbut.onclick = function() {
                     f.close();
-                });
+                };
                 var brobut = WindowManager.makeButton("Browse...");
 
                 body.appendChild(img);
@@ -314,7 +315,6 @@ document, or Internet resource, and Windows will open it for you.";
                 break;
             case "notepad":
                 f.setIcon("images/notepad/titleleft.png");
-                //divwindow.className = "window";
 
                 var divmenu = document.createElement("div");
                 divmenu.className = "menubar";
@@ -342,20 +342,11 @@ document, or Internet resource, and Windows will open it for you.";
                 //      a console window instead. (Alloc)
                 var divcmd = document.createElement("div");
                 divcmd.className = "terminal";
-                divcmd.style.height = "250px";
 
                 f.addNode(divcmdmenu);
                 f.addNode(divcmd);
                 break;
-            case "test":
-                var tbut = WindowManager.makeButton("Button");
-                tbut.style.marginRight = "6px";
-
-                var tc = WindowManager.makeButton("Close");
-                tc.onclick = function () {
-                    f.close();
-                };
-
+            case "tests":
                 var ff = document.createElement("form");
 
                 var r0 = document.createElement("input");
@@ -388,7 +379,46 @@ document, or Internet resource, and Windows will open it for you.";
                 ff.appendChild(cb1);
                 ff.appendChild(cbt1);
                 f.addNode(ff);
+
+                var tbut = WindowManager.makeButton("Button");
+                tbut.style.marginBottom = "6px";
+                tbut.style.display = "block";
+
                 f.addNode(tbut);
+
+                var txt1 = document.createElement("textarea");
+                txt1.rows = 1;
+                var txt2 = document.createElement("textarea");
+                txt2.rows = 1;
+
+                var makecont = document.createElement("div");
+
+                var btnMakeInfo = WindowManager.makeButton("Create info");
+                btnMakeInfo.onclick = function () {
+                    WindowManager.showInfo(txt1.value, txt2.value);
+                }
+                var btnMakeWarning = WindowManager.makeButton("Create warning");
+                btnMakeWarning.onclick = function () {
+                    WindowManager.showWarning(txt1.value, txt2.value);
+                }
+                var btnMakeError = WindowManager.makeButton("Create error");
+                btnMakeError.onclick = function () {
+                    WindowManager.showError(txt1.value, txt2.value);
+                }
+
+                makecont.appendChild(btnMakeInfo);
+                makecont.appendChild(btnMakeWarning);
+                makecont.appendChild(btnMakeError);
+
+                f.addNode(txt1);
+                f.addNode(txt2);
+                f.addNode(makecont);
+
+                var tc = WindowManager.makeButton("Close");
+                tc.style.cssFloat = "right";
+                tc.style.marginBottom = "4px";
+                tc.onclick = function () { f.close(); };
+
                 f.addNode(tc);
                 break;
             case "aboutdialog":
@@ -397,14 +427,15 @@ document, or Internet resource, and Windows will open it for you.";
                 var dnl = "<br/><br/>";
 
                 var lblAbout = document.createElement("p");
-                lblAbout.innerHTML = Project.productName + "<br/>\
-                Version " + Project.version + dnl +
-                "A web-based Windows 98 simulator. Made from scratch using \
+                lblAbout.innerHTML =
+                Project.productName + "<br/>\
+                    Version " + Project.version + dnl +
+                    "A web-based Windows 98 simulator. Made from scratch using \
 only HTML5, CSS3, and Javascript. No libraries." + dnl +
-                "This is only a personal project, I do not plan to \
+                    "This is only a personal project, I do not plan to \
 monitize it." + dnl +
-                "Copyright Microsoft (C) 1981-1998 for Windows 98" + dnl +
-                "Everything written by DD~!<br/>You can contact me via \
+                    "Copyright Microsoft (C) 1981-1998 for Windows 98" + dnl +
+                    "Everything written by DD~!<br/>You can contact me via \
 <a href=\"mailto:devddstuff@gmail.com\">email</a>.";
                 lblAbout.style.textAlign = "center";
 
@@ -442,8 +473,7 @@ monitize it." + dnl +
         StartMenu.hide();
     },
     
-    addTaskbarButton: function(form)
-    {
+    addTaskbarButton: function(form) {
         taskbarcont.appendChild(
             WindowManager.makeTaskbarButton(form)
         );
