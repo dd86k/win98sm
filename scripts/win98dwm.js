@@ -32,7 +32,7 @@ function Form(title) {
     //divtitle.id = "title" + indexWindow;
     divtitle.className = "atitlebar";
     divtitle.onmousedown = function (event) {
-        WindowManager.Drag.startMoving(obj, desktop, event);
+        WindowManager.Drag.startMoving(obj, desktoparea, event);
     };
     divtitle.onmouseup = function () {
         WindowManager.Drag.stopMoving();
@@ -53,7 +53,7 @@ function Form(title) {
 
     // Minimize
     var divmin = document.createElement("img");
-    divmin.className = "ctrlboxbuttonm";
+    divmin.className = "ctrlboxbutton";
     divmin.src = "images/window/min.png";
     /*divmin.onmousedown = function () {
         divmin.src = "images/window/minp.png";
@@ -73,7 +73,7 @@ function Form(title) {
 
     // Close
     var divclose = document.createElement("img");
-    divclose.className = "ctrlboxbutton";
+    divclose.className = "ctrlboxbuttonc";
     divclose.src = "images/window/close.png";
     divclose.onclick = function () {
         WindowManager.deleteWindow(obj);
@@ -116,6 +116,13 @@ Form.prototype = {
 
     setHeight: function (h) {
         this.divObject.style.height = h + "px";
+    },
+
+    /* Controlbox */
+    removeMinAndMaxButtons: function() {
+        var b = this.divObject.childNodes[0].getElementsByClassName("ctrlboxbutton");
+        for (var i = b.length; i >= 0; --i)
+            b[i].remove();
     },
     
     /* Window text */
@@ -201,6 +208,7 @@ var WindowManager = {
      * @param {number} type MsgBox Type.
      */
     makeMsgBox: function(f, msg, type) {
+        f.removeMinAndMaxButtons();
         var divmsg = document.createElement("p");
         divmsg.className = "msgboxMsg";
 
@@ -247,6 +255,7 @@ var WindowManager = {
 
         switch (type) {
             case "rundialog":
+                f.removeMinAndMaxButtons();
                 f.removeIcon();
 
                 var body = document.createElement("div");
@@ -386,8 +395,12 @@ document, or Internet resource, and Windows will open it for you.";
                 f.addNode(tbut);
 
                 var txt1 = document.createElement("textarea");
+                txt1.defaultValue = "Title";
+                txt1.placeholder = "Title";
                 txt1.rows = 1;
                 var txt2 = document.createElement("textarea");
+                txt2.defaultValue = "Message";
+                txt2.placeholder = "Message";
                 txt2.rows = 1;
 
                 var makecont = document.createElement("div");
@@ -421,6 +434,7 @@ document, or Internet resource, and Windows will open it for you.";
                 f.addNode(tc);
                 break;
             case "aboutdialog":
+                f.removeMinAndMaxButtons();
                 f.setWidth(400);
 
                 var dnl = "<br/><br/>";
@@ -467,7 +481,7 @@ monitize it." + dnl +
     addFormToDesktop: function(form) {
         if (form.iconExists)
             WindowManager.addTaskbarButton(form);
-        desktop.appendChild(form.divObject);
+        desktoparea.appendChild(form.divObject);
         //WindowManager.giveFocus(form.divObject);
         StartMenu.hide();
     },
@@ -537,13 +551,6 @@ monitize it." + dnl +
         var classes = document.getElementsByClassName("atitlebar");
         for (var i = 0; i < classes.length; ++i) {
             classes[i].className = "ititlebar";
-        }
-    },
-
-    killAllWindows: function() {
-        var ws = document.getElementsByClassName("window");
-        for(var i = ws.length - 1; i >= 0; --i) {
-            ws[i].remove();
         }
     },
 
@@ -617,4 +624,4 @@ var StartMenu = {
 
 
 startbutton.onmousedown = StartMenu.show;
-desktop.onmousedown = StartMenu.hide;
+desktoparea.onmousedown = StartMenu.hide;

@@ -11,13 +11,7 @@
     <link rel="icon" href="favicon.png"/>
 </head>
 <body>
-    <div id="desktop">
-        <div id="devmenu">
-            Tests:
-            <span onclick="Shell.run('shell:tests')">Control test</span>
-            <span onclick="WindowManager.killAllWindows()">Close all</span>
-        </div>
-    </div>
+    <div id="desktoparea"></div>
     
     <p id="desktopversion"></p>
     <div id="startmenu" style="visibility: hidden;">
@@ -74,7 +68,7 @@
         <div class="taskbarbuttonsep"></div>
         <div id="taskbarcont"></div>
         <span id="time">#NOJS</span>
-    </footer>
+    </div>
 
     <script src="scripts/win98.js"></script>
     <script src="scripts/win98dwm.js"></script>
