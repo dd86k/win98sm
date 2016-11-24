@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+@charset "utf-8";
 
 /*
  * Author: guitarxhero
@@ -22,6 +22,22 @@ body
     cursor: default;
 }
 
+/* IE Fixes */
+img
+{
+    border: 0;
+}
+
+/* Firefox fixes */
+
+/*@-moz-document url-prefix()
+{
+    textarea
+    {
+        height: 1em;
+    }
+}*/
+
 #devmenu
 {
     color: white;
@@ -43,11 +59,6 @@ body
     position: fixed;
     height: 100vh;
     width: 100%;
-}
-
-img
-{ /* IE9/10 fix */
-    border: 0;
 }
 
 #desktopversion
@@ -78,7 +89,7 @@ img
 .atitlebar, .ititlebar
 {
     height: 18px;
-    margin: 3px 3px 0 3px;
+    margin: 0;
     padding: 0;
 }
 
@@ -111,13 +122,16 @@ img
         url('../images/window/bottom.png') repeat-x bottom,
         url('../images/window/top.png') repeat-x top;
     background-color: #C0C0C0;
-    padding: 0;
+    padding: 3px;
+    min-width: 150px;
+    min-height: 50px;
+    position: fixed;
 }
 
-.windowarea, .AboutDialog
+.windowarea
 {
     padding: 0;
-    margin: 4px;
+    margin: 0;
     font-size: 12px;
 }
 
@@ -427,10 +441,9 @@ div#startmenu span
 {
     background: url('../images/misc/subfolderi.png') no-repeat right center;
 }
-   
 
 /* The time! */
- 
+
 span#time
 {
     position: fixed;

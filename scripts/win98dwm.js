@@ -16,16 +16,13 @@ function Form(title) {
 
     //divwindow.id = "form" + windowid;
     obj.className = "window";
-    obj.style.position = "absolute";
     obj.style.visibility = "visible";
     obj.style.left = "100px";
     obj.style.top = "100px";
-    obj.style.minWidth = "150px";
-    obj.style.minHeight = "50px";
     obj.style.zIndex = WindowzIndex++;
-    obj.addEventListener("mousedown", function () {
+    obj.onmousedown = function () {
         WindowManager.giveFocus(obj);
-    });
+    };
 
     // Titlebar
     var divtitle = document.createElement("div");
@@ -101,10 +98,6 @@ Form.prototype = {
     divObject: null,
     iconExists: true,
 
-    /*setTitle: function (title) {
-        this.divObject.childNodes[0].childNodes[ 0 or 1 ..
-    },*/
-
     setSize: function (w, h) {
         this.divObject.style.width = w + "px";
         this.divObject.style.height = h + "px";
@@ -119,19 +112,18 @@ Form.prototype = {
     },
 
     /* Controlbox */
-    removeMinAndMaxButtons: function() {
+    removeMinAndMaxButtons: function () {
         var b = this.divObject.childNodes[0].getElementsByClassName("ctrlboxbutton");
-        for (var i = b.length; i >= 0; --i)
-            b[i].remove();
+        b.remove();
     },
-    
+
     /* Window text */
     setTitle: function (t) {
-        var div = this.divObject.getElementsByClassName("titlebartext");
+        var div = this.divObject.childNodes[0].getElementsByClassName("titlebartext");
         div[0].innerText = t;
     },
     getTitle: function (t) {
-        var div = this.divObject.getElementsByClassName("titlebartext");
+        var div = this.divObject.childNodes[0].getElementsByClassName("titlebartext");
         return div[0].innerText;
     },
 
@@ -168,7 +160,7 @@ Form.prototype = {
         this.divObject.childNodes[1].appendChild(node);
     },
 
-    close: function() {
+    close: function () {
         this.divObject.remove();
     }
 }
@@ -180,23 +172,26 @@ var WindowzIndex = 0, activeDiv = null;
  */
 
 var WindowManager = {
-    showInfo: function(title, msg) {
+    showInfo: function (title, msg) {
         var f = new Form(title);
         f.removeIcon();
+        f.removeMinAndMaxButtons();
         WindowManager.makeMsgBox(f, msg, 0);
         WindowManager.addFormToDesktop(f);
     },
 
-    showWarning: function(title, msg) {
+    showWarning: function (title, msg) {
         var f = new Form(title);
         f.removeIcon();
+        f.removeMinAndMaxButtons();
         WindowManager.makeMsgBox(f, msg, 1);
         WindowManager.addFormToDesktop(f);
     },
 
-    showError: function(title, msg) {
+    showError: function (title, msg) {
         var f = new Form(title);
         f.removeIcon();
+        f.removeMinAndMaxButtons();
         WindowManager.makeMsgBox(f, msg, 2);
         WindowManager.addFormToDesktop(f);
     },
@@ -207,7 +202,7 @@ var WindowManager = {
      * @param {string} msg Message.
      * @param {number} type MsgBox Type.
      */
-    makeMsgBox: function(f, msg, type) {
+    makeMsgBox: function (f, msg, type) {
         f.removeMinAndMaxButtons();
         var divmsg = document.createElement("p");
         divmsg.className = "msgboxMsg";
@@ -248,7 +243,7 @@ var WindowManager = {
     },
 
     // For compability.
-    createWindow: function(title, x, y, type) {
+    createWindow: function (title, x, y, type) {
         var f = new Form(title);
 
         f.setLocation(x, y);
@@ -259,6 +254,7 @@ var WindowManager = {
                 f.removeIcon();
 
                 var body = document.createElement("div");
+                body.style.display = "inline-block";
                 var subbody = document.createElement("div");
 
                 var img = document.createElement("img");
@@ -277,7 +273,8 @@ document, or Internet resource, and Windows will open it for you.";
                 open.style.margin = "4px 10px 12px 14px";
                 open.style.display = "inline-block";
 
-                var input = document.createElement("textarea");
+                var input = document.createElement("input");
+                input.type = "text";
                 input.onkeydown = function (e) {
                     if (e.which == 13) { // Enter/Return
                         Shell.run(input.value);
@@ -298,13 +295,13 @@ document, or Internet resource, and Windows will open it for you.";
 
                 var okbut = WindowManager.makeButton("OK");
                 okbut.style.marginRight = "6px";
-                okbut.onclick = function() {
+                okbut.onclick = function () {
                     f.close();
                     Shell.run(input.value);
                 };
                 var canbut = WindowManager.makeButton("Cancel");
                 canbut.style.marginRight = "6px";
-                canbut.onclick = function() {
+                canbut.onclick = function () {
                     f.close();
                 };
                 var brobut = WindowManager.makeButton("Browse...");
@@ -441,7 +438,7 @@ document, or Internet resource, and Windows will open it for you.";
 
                 var lblAbout = document.createElement("p");
                 lblAbout.innerHTML =
-                Project.productName + "<br/>\
+                    Project.productName + "<br/>\
                     Version " + Project.version + dnl +
                     "A web-based Windows 98 simulator. Made from scratch using \
 only HTML5, CSS3, and Javascript. No libraries." + dnl +
@@ -457,12 +454,12 @@ monitize it." + dnl +
                 bottomlayout.style.textAlign = "center";
 
                 var btnOK = WindowManager.makeButton("Close");
-                btnOK.onclick = function() { f.close(); };
+                btnOK.onclick = function () { f.close(); };
 
                 var btnSpin = WindowManager.makeButton("Spin!");
-                btnSpin.onclick = function() {
+                btnSpin.onclick = function () {
                     f.divObject.style.animation = "spin 1s";
-                    setTimeout(function() {
+                    setTimeout(function () {
                         f.divObject.style.animation = "";
                     }, 1000);
                 };
@@ -478,27 +475,27 @@ monitize it." + dnl +
         WindowManager.addFormToDesktop(f);
     },
 
-    addFormToDesktop: function(form) {
+    addFormToDesktop: function (form) {
         if (form.iconExists)
             WindowManager.addTaskbarButton(form);
         desktoparea.appendChild(form.divObject);
         //WindowManager.giveFocus(form.divObject);
         StartMenu.hide();
     },
-    
-    addTaskbarButton: function(form) {
+
+    addTaskbarButton: function (form) {
         taskbarcont.appendChild(
             WindowManager.makeTaskbarButton(form)
         );
     },
-    
-    makeButton: function(text, width, height) {
+
+    makeButton: function (text, width, height) {
         var b = document.createElement("div");
         b.className = "button";
         b.style.width =
             (width === undefined ? 72 : width < 72 ? 72 : width) + "px";
         //divbutton.style.height =
-            //(height === undefined ? 22 : height < 22 ? 22 : height) + "px";
+        //(height === undefined ? 22 : height < 22 ? 22 : height) + "px";
         b.onmousedown = function () {
             b.className = "buttondown";
         };
@@ -515,10 +512,10 @@ monitize it." + dnl +
         return b;
     },
 
-    makeTaskbarButton: function(form) {
+    makeTaskbarButton: function (form) {
         var b = document.createElement("div");
         b.className = "taskbarbutton";
-        
+
         var bi = document.createElement("img");
         bi.src = form.getIcon();
 
@@ -531,11 +528,11 @@ monitize it." + dnl +
         return b;
     },
 
-    deleteWindow: function(div) {
+    deleteWindow: function (div) {
         div.remove();
     },
 
-    giveFocus: function(div) {
+    giveFocus: function (div) {
         if (activeDiv != null)
             activeDiv.childNodes[0].className = "ititlebar";
         activeDiv = div;
@@ -543,11 +540,11 @@ monitize it." + dnl +
         div.style.zIndex = WindowzIndex++;
     },
 
-    removeFocusLast: function() {
+    removeFocusLast: function () {
         if (activeDiv != null)
             activeDiv.childNodes[0].className = "ititlebar";
     },
-    removeFocusAll: function() {
+    removeFocusAll: function () {
         var classes = document.getElementsByClassName("atitlebar");
         for (var i = 0; i < classes.length; ++i) {
             classes[i].className = "ititlebar";
@@ -593,7 +590,7 @@ monitize it." + dnl +
         },
 
         stopMoving: function () {
-            document.onmousemove = function () {};
+            document.onmousemove = function () { };
         }
     }
 };
