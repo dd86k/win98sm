@@ -16,6 +16,7 @@ body
     margin: 0;
     padding: 0;
     background-color: #008080;
+    -webkit-user-select: none; /* 53 */
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -23,38 +24,13 @@ body
 }
 
 /* IE Fixes */
-img
-{
-    border: 0;
-}
+img { border: 0; }
 
-/* Firefox fixes */
+/*
+ * Desktop
+ */
 
-/*@-moz-document url-prefix()
-{
-    textarea
-    {
-        height: 1em;
-    }
-}*/
-
-#devmenu
-{
-    color: white;
-    margin-top: 10px;
-    margin-left: 10px;
-    font-size: 0.8em;
-}
-
-#devmenu span
-{
-    border: 1px solid white;
-    border-radius: 10px;
-    cursor: pointer;
-    padding: 5px;
-}
-
-#desktop
+#desktoparea
 {
     position: fixed;
     height: 100vh;
@@ -101,7 +77,8 @@ img
     margin: 3px 0 0 2px;
 }
 
-.windowicon
+.atitlebar .windowicon,
+.ititlebar .windowicon
 {
     display: inline-block;
     width: 16px;
@@ -113,14 +90,14 @@ img
 .window
 {
     background:
-        url('../images/window/topleft.png') no-repeat top left,
-        url('../images/window/topright.png') no-repeat top right,
-        url('../images/window/bottomleft.png') no-repeat bottom left,
-        url('../images/window/bottomright.png') no-repeat bottom right,
-        url('../images/window/left.png') repeat-y left,
-        url('../images/window/right.png') repeat-y right,
-        url('../images/window/bottom.png') repeat-x bottom,
-        url('../images/window/top.png') repeat-x top;
+    url('../images/window/topleft.png') no-repeat top left,
+    url('../images/window/topright.png') no-repeat top right,
+    url('../images/window/bottomleft.png') no-repeat bottom left,
+    url('../images/window/bottomright.png') no-repeat bottom right,
+    url('../images/window/left.png') repeat-y left,
+    url('../images/window/right.png') repeat-y right,
+    url('../images/window/bottom.png') repeat-x bottom,
+    url('../images/window/top.png') repeat-x top;
     background-color: #C0C0C0;
     padding: 3px;
     min-width: 150px;
@@ -219,38 +196,37 @@ img
     color: white;
 }
 
-
 /* -- Radio and checkbox -- */
 label {
-  display: block;
-  cursor: pointer;
-  position: relative;
-  padding-left: 25px;
-  margin-right: 15px;
-  font-size: 13px;
-  margin: 5px;
+    display: block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 25px;
+    margin-right: 15px;
+    font-size: 13px;
+    margin: 5px;
 }
 input[type=radio],
 input[type=checkbox] {
-  display: none;
+    display: none;
 }
 label:before {
-  content: "";
-  display: inline-block;
- 
-  width: 16px;
-  height: 16px;
- 
-  margin-right: 10px;
-  position: absolute;
-  left: 0;
-  bottom: 1px;
-  background-color: #aaa;
-  box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    content: "";
+    display: inline-block;
+    
+    width: 16px;
+    height: 16px;
+    
+    margin-right: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    background-color: #aaa;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
 }
 input[type=radio] label:before,
 input[type=checkbox] label:before {
-  border-radius: 8px;
+    border-radius: 8px;
 }
 input[type=radio]:checked + label:before,
 input[type=checkbox]:checked + label:before {
@@ -303,7 +279,6 @@ input[type=checkbox]:checked + label:before {
     width: 100%;
     height: 28px;
     background:
-    url('../images/startmenu/bar3.png') no-repeat bottom right,
     url('../images/startmenu/bar2.png') repeat-x top;
     background-color: #C0C0C0;
     
@@ -318,13 +293,23 @@ input[type=checkbox]:checked + label:before {
     margin: 4px 0 2px 2px;
 }
 
-#taskbar .taskbarbuttonsep
+#taskbar .grip
 {
     display: inline-block;
     width: 7px;
     height: 18px;
-    margin: 0 4px 4px -6px;
+    margin: 0 4px 4px -5px;
     background: url('../images/startmenu/taskbarbuttonsep.png') no-repeat center;
+}
+
+#taskbar .minisep
+{
+    float: right;
+    margin: 4px 2px;
+    width: 0px;
+    height: 22px;
+    border-right: 1px solid white;
+    border-left: 1px solid #87888F;
 }
 
 #taskbarcont
@@ -387,7 +372,6 @@ input[type=checkbox]:checked + label:before {
     #C0C0C0;
     width: 176px;
     padding: 3px 3px 3px 24px;
-
     z-index: 5000000;
 }
 
@@ -419,7 +403,7 @@ div#startmenu img
     margin: 0px 6px 0px 6px;
 }
 
-div#startmenu span
+#startmenu span
 {
     position: relative;
     top: -25%;
@@ -442,14 +426,21 @@ div#startmenu span
     background: url('../images/misc/subfolderi.png') no-repeat right center;
 }
 
-/* The time! */
+/* OS Time */
 
-span#time
+#systray
 {
-    position: fixed;
-    bottom: 6px;
-    right: 12px;
-    font-size: 11.5px;
+    float: right;
+    text-align: center;
+    margin: 4px 2px;
+    min-width: 72px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
 }
 
 /* Specials/Animations */

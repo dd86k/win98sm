@@ -58,7 +58,7 @@ function updateTime() {
         t += "AM";
     }
 
-    time.innerHTML = hours + ":" + minutes + " " + t;
+    ostime.innerHTML = hours + ":" + minutes + " " + t;
 }
 
 setInterval(updateTime, 10000);
@@ -74,14 +74,7 @@ setInterval(updateTime, 10000);
  */
 
 var Utils = {
-    /**
-     * Returns a random number from 0 to max.
-     * @param {number} max Maximum number, excluded.
-     * @returns A random number.
-     */
-    r: function (max) {
-        return Math.random() * max;
-    }
+    r: function (max) { return Math.random() * max; }
 }
 
 /*
@@ -112,31 +105,34 @@ var Shell = {
      */
     run: function (file, args) {
         if (file != null && file.length > 0) {
-
-            var s = file.split(" ", 128);
-            switch (s[0].toLowerCase()) {
-                case "command":
-                    WindowManager.createWindow('MS-DOS Prompt', Utils.r(200), Utils.r(200), 'cmd');
-                    return 0;
-                case "notepad": case "notepad.exe":
-                    WindowManager.createWindow(
-                        'Untitled - Notepad', Utils.r(200), Utils.r(200), 'notepad');
-                    return 0;
-                case "shell:run":
-                    WindowManager.createWindow('Run', 150, 50, 'rundialog');
-                    return 0;
-                case "shell:about":
-                    WindowManager.createWindow('About', 150, 50, 'aboutdialog');
-                    return 0;
-                case "shell:tests":
-                    WindowManager.createWindow("Tests", 50, 50, "tests");
-                    return 0;
-                default:
-                    WindowManager.showError(file,
-                        "The file \"" + file + "\" (or one of its components) cannot \
-                        be found. Verify the path and the filename are correct, \
-                        and all the libraries required are available.");
-                    return 1;
+            if (/^(http)/i.test(file)) {
+                open(file);
+            } else {
+                var s = file.split(" ", 128);
+                switch (s[0].toLowerCase()) {
+                    case "command":
+                        WindowManager.createWindow('MS-DOS Prompt', Utils.r(200), Utils.r(200), 'cmd');
+                        return 0;
+                    case "notepad": case "notepad.exe":
+                        WindowManager.createWindow(
+                            'Untitled - Notepad', Utils.r(200), Utils.r(200), 'notepad');
+                        return 0;
+                    case "shell:run":
+                        WindowManager.createWindow('Run', 150, 50, 'rundialog');
+                        return 0;
+                    case "shell:about":
+                        WindowManager.createWindow('About', 150, 50, 'aboutdialog');
+                        return 0;
+                    case "shell:tests":
+                        WindowManager.createWindow("Tests", 50, 50, "tests");
+                        return 0;
+                    default:
+                        WindowManager.showError(file,
+                            "The file \"" + file + "\" (or one of its components) cannot \
+                            be found. Verify the path and the filename are correct, \
+                            and all the libraries required are available.");
+                        return 1;
+                }
             }
         } else {
             WindowManager.showError("Shell", "Empty command");

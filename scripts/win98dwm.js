@@ -12,24 +12,24 @@
  */
 function Form(title) {
     // Make the window, and make a reference.
-    var obj = this.divObject = document.createElement("div");
+    var win = this.divObject = document.createElement("div");
 
     //divwindow.id = "form" + windowid;
-    obj.className = "window";
-    obj.style.visibility = "visible";
-    obj.style.left = "100px";
-    obj.style.top = "100px";
-    obj.style.zIndex = WindowzIndex++;
-    obj.onmousedown = function () {
-        WindowManager.giveFocus(obj);
+    win.className = "window";
+    win.style.visibility = "visible";
+    win.style.left = "100px";
+    win.style.top = "100px";
+    win.style.zIndex = WindowzIndex++;
+    win.onmousedown = function () {
+        WindowManager.giveFocus(win);
     };
 
     // Titlebar
-    var divtitle = document.createElement("div");
+    var divtitle = this.titleObj = document.createElement("div");
     //divtitle.id = "title" + indexWindow;
     divtitle.className = "atitlebar";
     divtitle.onmousedown = function (event) {
-        WindowManager.Drag.startMoving(obj, desktoparea, event);
+        WindowManager.Drag.startMoving(win, desktoparea, event);
     };
     divtitle.onmouseup = function () {
         WindowManager.Drag.stopMoving();
@@ -73,7 +73,7 @@ function Form(title) {
     divclose.className = "ctrlboxbuttonc";
     divclose.src = "images/window/close.png";
     divclose.onclick = function () {
-        WindowManager.deleteWindow(obj);
+        WindowManager.deleteWindow(win);
     };
     divclose.onmousedown = function () {
         divclose.src = "images/window/closep.png";
@@ -85,18 +85,24 @@ function Form(title) {
     divtitle.appendChild(divmax);
     divtitle.appendChild(divmin);
 
-    obj.appendChild(divtitle);
+    win.appendChild(divtitle);
 
     // Form client area
-    var divwindowarea = document.createElement("div");
+    var divwindowarea = this.windowAreaObj = document.createElement("div");
     divwindowarea.className = "windowarea";
-    obj.appendChild(divwindowarea);
+    win.appendChild(divwindowarea);
 }
 
 Form.prototype = {
     /* Window properties */
-    divObject: null,
+    divObject: null, // rename to windowObj
+    titleObj: null,
+    windowAreaObj: null,
+
+    taskbarButtonObj: null,
+
     iconExists: true,
+    
 
     setSize: function (w, h) {
         this.divObject.style.width = w + "px";
@@ -111,6 +117,10 @@ Form.prototype = {
         this.divObject.style.height = h + "px";
     },
 
+    focus: function() {
+        //TODO: Form.focus()
+    },
+
     /* Controlbox */
     removeMinAndMaxButtons: function () {
         var b = this.divObject.childNodes[0].getElementsByClassName("ctrlboxbutton");
@@ -119,12 +129,10 @@ Form.prototype = {
 
     /* Window text */
     setTitle: function (t) {
-        var div = this.divObject.childNodes[0].getElementsByClassName("titlebartext");
-        div[0].innerText = t;
+        this.titleObj.innerText = t;
     },
-    getTitle: function (t) {
-        var div = this.divObject.childNodes[0].getElementsByClassName("titlebartext");
-        return div[0].innerText;
+    getTitle: function () {
+        return this.titleObj.innerText;
     },
 
     /* Window icon */
@@ -157,7 +165,7 @@ Form.prototype = {
     /* Functions */
     addNode: function (node) {
         // Main window area.
-        this.divObject.childNodes[1].appendChild(node);
+        this.windowAreaObj.appendChild(node);
     },
 
     close: function () {
@@ -279,6 +287,7 @@ document, or Internet resource, and Windows will open it for you.";
                     if (e.which == 13) { // Enter/Return
                         Shell.run(input.value);
                         f.close();
+                        return false;
                     }
                 };
                 input.rows = 1;
