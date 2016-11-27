@@ -37,15 +37,15 @@ img { border: 0; }
     width: 100%;
 }
 
-#desktopversion
+#websimversion
 {
     color: white;
     text-shadow: 3px 3px 0px black;
     position: fixed;
     bottom: 20px;
     right: 5px;
-    font-size: 1.2em;
     z-index: -1;
+    font-size: 15px;
 }
 
 /*
@@ -175,6 +175,7 @@ img { border: 0; }
     border: 1px solid black;
     display: inline-block;
     text-align: center;
+    outline: none;
 }
 
 .innerbutton
@@ -329,20 +330,8 @@ input[type=checkbox]:checked + label:before {
 {
     position: fixed;
     display: inline-block;
-    bottom: 2px;
-}
-
-.taskbarbutton
-{
-    background:
-    url('../images/button/topright.png') no-repeat right top,
-    url('../images/button/topleft.png') no-repeat left top,
-    url('../images/button/bottomright.png') no-repeat right bottom,
-    url('../images/button/bottomleft.png') no-repeat left bottom,
-    url('../images/button/right.png') repeat-y right,
-    url('../images/button/top.png') repeat-x top,
-    url('../images/button/left.png') repeat-y left,
-    url('../images/button/bottom.png') repeat-x bottom, #C0C0C0;
+    bottom: -4px;
+    width: calc(100% - 155px);
 }
 
 /*.taskbarbutton img
@@ -357,9 +346,33 @@ input[type=checkbox]:checked + label:before {
 {
     display: inline-block;
     max-width: 160px;
-    width: 160px;
+    overflow: hidden;
+    margin: 0 3px 3px 0;
     height: 22px;
+    width: 160px;
+    font-size: 11px;
+    line-height: 18px;
+}
+
+#taskbarcont .taskbarbutton span, #taskbarcont .taskbarbutton img,
+#taskbarcont .taskbarbuttonactive span, #taskbarcont .taskbarbuttonactive img,
+#taskbarcont .taskbarbuttondown span, #taskbarcont .taskbarbuttondown img
+{
+    float: left;
     margin: 3px;
+}
+
+#taskbarcont .taskbarbutton
+{
+    background:
+    url('../images/button/topright.png') no-repeat right top,
+    url('../images/button/topleft.png') no-repeat left top,
+    url('../images/button/bottomright.png') no-repeat right bottom,
+    url('../images/button/bottomleft.png') no-repeat left bottom,
+    url('../images/button/right.png') repeat-y right,
+    url('../images/button/top.png') repeat-x top,
+    url('../images/button/left.png') repeat-y left,
+    url('../images/button/bottom.png') repeat-x bottom, #C0C0C0;
 }
 
 /*

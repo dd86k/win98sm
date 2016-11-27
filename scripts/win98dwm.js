@@ -12,16 +12,16 @@
  */
 function Form(title) {
     // Make the window, and make a reference.
-    var win = this.divObject = document.createElement("div");
+    var winobj = this.divObject = document.createElement("div");
 
     //divwindow.id = "form" + windowid;
-    win.className = "window";
-    win.style.visibility = "visible";
-    win.style.left = "100px";
-    win.style.top = "100px";
-    win.style.zIndex = WindowZIndex++;
-    win.onmousedown = function () {
-        WindowManager.giveFocus(win);
+    winobj.className = "window";
+    winobj.style.visibility = "visible";
+    winobj.style.left = "100px";
+    winobj.style.top = "100px";
+    winobj.style.zIndex = WindowZIndex++;
+    winobj.onmousedown = function () {
+        WindowManager.giveFocus(winobj);
     };
 
     // Titlebar
@@ -29,7 +29,7 @@ function Form(title) {
     //divtitle.id = "title" + indexWindow;
     divtitle.className = "atitlebar";
     divtitle.onmousedown = function (event) {
-        WindowManager.Drag.startMoving(win, desktoparea, event);
+        WindowManager.Drag.startMoving(winobj, desktoparea, event);
     };
     divtitle.onmouseup = function () {
         WindowManager.Drag.stopMoving();
@@ -72,7 +72,7 @@ function Form(title) {
     divclose.className = "ctrlboxbuttonc";
     divclose.src = "images/window/close.png";
     divclose.onclick = function () {
-        WindowManager.deleteWindow(win);
+        WindowManager.deleteWindow(winobj);
     };
     divclose.onmousedown = function () {
         divclose.src = "images/window/closep.png";
@@ -84,12 +84,12 @@ function Form(title) {
     divtitle.appendChild(divmax);
     divtitle.appendChild(divmin);
 
-    win.appendChild(divtitle);
+    winobj.appendChild(divtitle);
 
     // Form client area
     var divwindowarea = this.windowAreaObj = document.createElement("div");
     divwindowarea.className = "windowarea";
-    win.appendChild(divwindowarea);
+    winobj.appendChild(divwindowarea);
 }
 
 Form.prototype = {
@@ -117,7 +117,7 @@ Form.prototype = {
     },
 
     focus: function() {
-        //TODO: Form.focus()
+        //TODO: Form.prototype.focus()
     },
 
     /* Controlbox */
@@ -279,7 +279,7 @@ document, or Internet resource, and Windows will open it for you.";
                 desc.style.fontSize = "11px";
                 desc.style.maxWidth = "280px";
                 desc.style.cssFloat = "Right";
-                desc.style.marginTop = "20px";
+                desc.style.marginTop = "18px";
 
                 var open = document.createElement("p");
                 open.innerText = "Open:";
@@ -298,8 +298,6 @@ document, or Internet resource, and Windows will open it for you.";
                 };
                 input.style.marginBottom = "-7px";
                 input.style.width = "277px";
-                input.tabIndex = 1;
-                input.autofocus = true;
 
                 var buttons = document.createElement("div");
                 buttons.style.textAlign = "right";
@@ -498,9 +496,19 @@ monitize it." + dnl +
     },
 
     addTaskbarButton: function (form) {
-        taskbarcont.appendChild(
-            WindowManager.makeTaskbarButton(form)
-        );
+        var c = taskbarcont.rows[0].insertCell(-1);
+        c.className = "taskbarbutton";
+
+        var icon = document.createElement("img");
+        icon.src = form.getIcon();
+
+        var text = document.createElement("span");
+        text.innerText = form.getTitle();
+
+        c.appendChild(icon);
+        c.appendChild(text);
+
+        form.taskbarButtonObj = c;
     },
 
     makeButton: function (text, width, height) {
@@ -523,22 +531,6 @@ monitize it." + dnl +
         t.innerText = text;
 
         b.appendChild(t);
-
-        return b;
-    },
-
-    makeTaskbarButton: function (form) {
-        var b = document.createElement("div");
-        b.className = "taskbarbutton";
-
-        var bi = document.createElement("img");
-        bi.src = form.getIcon();
-
-        var bt = document.createElement("span");
-        bt.innerText = form.getTitle();
-
-        b.appendChild(bi);
-        b.appendChild(bt);
 
         return b;
     },
@@ -607,7 +599,7 @@ monitize it." + dnl +
         },
 
         stopMoving: function () {
-            document.onmousemove = function () { };
+            document.onmousemove = null;
         }
     }
 };

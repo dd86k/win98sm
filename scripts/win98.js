@@ -24,11 +24,11 @@
  */
 var Project = {
     productName: "Windows 98 WebSim",
-    version: "0.4.1-git-11"
+    version: "0.4.1-git-12"
 };
 
 function start() {
-    desktopversion.innerText = Project.productName + " " + Project.version;
+    websimversion.innerText = Project.productName + " " + Project.version;
     updateTime();
 }
 
