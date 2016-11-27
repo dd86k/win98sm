@@ -19,7 +19,7 @@ function Form(title) {
     win.style.visibility = "visible";
     win.style.left = "100px";
     win.style.top = "100px";
-    win.style.zIndex = WindowzIndex++;
+    win.style.zIndex = WindowZIndex++;
     win.onmousedown = function () {
         WindowManager.giveFocus(win);
     };
@@ -46,7 +46,6 @@ function Form(title) {
     var divtitletext = document.createElement("span");
     divtitletext.className = "titlebartext";
     divtitletext.innerText = title;
-    divtitletext.style.fontWeight = "bold";
 
     // Minimize
     var divmin = document.createElement("img");
@@ -124,7 +123,9 @@ Form.prototype = {
     /* Controlbox */
     removeMinAndMaxButtons: function () {
         var b = this.divObject.childNodes[0].getElementsByClassName("ctrlboxbutton");
-        b.remove();
+        for (var i = b.length - 1; i >= 0; --i) {
+             b[i].remove();
+         }
     },
 
     /* Window text */
@@ -173,7 +174,7 @@ Form.prototype = {
     }
 }
 
-var WindowzIndex = 0, activeDiv = null;
+var WindowZIndex = 0, activeDiv = null;
 
 /**
  * Window Manager.
@@ -233,8 +234,9 @@ var WindowManager = {
                 break;
         }
 
-        var divbutton = WindowManager.makeButton("OK");
-        divbutton.addEventListener("click", function () {
+        var btnOk = WindowManager.makeButton("OK");
+        btnOk.tabIndex = 25;
+        btnOk.addEventListener("click", function () {
             WindowManager.deleteWindow(f.divObject);
         });
 
@@ -243,7 +245,7 @@ var WindowManager = {
         divcont.style.width = "100%";
         divcont.style.textAlign = "center";
 
-        divcont.appendChild(divbutton);
+        divcont.appendChild(btnOk);
 
         f.addNode(divmsgicon);
         f.addNode(divmsg);
@@ -260,6 +262,7 @@ var WindowManager = {
             case "rundialog":
                 f.removeMinAndMaxButtons();
                 f.removeIcon();
+                f.setSize(347, 163);
 
                 var body = document.createElement("div");
                 body.style.display = "inline-block";
@@ -267,14 +270,16 @@ var WindowManager = {
 
                 var img = document.createElement("img");
                 img.src = "images/run/item.png";
-                img.style.margin = "14px";
+                img.style.margin = "20px 14px";
+                img.style.display = "inline-block";
 
                 var desc = document.createElement("p");
                 desc.innerText = "Type the name of a program, folder, \
 document, or Internet resource, and Windows will open it for you.";
                 desc.style.fontSize = "11px";
-                desc.style.maxWidth = "300px";
-                desc.style.cssFloat = "right";
+                desc.style.maxWidth = "280px";
+                desc.style.cssFloat = "Right";
+                desc.style.marginTop = "20px";
 
                 var open = document.createElement("p");
                 open.innerText = "Open:";
@@ -283,6 +288,7 @@ document, or Internet resource, and Windows will open it for you.";
 
                 var input = document.createElement("input");
                 input.type = "text";
+                input.style.display = "inline-block";
                 input.onkeydown = function (e) {
                     if (e.which == 13) { // Enter/Return
                         Shell.run(input.value);
@@ -290,17 +296,12 @@ document, or Internet resource, and Windows will open it for you.";
                         return false;
                     }
                 };
-                input.rows = 1;
                 input.style.marginBottom = "-7px";
-                input.style.resize = "none";
-                input.style.width = "290px";
-                input.onload = function () { input.focus(); };
-                input.autofocus = true;
+                input.style.width = "277px";
 
                 var buttons = document.createElement("div");
-                buttons.style.width = "98%";
                 buttons.style.textAlign = "right";
-                buttons.style.margin = "8px 0 14px 0px";
+                buttons.style.margin = "6px 8px";
 
                 var okbut = WindowManager.makeButton("OK");
                 okbut.style.marginRight = "6px";
@@ -412,10 +413,12 @@ document, or Internet resource, and Windows will open it for you.";
                 var makecont = document.createElement("div");
 
                 var btnMakeInfo = WindowManager.makeButton("Create info");
+                btnMakeInfo.style.marginRight = "4px";
                 btnMakeInfo.onclick = function () {
                     WindowManager.showInfo(txt1.value, txt2.value);
                 }
                 var btnMakeWarning = WindowManager.makeButton("Create warning");
+                btnMakeWarning.style.marginRight = "4px";
                 btnMakeWarning.onclick = function () {
                     WindowManager.showWarning(txt1.value, txt2.value);
                 }
@@ -434,7 +437,7 @@ document, or Internet resource, and Windows will open it for you.";
 
                 var tc = WindowManager.makeButton("Close");
                 tc.style.cssFloat = "right";
-                tc.style.marginBottom = "4px";
+                tc.style.marginTop = "4px";
                 tc.onclick = function () { f.close(); };
 
                 f.addNode(tc);
@@ -460,10 +463,11 @@ monitize it." + dnl +
 
                 var bottomlayout = document.createElement("div");
                 bottomlayout.style.width = "100%";
-                bottomlayout.style.textAlign = "center";
+                bottomlayout.style.textAlign = "right";
 
                 var btnOK = WindowManager.makeButton("Close");
                 btnOK.onclick = function () { f.close(); };
+                btnOK.style.marginLeft = "6px";
 
                 var btnSpin = WindowManager.makeButton("Spin!");
                 btnSpin.onclick = function () {
@@ -488,7 +492,6 @@ monitize it." + dnl +
         if (form.iconExists)
             WindowManager.addTaskbarButton(form);
         desktoparea.appendChild(form.divObject);
-        //WindowManager.giveFocus(form.divObject);
         StartMenu.hide();
     },
 
@@ -511,6 +514,7 @@ monitize it." + dnl +
         b.onmouseup = function () {
             b.className = "button";
         };
+        b.tabIndex = 0;
 
         var t = document.createElement("div");
         t.className = "innerbutton";
@@ -546,14 +550,16 @@ monitize it." + dnl +
             activeDiv.childNodes[0].className = "ititlebar";
         activeDiv = div;
         div.childNodes[0].className = "atitlebar";
-        div.style.zIndex = WindowzIndex++;
+        div.style.zIndex = WindowZIndex++;
     },
 
-    removeFocusLast: function () {
-        if (activeDiv != null)
+    unfocusActiveWindow: function () {
+        if (activeDiv != null) {
             activeDiv.childNodes[0].className = "ititlebar";
+            activeDiv = null;
+        }
     },
-    removeFocusAll: function () {
+    unfocusAll: function () {
         var classes = document.getElementsByClassName("atitlebar");
         for (var i = 0; i < classes.length; ++i) {
             classes[i].className = "ititlebar";
@@ -610,8 +616,7 @@ monitize it." + dnl +
 
 var StartMenu = {
     show: function () {
-        //TODO: Remove last focus instead
-        WindowManager.removeFocusAll();
+        WindowManager.unfocusAll();
         if (startmenu.style.visibility == 'hidden') {
             startmenu.style.visibility = 'visible';
             startbutton.src = 'images/startmenu/on.png';
@@ -624,10 +629,15 @@ var StartMenu = {
     hide: function () {
         startmenu.style.visibility = 'hidden';
         startbutton.src = 'images/startmenu/off.png';
-        //WindowManager.unfocusLast();
     }
 }
 
+/*
+ * Events
+ */
 
 startbutton.onmousedown = StartMenu.show;
-desktoparea.onmousedown = StartMenu.hide;
+desktoparea.onmousedown = function (e) {
+    //WindowManager.unfocusActiveWindow();
+    StartMenu.hide();
+}

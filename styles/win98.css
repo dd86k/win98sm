@@ -87,6 +87,11 @@ img { border: 0; }
     padding: 0;
 }
 
+.titlebartext
+{
+    font-weight: bold;
+}
+
 .window
 {
     background:
@@ -171,10 +176,20 @@ img { border: 0; }
 
 .innerbutton
 {
+    border: 1px dotted transparent;
+}
+
+.button:first-child:focus span
+{
     border: 1px dotted black;
 }
 
-.terminal /* Command prompt */
+/*.button:focus
+{
+    border: 1px solid black;
+}*/
+
+.conbuf
 {
     font-family: monospace;
     position: relative;
@@ -196,7 +211,7 @@ img { border: 0; }
     color: white;
 }
 
-/* -- Radio and checkbox -- */
+/* Radio and checkbox */
 label {
     display: block;
     cursor: pointer;
