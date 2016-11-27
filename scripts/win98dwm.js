@@ -298,6 +298,8 @@ document, or Internet resource, and Windows will open it for you.";
                 };
                 input.style.marginBottom = "-7px";
                 input.style.width = "277px";
+                input.tabIndex = 1;
+                input.autofocus = true;
 
                 var buttons = document.createElement("div");
                 buttons.style.textAlign = "right";

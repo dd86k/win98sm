@@ -102,8 +102,7 @@ img { border: 0; }
     url('../images/window/left.png') repeat-y left,
     url('../images/window/right.png') repeat-y right,
     url('../images/window/bottom.png') repeat-x bottom,
-    url('../images/window/top.png') repeat-x top;
-    background-color: #C0C0C0;
+    url('../images/window/top.png') repeat-x top, #C0C0C0;
     padding: 3px;
     min-width: 150px;
     min-height: 50px;
@@ -161,8 +160,12 @@ img { border: 0; }
     url('../images/button/n.png') repeat-x top,
     url('../images/button/n.png') repeat-x bottom,
     url('../images/button/n.png') repeat-y left,
-    url('../images/button/n.png') repeat-y right,
-    #C0C0C0;
+    url('../images/button/n.png') repeat-y right, #C0C0C0;
+}
+
+.buttondown .innerbutton
+{
+    border: 1px dotted black;
 }
 
 .button, .buttondown
@@ -179,15 +182,10 @@ img { border: 0; }
     border: 1px dotted transparent;
 }
 
-.button:first-child:focus span
+.button:focus .innerbutton
 {
     border: 1px dotted black;
 }
-
-/*.button:focus
-{
-    border: 1px solid black;
-}*/
 
 .conbuf
 {
@@ -317,7 +315,7 @@ input[type=checkbox]:checked + label:before {
     background: url('../images/startmenu/taskbarbuttonsep.png') no-repeat center;
 }
 
-#taskbar .minisep
+#taskbar .sep
 {
     float: right;
     margin: 4px 2px;
@@ -334,13 +332,6 @@ input[type=checkbox]:checked + label:before {
     bottom: 2px;
 }
 
-#taskbarcont .taskbarbutton,
-#taskbarcont .taskbarbuttonactive,
-#taskbarcont .taskbarbuttondown
-{
-    margin-left: 3px;
-}
-
 .taskbarbutton
 {
     background:
@@ -351,8 +342,7 @@ input[type=checkbox]:checked + label:before {
     url('../images/button/right.png') repeat-y right,
     url('../images/button/top.png') repeat-x top,
     url('../images/button/left.png') repeat-y left,
-    url('../images/button/bottom.png') repeat-x bottom,
-    #C0C0C0;
+    url('../images/button/bottom.png') repeat-x bottom, #C0C0C0;
 }
 
 /*.taskbarbutton img
@@ -361,12 +351,15 @@ input[type=checkbox]:checked + label:before {
     height: 16px;
 }*/
 
-.taskbarbutton, .taskbarbuttondown, .taskbarbuttonactive
+#taskbarcont .taskbarbutton,
+#taskbarcont .taskbarbuttonactive,
+#taskbarcont .taskbarbuttondown
 {
     display: inline-block;
     max-width: 160px;
     width: 160px;
     height: 22px;
+    margin: 3px;
 }
 
 /*
@@ -383,8 +376,7 @@ input[type=checkbox]:checked + label:before {
     url('../images/startmenu/startmenu-bottom-left.png') no-repeat left bottom,
     url('../images/startmenu/startmenu-left.png') repeat-y left,
     url('../images/startmenu/startmenu-bottom.png') no-repeat bottom,
-    url('../images/startmenu/startmenu-right.png') repeat-y right,
-    #C0C0C0;
+    url('../images/startmenu/startmenu-right.png') repeat-y right, #C0C0C0;
     width: 176px;
     padding: 3px 3px 3px 24px;
     z-index: 5000000;
@@ -415,7 +407,7 @@ div#startmenu img
     display: inline-block;
     width: 24px;
     height: 24px;
-    margin: 0px 6px 0px 6px;
+    margin: 0px 6px;
 }
 
 #startmenu span
@@ -432,7 +424,7 @@ div#startmenu img
 }
 
 .StartMenuFolder
-{ 
+{
     background: url('../images/misc/subfolder.png') no-repeat right center;
 }
 
