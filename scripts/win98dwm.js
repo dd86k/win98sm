@@ -11,28 +11,34 @@
  * @class
  */
 function Form(title) {
+    var thisref = this; // Object reference
     // Make the window, and make a reference.
-    var winobj = this.divObject = document.createElement("div");
+    var winobjref = this.divObject = document.createElement("div");
 
     //divwindow.id = "form" + windowid;
-    winobj.className = "window";
-    winobj.style.visibility = "visible";
-    winobj.style.left = "100px";
-    winobj.style.top = "100px";
-    winobj.style.zIndex = WindowZIndex++;
-    winobj.onmousedown = function () {
-        WindowManager.giveFocus(winobj);
-    };
+    winobjref.className = "window";
+    winobjref.style.visibility = "visible";
+    winobjref.style.left = "100px";
+    winobjref.style.top = "100px";
+    winobjref.style.zIndex = WindowZIndex++;
 
     // Titlebar
     var divtitle = this.titleObj = document.createElement("div");
     //divtitle.id = "title" + indexWindow;
     divtitle.className = "atitlebar";
     divtitle.onmousedown = function (event) {
-        WindowManager.Drag.startMoving(winobj, desktoparea, event);
+        WindowManager.Drag.startMoving(winobjref, desktoparea, event);
     };
     divtitle.onmouseup = function () {
         WindowManager.Drag.stopMoving();
+    };
+    
+    winobjref.onmousedown = function () {
+        if (activeDiv != null)
+            activeDiv.childNodes[0].className = "ititlebar";
+        activeDiv = winobjref;
+        divtitle.className = "atitlebar";
+        winobjref.style.zIndex = WindowZIndex++;
     };
 
     // Titlebar icon
@@ -72,7 +78,7 @@ function Form(title) {
     divclose.className = "ctrlboxbuttonc";
     divclose.src = "images/window/close.png";
     divclose.onclick = function () {
-        WindowManager.deleteWindow(winobj);
+        thisref.close();
     };
     divclose.onmousedown = function () {
         divclose.src = "images/window/closep.png";
@@ -84,12 +90,12 @@ function Form(title) {
     divtitle.appendChild(divmax);
     divtitle.appendChild(divmin);
 
-    winobj.appendChild(divtitle);
+    winobjref.appendChild(divtitle);
 
     // Form client area
     var divwindowarea = this.windowAreaObj = document.createElement("div");
     divwindowarea.className = "windowarea";
-    winobj.appendChild(divwindowarea);
+    winobjref.appendChild(divwindowarea);
 }
 
 Form.prototype = {
@@ -171,6 +177,8 @@ Form.prototype = {
 
     close: function () {
         this.divObject.remove();
+        if (this.taskbarButtonObj !== undefined && this.taskbarButtonObj != null)
+            this.taskbarButtonObj.remove();
     }
 }
 
@@ -473,7 +481,7 @@ monitize it." + dnl +
                 btnSpin.onclick = function () {
                     f.divObject.style.animation = "spin 1s";
                     setTimeout(function () {
-                        f.divObject.style.animation = "";
+                        f.divObject.style.animation = null;
                     }, 1000);
                 };
 
@@ -539,14 +547,6 @@ monitize it." + dnl +
         div.remove();
     },
 
-    giveFocus: function (div) {
-        if (activeDiv != null)
-            activeDiv.childNodes[0].className = "ititlebar";
-        activeDiv = div;
-        div.childNodes[0].className = "atitlebar";
-        div.style.zIndex = WindowZIndex++;
-    },
-
     unfocusActiveWindow: function () {
         if (activeDiv != null) {
             activeDiv.childNodes[0].className = "ititlebar";
@@ -582,13 +582,10 @@ monitize it." + dnl +
                 cHe = parseInt(c.style.height);
             divTop = divTop.replace('px', '');
             divLeft = divLeft.replace('px', '');
-            var diffX = posX - divLeft,
-                diffY = posY - divTop;
-            document.onmousemove = function (me) {
-                var posX = me.clientX,
-                    posY = me.clientY,
-                    aX = posX - diffX,
-                    aY = posY - diffY;
+            var diffX = posX - divLeft, diffY = posY - divTop;
+            document.onmousemove = function (e) {
+                var posX = e.clientX, posY = e.clientY,
+                    aX = posX - diffX, aY = posY - diffY;
                 /*if (aX < 0) aX = 0;
                 if (aY < 0) aY = 0;
                 if (aX + eWi > cWi) aX = cWi - eWi;

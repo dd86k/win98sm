@@ -359,7 +359,7 @@ input[type=checkbox]:checked + label:before {
 #taskbarcont .taskbarbuttondown span, #taskbarcont .taskbarbuttondown img
 {
     float: left;
-    margin: 3px;
+    margin: 3px 0 3px 3px;
 }
 
 #taskbarcont .taskbarbutton
