@@ -188,7 +188,7 @@ img { border: 0; }
     border: 1px dotted black;
 }
 
-.conbuf
+.conscr
 {
     font-family: monospace;
     position: relative;
@@ -293,10 +293,8 @@ input[type=checkbox]:checked + label:before {
     width: 100%;
     height: 28px;
     background:
-    url('../images/startmenu/bar2.png') repeat-x top;
-    background-color: #C0C0C0;
-    
-    z-index: 4999999;
+    url('../images/startmenu/bar2.png') repeat-x top, #C0C0C0;
+    z-index: 5000000;
 }
 
 #startbutton
@@ -313,7 +311,7 @@ input[type=checkbox]:checked + label:before {
     width: 7px;
     height: 18px;
     margin: 0 4px 4px -5px;
-    background: url('../images/startmenu/taskbarbuttonsep.png') no-repeat center;
+    background: url('../images/startmenu/tb-grip.png') no-repeat center;
 }
 
 #taskbar .sep
@@ -326,7 +324,7 @@ input[type=checkbox]:checked + label:before {
     border-left: 1px solid #87888F;
 }
 
-#taskbarcont
+#maintoolbar
 {
     position: fixed;
     display: inline-block;
@@ -340,9 +338,9 @@ input[type=checkbox]:checked + label:before {
     height: 16px;
 }*/
 
-#taskbarcont .taskbarbutton,
-#taskbarcont .taskbarbuttonactive,
-#taskbarcont .taskbarbuttondown
+#maintoolbar .taskbarbutton,
+#maintoolbar .taskbarbuttonactive,
+#maintoolbar .taskbarbuttondown
 {
     display: inline-block;
     max-width: 160px;
@@ -354,15 +352,15 @@ input[type=checkbox]:checked + label:before {
     line-height: 18px;
 }
 
-#taskbarcont .taskbarbutton span, #taskbarcont .taskbarbutton img,
-#taskbarcont .taskbarbuttonactive span, #taskbarcont .taskbarbuttonactive img,
-#taskbarcont .taskbarbuttondown span, #taskbarcont .taskbarbuttondown img
+#maintoolbar .taskbarbutton span, #maintoolbar .taskbarbutton img,
+#maintoolbar .taskbarbuttonactive span, #maintoolbar .taskbarbuttonactive img,
+#maintoolbar .taskbarbuttondown span, #maintoolbar .taskbarbuttondown img
 {
     float: left;
     margin: 3px 0 3px 3px;
 }
 
-#taskbarcont .taskbarbutton
+#maintoolbar .taskbarbutton
 {
     background:
     url('../images/button/topright.png') no-repeat right top,
@@ -385,37 +383,37 @@ input[type=checkbox]:checked + label:before {
     bottom: 24px;
     left: 2px;
     background:
-    url('../images/startmenu/startmenu-top.png') no-repeat top center,
-    url('../images/startmenu/startmenu-bottom-left.png') no-repeat left bottom,
-    url('../images/startmenu/startmenu-left.png') repeat-y left,
-    url('../images/startmenu/startmenu-bottom.png') no-repeat bottom,
-    url('../images/startmenu/startmenu-right.png') repeat-y right, #C0C0C0;
-    width: 176px;
+    url('../images/startmenu/sm-ur.png') no-repeat top right,
+    url('../images/startmenu/sm-ul.png') no-repeat top left,
+    url('../images/startmenu/sm-u.png') repeat-x top,
+    url('../images/startmenu/sm-bl.png') no-repeat left bottom,
+    url('../images/startmenu/sm-l.png') repeat-y left,
+    url('../images/startmenu/sm-b.png') repeat-x bottom,
+    url('../images/startmenu/sm-br.png') no-repeat bottom right,
+    url('../images/startmenu/sm-r.png') repeat-y right, #C0C0C0;
+    width: 186px;
     padding: 3px 3px 3px 24px;
-    z-index: 5000000;
+    z-index: 5000001;
 }
 
 #startmenu>div
 {
-    display: block;
     color: black;
     margin: 0;
-    width: 175px;
     height: 28px;
     font-size: 12px;
     text-decoration: none;
-    padding: 4px 0px 0px 0px;
-    cursor: default;
+    padding-top: 4px;
 }
 
-div#startmenu>div:hover:not(.sep)
+#startmenu>div:hover:not(.sep)
 {
     color: white;
     background-color: #000080;
     cursor: default;
 }
 
-div#startmenu img
+#startmenu img
 {
     display: inline-block;
     width: 24px;
@@ -432,16 +430,20 @@ div#startmenu img
 
 #startmenu .sep
 {
-    height: 8px;
-    background: url('../images/startmenu/sep.png') no-repeat center;
+    height: 0;
+    margin: 3px 2px;
+    padding: 0;
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid white;
+    /*background: url('../images/startmenu/sep.png') no-repeat center;*/
 }
 
-.StartMenuFolder
+#startmenu .folder
 {
     background: url('../images/misc/subfolder.png') no-repeat right center;
 }
 
-.StartMenuFolder:hover
+#startmenu .folder:hover
 {
     background: url('../images/misc/subfolderi.png') no-repeat right center;
 }

@@ -32,7 +32,7 @@ function Form(title) {
     divtitle.onmouseup = function () {
         WindowManager.Drag.stopMoving();
     };
-    
+
     winobjref.onmousedown = function () {
         if (activeDiv != null)
             activeDiv.childNodes[0].className = "ititlebar";
@@ -364,7 +364,7 @@ document, or Internet resource, and Windows will open it for you.";
                 //TODO: Make a function from win98con.js to make
                 //      a console window instead. (Alloc)
                 var divcmd = document.createElement("div");
-                divcmd.className = "terminal";
+                divcmd.className = "conscr";
 
                 f.addNode(divcmdmenu);
                 f.addNode(divcmd);
@@ -504,7 +504,7 @@ monitize it." + dnl +
     },
 
     addTaskbarButton: function (form) {
-        var c = taskbarcont.rows[0].insertCell(-1);
+        var c = maintoolbar.rows[0].insertCell(-1);
         c.className = "taskbarbutton";
 
         var icon = document.createElement("img");
