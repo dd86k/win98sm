@@ -9,6 +9,7 @@ A simulator made purely in HTML5, CSS3, and Javascript (ECMAScript 5) without an
 | [Old][old] |
 
 Copyright Microsoft (c) 1981-1998 for their Windows 98 product.
+
 Copyright Github Inc. (c) 2016 for the Github Mark.
 
 [dev]: https://cdn.skildust.com/osp/win98sm/win98.html

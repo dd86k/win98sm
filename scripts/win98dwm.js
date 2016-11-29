@@ -260,7 +260,7 @@ var WindowManager = {
         f.addNode(divcont);
     },
 
-    // For compability.
+    // For compability. Depricated.
     createWindow: function (title, x, y, type) {
         var f = new Form(title);
 
@@ -271,6 +271,7 @@ var WindowManager = {
                 f.removeMinAndMaxButtons();
                 f.removeIcon();
                 f.setSize(347, 163);
+                f.setLocation(5, innerHeight - 201);
 
                 var body = document.createElement("div");
                 body.style.display = "inline-block";
@@ -353,6 +354,40 @@ document, or Internet resource, and Windows will open it for you.";
                 divmenu.appendChild(divtmp);
                 f.addNode(divmenu);
                 f.addNode(divinput);
+                break;
+            case "iexplore":
+                f.setIcon("images/iexplore/icon.png");
+
+                var mbc = document.createElement("div");
+
+                var mb = document.createElement("img");
+                mb.src = "images/iexplore/b.png";
+
+                var addspan = document.createElement("span");
+                addspan.innerText = "Address";
+
+                var addtxt = document.createElement("input");
+                addtxt.type = "text";
+
+                mbc.appendChild(mb);
+                mbc.appendChild(addspan);
+                mbc.appendChild(addtxt);
+
+                var netframe = document.createElement("iframe");
+                netframe.sandbox = "";
+
+                addtxt.onkeydown = function (e) {
+                    if (e.which == 13) {
+                        netframe.src = addtxt.value;
+                        f.setTitle(
+                            addtxt.value + " - Microsoft Internet Explorer"
+                        );
+                        return false;
+                    }
+                }
+
+                f.addNode(mbc);
+                f.addNode(netframe);
                 break;
             case "cmd":
                 f.setIcon("images/cmd/titleleft.png");

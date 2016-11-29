@@ -23,12 +23,12 @@
  * Project properties.
  */
 var Project = {
-    productName: "Windows 98 WebSim",
-    version: "0.5.0-git-14"
+    name: "Windows 98 WebSim",
+    version: "0.5.0-git-15"
 };
 
 function start() {
-    websimversion.innerText = Project.productName + " " + Project.version;
+    websimversion.innerText = Project.name + " " + Project.version;
     updateTime();
 }
 
@@ -110,12 +110,18 @@ var Shell = {
             } else {
                 var s = file.split(" ", 128);
                 switch (s[0].toLowerCase()) {
-                    case "command":
+                    case "command": case "command.com":
                         WindowManager.createWindow('MS-DOS Prompt', Utils.r(200), Utils.r(200), 'cmd');
                         return 0;
                     case "notepad": case "notepad.exe":
                         WindowManager.createWindow(
                             'Untitled - Notepad', Utils.r(200), Utils.r(200), 'notepad');
+                        return 0;
+                    case "iexplore": case "iexplore.exe":
+                        WindowManager.createWindow(
+                            'about:blank - Microsoft Internet Explorer',
+                                Utils.r(200), Utils.r(200), 'iexplore'
+                        );
                         return 0;
                     case "shell:run":
                         WindowManager.createWindow('Run', 150, 50, 'rundialog');
