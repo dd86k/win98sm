@@ -332,15 +332,15 @@ input[type=checkbox]:checked + label:before {
     width: calc(100% - 155px);
 }
 
-/*.taskbarbutton img
+/*.tb img
 {
     width: 16px;
     height: 16px;
 }*/
 
-#maintoolbar .taskbarbutton,
-#maintoolbar .taskbarbuttonactive,
-#maintoolbar .taskbarbuttondown
+#maintoolbar .tb,
+#maintoolbar .tb-focus,
+#maintoolbar .tb-down
 {
     display: inline-block;
     max-width: 160px;
@@ -352,15 +352,15 @@ input[type=checkbox]:checked + label:before {
     line-height: 18px;
 }
 
-#maintoolbar .taskbarbutton span, #maintoolbar .taskbarbutton img,
-#maintoolbar .taskbarbuttonactive span, #maintoolbar .taskbarbuttonactive img,
-#maintoolbar .taskbarbuttondown span, #maintoolbar .taskbarbuttondown img
+#maintoolbar .tb span, #maintoolbar .tb img,
+#maintoolbar .tb-focus span, #maintoolbar .tb-focus img,
+#maintoolbar .tb-down span, #maintoolbar .tb-down img
 {
     float: left;
     margin: 3px 0 3px 3px;
 }
 
-#maintoolbar .taskbarbutton
+#maintoolbar .tb
 {
     background:
     url('../images/button/topright.png') no-repeat right top,
@@ -371,6 +371,30 @@ input[type=checkbox]:checked + label:before {
     url('../images/button/top.png') repeat-x top,
     url('../images/button/left.png') repeat-y left,
     url('../images/button/bottom.png') repeat-x bottom, #C0C0C0;
+}
+
+#maintoolbar .tb-focus
+{
+    background:
+    url('../images/tb/tb-ur.png') no-repeat right top,
+    url('../images/tb/tb-ul.png') no-repeat left top,
+    url('../images/tb/tb-br.png') no-repeat right bottom,
+    url('../images/tb/tb-bl.png') no-repeat left bottom,
+    url('../images/tb/tb-r.png') repeat-y right,
+    url('../images/tb/tb-u.png') repeat-x top,
+    url('../images/tb/tb-l.png') repeat-y left,
+    url('../images/tb/tb-b.png') repeat-x bottom,
+    url('../images/tb/tb-d.png') repeat;
+}
+
+#maintoolbar .tb-focus span
+{
+    font-weight: bolder;
+}
+
+#maintoolbar .tb-focus img
+{
+    margin-top: 4px;
 }
 
 /*

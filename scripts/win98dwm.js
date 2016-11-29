@@ -11,34 +11,24 @@
  * @class
  */
 function Form(title) {
-    var thisref = this; // Object reference
+    var thisref = this.thisRef = this; // Object reference
     // Make the window, and make a reference.
     var winobjref = this.divObject = document.createElement("div");
 
-    //divwindow.id = "form" + windowid;
     winobjref.className = "window";
     winobjref.style.visibility = "visible";
-    winobjref.style.left = "100px";
-    winobjref.style.top = "100px";
-    winobjref.style.zIndex = WindowZIndex++;
+    winobjref.style.left = "0px";
+    winobjref.style.top = "0px";
+    winobjref.onmousedown = function () { thisref.focus(); };
 
     // Titlebar
-    var divtitle = this.titleObj = document.createElement("div");
-    //divtitle.id = "title" + indexWindow;
+    var divtitle = this.titlebarObj = document.createElement("div");
     divtitle.className = "atitlebar";
     divtitle.onmousedown = function (event) {
         WindowManager.Drag.startMoving(winobjref, desktoparea, event);
     };
     divtitle.onmouseup = function () {
         WindowManager.Drag.stopMoving();
-    };
-
-    winobjref.onmousedown = function () {
-        if (activeDiv != null)
-            activeDiv.childNodes[0].className = "ititlebar";
-        activeDiv = winobjref;
-        divtitle.className = "atitlebar";
-        winobjref.style.zIndex = WindowZIndex++;
     };
 
     // Titlebar icon
@@ -49,7 +39,7 @@ function Form(title) {
     divtitleicon.className = "windowicon";
 
     // Text
-    var divtitletext = document.createElement("span");
+    var divtitletext = this.titleObj = document.createElement("span");
     divtitletext.className = "titlebartext";
     divtitletext.innerText = title;
 
@@ -99,31 +89,44 @@ function Form(title) {
 }
 
 Form.prototype = {
+    thisRef: null,
     /* Window properties */
     divObject: null, // rename to windowObj
+    titlebarObj: null,
     titleObj: null,
     windowAreaObj: null,
 
     taskbarButtonObj: null,
 
     iconExists: true,
-    
 
+    /* Form size */
     setSize: function (w, h) {
         this.divObject.style.width = w + "px";
         this.divObject.style.height = h + "px";
     },
-
     setWidth: function (w) {
         this.divObject.style.width = w + "px";
     },
-
     setHeight: function (h) {
         this.divObject.style.height = h + "px";
     },
 
-    focus: function() {
-        //TODO: Form.prototype.focus()
+    /* Focus */
+    focus: function () {
+        if (activeForm != null)
+            activeForm.unfocus();
+        activeForm = this.thisRef;
+        this.titlebarObj.className = "atitlebar";
+        this.divObject.style.zIndex = WindowZIndex++;
+        if (this.taskbarButtonObj != null)
+            this.taskbarButtonObj.className = "tb-focus";
+    },
+    unfocus: function () {
+        this.titlebarObj.className = "ititlebar";
+        activeForm = null;
+        if (this.taskbarButtonObj != null)
+            this.taskbarButtonObj.className = "tb";
     },
 
     /* Controlbox */
@@ -134,7 +137,7 @@ Form.prototype = {
          }
     },
 
-    /* Window text */
+    /* Form title */
     setTitle: function (t) {
         this.titleObj.innerText = t;
     },
@@ -142,7 +145,7 @@ Form.prototype = {
         return this.titleObj.innerText;
     },
 
-    /* Window icon */
+    /* Form icon */
     setIcon: function (path) {
         if (this.iconExists)
             this.divObject.childNodes[0].childNodes[0].src = path;
@@ -163,13 +166,13 @@ Form.prototype = {
         }
     },
 
-    /* Location */
+    /* Form location */
     setLocation: function (x, y) {
         this.divObject.style.left = x + "px";
         this.divObject.style.top = y + "px";
     },
 
-    /* Functions */
+    /* Form functions */
     addNode: function (node) {
         // Main window area.
         this.windowAreaObj.appendChild(node);
@@ -177,12 +180,12 @@ Form.prototype = {
 
     close: function () {
         this.divObject.remove();
-        if (this.taskbarButtonObj !== undefined && this.taskbarButtonObj != null)
+        if (this.taskbarButtonObj != null)
             this.taskbarButtonObj.remove();
     }
 }
 
-var WindowZIndex = 0, activeDiv = null;
+var WindowZIndex = 0, activeForm = null;
 
 /**
  * Window Manager.
@@ -374,7 +377,6 @@ document, or Internet resource, and Windows will open it for you.";
                 mbc.appendChild(addtxt);
 
                 var netframe = document.createElement("iframe");
-                netframe.sandbox = "";
 
                 addtxt.onkeydown = function (e) {
                     if (e.which == 13) {
@@ -540,7 +542,7 @@ monitize it." + dnl +
 
     addTaskbarButton: function (form) {
         var c = maintoolbar.rows[0].insertCell(-1);
-        c.className = "taskbarbutton";
+        c.className = "tb-focus";
 
         var icon = document.createElement("img");
         icon.src = form.getIcon();
@@ -583,15 +585,8 @@ monitize it." + dnl +
     },
 
     unfocusActiveWindow: function () {
-        if (activeDiv != null) {
-            activeDiv.childNodes[0].className = "ititlebar";
-            activeDiv = null;
-        }
-    },
-    unfocusAll: function () {
-        var classes = document.getElementsByClassName("atitlebar");
-        for (var i = 0; i < classes.length; ++i) {
-            classes[i].className = "ititlebar";
+        if (activeForm != null) {
+            activeForm.unfocus();
         }
     },
 
@@ -642,7 +637,7 @@ monitize it." + dnl +
 
 var StartMenu = {
     show: function () {
-        WindowManager.unfocusAll();
+        WindowManager.unfocusActiveWindow();
         if (startmenu.style.visibility == 'hidden') {
             startmenu.style.visibility = 'visible';
             startbutton.src = 'images/startmenu/on.png';

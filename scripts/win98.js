@@ -24,7 +24,7 @@
  */
 var Project = {
     name: "Windows 98 WebSim",
-    version: "0.5.0-git-15"
+    version: "0.5.0-git-16"
 };
 
 function start() {
@@ -78,7 +78,7 @@ var Utils = {
 }
 
 /*
- * Generic prototyping.
+ * Global prototyping.
  */
 
 // StackOverflow solution by Johan Dettmar
@@ -86,11 +86,9 @@ Element.prototype.remove = function () {
     this.parentElement.removeChild(this);
 };
 NodeList.prototype.remove = HTMLCollection.prototype.remove = function () {
-    for (var i = 0, len = this.length; i < len; i++) {
-        if (this[i] && this[i].parentElement) {
+    for (var i = 0, len = this.length; i < len; i++)
+        if (this[i] && this[i].parentElement)
             this[i].parentElement.removeChild(this[i]);
-        }
-    }
 };
 
 /**
@@ -117,12 +115,12 @@ var Shell = {
                         WindowManager.createWindow(
                             'Untitled - Notepad', Utils.r(200), Utils.r(200), 'notepad');
                         return 0;
-                    case "iexplore": case "iexplore.exe":
+                    /*case "iexplore": case "iexplore.exe":
                         WindowManager.createWindow(
                             'about:blank - Microsoft Internet Explorer',
                                 Utils.r(200), Utils.r(200), 'iexplore'
                         );
-                        return 0;
+                        return 0;*/
                     case "shell:run":
                         WindowManager.createWindow('Run', 150, 50, 'rundialog');
                         return 0;
