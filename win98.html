@@ -1,71 +1,77 @@
 <!DOCTYPE html>
 <!-- Shell bomb proof! -->
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="description" content="Windows 98 Web Simulator, only with HTML5, CSS3, and Javascript technologies.">
     <meta name="keywords" content="Windows 98,win98,simulator">
     <meta name="author" content="DD~!">
     <title>Windows 98 WebSim</title>
-    <link href="styles/win98.css" rel="stylesheet" type="text/css"/>
-    <link rel="icon" href="favicon.png"/>
+    <link href="styles/win98.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="favicon.png" />
 </head>
+
 <body>
     <div id="desktoparea"></div>
     <p id="websimversion"></p>
 
     <div id="startmenu" style="visibility: hidden;">
         <div onclick="Shell.run('shell:about')">
-            <img src="images/startmenu/item11.png"/>
+            <img src="images/startmenu/item11.png" />
             <span>About</span>
         </div>
         <div onclick="Shell.run('https://github.com/guitarxhero/win98sm')">
-            <img src="images/startmenu/item10.png"/>
+            <img src="images/startmenu/item10.png" />
             <span>Github Project Page</span>
         </div>
         <div class="sep"></div>
         <div class="folder">
-            <img src="images/startmenu/item09.png"/>
+            <img src="images/startmenu/item09.png" />
             <span>Programs</span>
         </div>
         <div class="folder">
-            <img src="images/startmenu/item08.png"/>
+            <img src="images/startmenu/item08.png" />
             <span>Favorites</span>
         </div>
         <div class="folder">
-            <img src="images/startmenu/item07.png"/>
+            <img src="images/startmenu/item07.png" />
             <span>Documents</span>
         </div>
         <div class="folder">
-            <img src="images/startmenu/item06.png"/>
+            <img src="images/startmenu/item06.png" />
             <span>Settings</span>
         </div>
         <div class="folder">
-            <img src="images/startmenu/item05.png"/>
+            <img src="images/startmenu/item05.png" />
             <span>Find</span>
         </div>
         <div>
-            <img src="images/startmenu/item04.png"/>
+            <img src="images/startmenu/item04.png" />
             <span>Help</span>
         </div>
         <div onclick="Shell.run('shell:run')">
-            <img src="images/startmenu/item03.png"/>
+            <img src="images/startmenu/item03.png" />
             <span>Run...</span>
         </div>
         <div class="sep"></div>
         <div>
-            <img src="images/startmenu/item02.png"/>
+            <img src="images/startmenu/item02.png" />
             <span>Log Off...</span>
         </div>
         <div>
-            <img src="images/startmenu/item01.png"/>
+            <img src="images/startmenu/item01.png" />
             <span>Shut Down...</span>
         </div>
     </div>
 
     <div id="taskbar">
-        <img id="startbutton" src="images/startmenu/off.png" alt="Start" title="Click here to start."/>
-        <table id="maintoolbar"><tbody><tr></tr></tbody></table>
+        <img id="startbutton" src="images/startmenu/off.png" alt="Start" title="Click here to start." />
+        <table id="maintoolbar">
+            <tbody>
+                <tr></tr>
+            </tbody>
+        </table>
         <div id="systray"><span id="ostime">...</span></div>
         <div class="sep"></div>
     </div>
@@ -74,4 +80,5 @@
     <script src="scripts/win98dwm.js"></script>
     <!--<script src="scripts/win98con.js"></script>-->
 </body>
+
 </html>

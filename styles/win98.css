@@ -397,6 +397,19 @@ input[type=checkbox]:checked + label:before {
     margin-top: 4px;
 }
 
+#maintoolbar .tb-down
+{
+    background:
+    url('../images/tb/ptb-tr.png') no-repeat right top,
+    url('../images/tb/ptb-tl.png') no-repeat left top,
+    url('../images/tb/ptb-br.png') no-repeat right bottom,
+    url('../images/tb/ptb-bl.png') no-repeat left bottom,
+    url('../images/tb/ptb-r.png') repeat-y right,
+    url('../images/tb/ptb-t.png') repeat-x top,
+    url('../images/tb/ptb-l.png') repeat-y left,
+    url('../images/tb/ptb-b.png') repeat-x bottom, #C0C0C0;
+}
+
 /*
  * Start menu.
  */

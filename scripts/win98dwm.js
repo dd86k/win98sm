@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * win98dwm.js, Forms and Window Manager.
+ * win98dwm.js, Forms, Window Manager, and the Start Menu.
  * @author guitarxhero
  */
 
@@ -11,7 +11,7 @@
  * @class
  */
 function Form(title) {
-    var thisref = this.thisRef = this; // Object reference
+    var thisref = this.thisRef = activeForm = this; // Object reference
     // Make the window, and make a reference.
     var winobjref = this.divObject = document.createElement("div");
 
@@ -24,8 +24,8 @@ function Form(title) {
     // Titlebar
     var divtitle = this.titlebarObj = document.createElement("div");
     divtitle.className = "atitlebar";
-    divtitle.onmousedown = function (event) {
-        WindowManager.Drag.startMoving(winobjref, desktoparea, event);
+    divtitle.onmousedown = function (e) {
+        WindowManager.Drag.startMoving(winobjref, desktoparea, e);
     };
     divtitle.onmouseup = function () {
         WindowManager.Drag.stopMoving();
@@ -89,15 +89,15 @@ function Form(title) {
 }
 
 Form.prototype = {
+    /* References */
     thisRef: null,
-    /* Window properties */
     divObject: null, // rename to windowObj
     titlebarObj: null,
     titleObj: null,
     windowAreaObj: null,
-
     taskbarButtonObj: null,
 
+    /* Properties */
     iconExists: true,
 
     /* Form size */
@@ -133,8 +133,8 @@ Form.prototype = {
     removeMinAndMaxButtons: function () {
         var b = this.divObject.childNodes[0].getElementsByClassName("ctrlboxbutton");
         for (var i = b.length - 1; i >= 0; --i) {
-             b[i].remove();
-         }
+            b[i].remove();
+        }
     },
 
     /* Form title */
@@ -495,7 +495,7 @@ document, or Internet resource, and Windows will open it for you.";
 
                 var lblAbout = document.createElement("p");
                 lblAbout.innerHTML =
-                    Project.productName + "<br/>\
+                    Project.name + "<br/>\
                     Version " + Project.version + dnl +
                     "A web-based Windows 98 simulator. Made from scratch using \
 only HTML5, CSS3, and Javascript. No libraries." + dnl +
@@ -543,6 +543,12 @@ monitize it." + dnl +
     addTaskbarButton: function (form) {
         var c = maintoolbar.rows[0].insertCell(-1);
         c.className = "tb-focus";
+        c.onmousedown = function (e) {
+            c.className = "tb-down";
+        }
+        c.onclick = function (e) {
+            form.focus();
+        }
 
         var icon = document.createElement("img");
         icon.src = form.getIcon();
@@ -657,7 +663,9 @@ var StartMenu = {
  * Events
  */
 
-startbutton.onmousedown = StartMenu.show;
+startbutton.onmousedown = function (e) {
+    StartMenu.show();
+}
 desktoparea.onmousedown = function (e) {
     //WindowManager.unfocusActiveWindow();
     StartMenu.hide();

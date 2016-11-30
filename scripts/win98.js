@@ -24,7 +24,7 @@
  */
 var Project = {
     name: "Windows 98 WebSim",
-    version: "0.5.0-git-16"
+    version: "0.5.0-git-17"
 };
 
 function start() {
