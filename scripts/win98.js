@@ -24,7 +24,7 @@
  */
 var Project = {
     name: "Windows 98 WebSim",
-    version: "0.5.0-git-17"
+    version: "0.5.0-git-18"
 };
 
 function start() {
@@ -61,7 +61,7 @@ function updateTime() {
     ostime.innerHTML = hours + ":" + minutes + " " + t;
 }
 
-setInterval(updateTime, 10000);
+setInterval(updateTime, 5000);
 
 /*
  * A program.

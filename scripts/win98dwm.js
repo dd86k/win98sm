@@ -19,6 +19,7 @@ function Form(title) {
     winobjref.style.visibility = "visible";
     winobjref.style.left = "0px";
     winobjref.style.top = "0px";
+    winobjref.style.zIndex = ++WindowZIndex;
     winobjref.onmousedown = function () { thisref.focus(); };
 
     // Titlebar
@@ -50,9 +51,8 @@ function Form(title) {
     /*divmin.onmousedown = function () {
         divmin.src = "images/window/minp.png";
     };
-    divmin.onmouseup = function () {
-        divmin.src = "images/window/minp.png";
-        WindowManager.hideWindow(obj);
+    divmin.onclick = function () {
+        
     };*/
 
     // Maximize
@@ -60,7 +60,7 @@ function Form(title) {
     divmax.className = "ctrlboxbutton";
     divmax.src = "images/window/max.png";
     /*divmax.onclick = function () {
-        WindowAPI.maximizeWindow(divwindow);
+        
     };*/
 
     // Close
@@ -118,7 +118,7 @@ Form.prototype = {
             activeForm.unfocus();
         activeForm = this.thisRef;
         this.titlebarObj.className = "atitlebar";
-        this.divObject.style.zIndex = WindowZIndex++;
+        this.divObject.style.zIndex = ++WindowZIndex;
         if (this.taskbarButtonObj != null)
             this.taskbarButtonObj.className = "tb-focus";
     },
@@ -194,24 +194,18 @@ var WindowZIndex = 0, activeForm = null;
 var WindowManager = {
     showInfo: function (title, msg) {
         var f = new Form(title);
-        f.removeIcon();
-        f.removeMinAndMaxButtons();
         WindowManager.makeMsgBox(f, msg, 0);
         WindowManager.addFormToDesktop(f);
     },
 
     showWarning: function (title, msg) {
         var f = new Form(title);
-        f.removeIcon();
-        f.removeMinAndMaxButtons();
         WindowManager.makeMsgBox(f, msg, 1);
         WindowManager.addFormToDesktop(f);
     },
 
     showError: function (title, msg) {
         var f = new Form(title);
-        f.removeIcon();
-        f.removeMinAndMaxButtons();
         WindowManager.makeMsgBox(f, msg, 2);
         WindowManager.addFormToDesktop(f);
     },
@@ -224,6 +218,8 @@ var WindowManager = {
      */
     makeMsgBox: function (f, msg, type) {
         f.removeMinAndMaxButtons();
+        f.removeIcon();
+        f.setLocation(200, 100);
         var divmsg = document.createElement("p");
         divmsg.className = "msgboxMsg";
 
