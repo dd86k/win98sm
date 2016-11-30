@@ -24,12 +24,12 @@
  */
 var Project = {
     name: "Windows 98 WebSim",
-    version: "0.5.0-git-18"
+    version: "0.5.0-git-18-rc"
 };
 
 function start() {
     websimversion.innerText = Project.name + " " + Project.version;
-    updateTime();
+    updateTime24h();
 }
 
 onload = start;
@@ -38,7 +38,7 @@ onload = start;
  * Time.
  */
 
-function updateTime() {
+function updateTime12h() {
     var currentTime = new Date();
     var hours = currentTime.getHours();
     var minutes = currentTime.getMinutes();
@@ -61,7 +61,19 @@ function updateTime() {
     ostime.innerHTML = hours + ":" + minutes + " " + t;
 }
 
-setInterval(updateTime, 5000);
+function updateTime24h() {
+    var currentTime = new Date();
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+
+    ostime.innerHTML = hours + ":" + minutes;
+}
+
+setInterval(updateTime24h, 5000);
 
 /*
  * A program.

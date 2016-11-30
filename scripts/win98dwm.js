@@ -659,10 +659,5 @@ var StartMenu = {
  * Events
  */
 
-startbutton.onmousedown = function (e) {
-    StartMenu.show();
-}
-desktoparea.onmousedown = function (e) {
-    //WindowManager.unfocusActiveWindow();
-    StartMenu.hide();
-}
+startbutton.onmousedown = StartMenu.show;
+desktoparea.onmousedown = StartMenu.hide;
