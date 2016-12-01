@@ -2,7 +2,7 @@
 
 /**
  * win98dwm.js, Forms, Window Manager, and the Start Menu.
- * @author guitarxhero
+ * @author dd86k
  */
 
 /**
@@ -496,7 +496,7 @@ document, or Internet resource, and Windows will open it for you.";
                     "A web-based Windows 98 simulator. Made from scratch using \
 only HTML5, CSS3, and Javascript. No libraries." + dnl +
                     "This is only a personal project, I do not plan to \
-monitize it." + dnl +
+monetize it." + dnl +
                     "Copyright Microsoft (C) 1981-1998 for Windows 98" + dnl +
                     "Everything written by DD~!<br/>You can contact me via \
 <a href=\"mailto:devddstuff@gmail.com\">email</a>.";
@@ -630,6 +630,10 @@ monitize it." + dnl +
         stopMoving: function () {
             document.onmousemove = null;
         }
+    },
+
+    Systray: {
+
     }
 };
 

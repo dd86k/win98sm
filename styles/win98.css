@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /*
- * Author: guitarxhero
+ * Author: dd86k
  */
 
 /*@font-face
@@ -438,8 +438,6 @@ input[type=checkbox]:checked + label:before {
     color: black;
     margin: 0;
     height: 28px;
-    font-size: 12px;
-    text-decoration: none;
     padding-top: 4px;
 }
 
@@ -472,17 +470,71 @@ input[type=checkbox]:checked + label:before {
     padding: 0;
     border-top: 1px solid #808080;
     border-bottom: 1px solid white;
-    /*background: url('../images/startmenu/sep.png') no-repeat center;*/
 }
 
-#startmenu .folder
+#startmenu .folder,
+#startmenu .subfolder
 {
     background: url('../images/misc/subfolder.png') no-repeat right center;
 }
 
-#startmenu .folder:hover
+#startmenu .folder:hover,
+#startmenu .subfolder:hover
 {
     background: url('../images/misc/subfolderi.png') no-repeat right center;
+}
+
+#startmenu .folder:hover>.submenu,
+#startmenu .subfolder:hover>.submenu
+{
+    display: inline-block;
+}
+
+#startmenu .submenu
+{
+    width: 130px;
+    display: none;
+    margin: -33px 0 0 181px;
+    padding: 3px 3px 4px;
+    color: black;
+    background:
+    url('../images/button/topright.png') no-repeat right top,
+    url('../images/button/topleft.png') no-repeat left top,
+    url('../images/button/bottomright.png') no-repeat right bottom,
+    url('../images/button/bottomleft.png') no-repeat left bottom,
+    url('../images/button/right.png') repeat-y right,
+    url('../images/button/top.png') repeat-x top,
+    url('../images/button/left.png') repeat-y left,
+    url('../images/button/bottom.png') repeat-x bottom, #C0C0C0;
+}
+
+#startmenu .submenu .submenu
+{
+    margin: -10px 0 0 127px;
+}
+
+#startmenu .submenu>div
+{
+    height: 18px;
+    padding-top: 2px;
+}
+
+#startmenu .submenu>div>img
+{
+    height: 16px;
+    width: 16px;
+    margin-left: 3px;
+}
+
+#startmenu .submenu>div:hover
+{
+    background-color: #000080;
+    color: white;
+}
+
+#startmenu .submenu>div>span
+{
+    width: 100%;
 }
 
 /* OS Time */
@@ -492,14 +544,18 @@ input[type=checkbox]:checked + label:before {
     float: right;
     text-align: center;
     margin: 4px 2px;
-    min-width: 72px;
     height: 20px;
-    line-height: 20px;
-    font-size: 12px;
+    padding: 0 10px;
     border-top: 1px solid #808080;
     border-left: 1px solid #808080;
     border-right: 1px solid white;
     border-bottom: 1px solid white;
+}
+
+#ostime
+{
+    line-height: 20px;
+    font-size: 12px;
 }
 
 /* Specials/Animations */

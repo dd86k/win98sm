@@ -2,7 +2,7 @@
 
 /**
  * win98.js, Operating System.
- * @author guitarxhero
+ * @author dd86k
  */
 
 /* TODOs:
@@ -24,11 +24,27 @@
  */
 var Project = {
     name: "Windows 98 WebSim",
-    version: "0.5.0-git-18-rc"
+    majorVersion: 0,
+    minorVersion: 6,
+    revision: 0,
+    branch: "git",
+    commit: 1,
+    get version () {
+        var t = Project.majorVersion + "." + Project.minorVersion + "." +
+            Project.revision;
+
+        if (Project.branch == "git")
+            t = t + "-" + Project.branch + "-" + Project.commit;
+
+        return t;
+    },
+    get full () {
+        return Project.name + " " + Project.version;
+    }
 };
 
 function start() {
-    websimversion.innerText = Project.name + " " + Project.version;
+    websimversion.innerText = Project.full;
     updateTime24h();
 }
 
@@ -109,7 +125,7 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function () {
 
 var Shell = {
     /**
-     * Run a file.
+     * Run a file. (Fake)
      * @param {String} path The virtual path to the file.
      * @returns {Number} Error code.
      */
@@ -145,8 +161,8 @@ var Shell = {
                     default:
                         WindowManager.showError(file,
                             "The file \"" + file + "\" (or one of its components) cannot \
-                            be found. Verify the path and the filename are correct, \
-                            and all the libraries required are available.");
+be found. Verify the path and the filename are correct, \
+and all the libraries required are available.");
                         return 1;
                 }
             }

@@ -2,15 +2,16 @@
 
 /**
  * win98con.js, Console Host.
- * @author guitarxhero
+ * @author dd86k
  */
 
-function conhost(parent) {
-    this.parent = parent;
+function Conhost() {
+    
 }
 
-conhost.prototype = {
-
+Conhost.prototype = {
+    thisRef: null,
+    textareaRef: null
 }
 
 function getColor(hex)

@@ -2,9 +2,11 @@
 
 Windows 98 Web Simulator is a simulator made purely in HTML5, CSS3, and Javascript (ECMAScript 5) without any libraries.
 
+This project and myself are not associated nor affiliated with Microsoft and there will never be a plan to monetize this project. This project is mostly from my interest in operating systems and programming practise purposes.
+
 | Version |
 |---------|
-| [Dev][dev] |
+| [Dev][dev] (Daily) |
 | [Stable][stable] (Recommended) |
 | [Old][old] |
 
