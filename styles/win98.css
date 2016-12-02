@@ -492,9 +492,10 @@ input[type=checkbox]:checked + label:before {
 
 #startmenu .submenu
 {
-    width: 130px;
+    position: fixed;
     display: none;
-    margin: -33px 0 0 181px;
+    left: 208px;
+    margin: -7px 0 0 0;
     padding: 3px 3px 4px;
     color: black;
     background:
@@ -510,20 +511,20 @@ input[type=checkbox]:checked + label:before {
 
 #startmenu .submenu .submenu
 {
-    margin: -10px 0 0 127px;
+    margin: -5px 0 0 116px; /* Temporary */
 }
 
 #startmenu .submenu>div
 {
     height: 18px;
-    padding-top: 2px;
+    padding: 2px 15px 0 0;
 }
 
 #startmenu .submenu>div>img
 {
     height: 16px;
     width: 16px;
-    margin-left: 3px;
+    margin: 0 -3px 0 3px;
 }
 
 #startmenu .submenu>div:hover

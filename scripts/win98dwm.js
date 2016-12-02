@@ -543,6 +543,7 @@ monetize it." + dnl +
             c.className = "tb-down";
         }
         c.onclick = function (e) {
+            StartMenu.hide();
             form.focus();
         }
 
