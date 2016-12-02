@@ -188,19 +188,25 @@ img { border: 0; }
     border: 1px dotted black;
 }
 
-.conscr
+.conhost
 {
-    font-family: monospace;
+    display: block;
     position: relative;
+
+    font-family: monospace;
+
     margin: 0;
-    color: #A8A8A8;
-    word-wrap: break-word;
-    overflow-y: scroll;
-    font-size: 12px;
+    padding: 2px;
+    width: 483px;
+    height: 248px;
+
     color: white;
     background-color: black;
+
+    word-wrap: break-word;
+    overflow-y: hidden;
+    font-size: 12px;
     border: 1px solid #808080;
-    padding: 2px;
 }
 
 .input /* Textbox */

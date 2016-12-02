@@ -422,19 +422,17 @@ document, or Internet resource, and Windows will open it for you.";
                 f.addNode(netframe);
                 break;
             case "command":
-                f.setIcon("images/cmd/icon.png");
+                f.setIcon("images/command/icon.png");
+                f.setSize(493, 308);
 
                 var divcmdmenu = document.createElement("img");
-                divcmdmenu.src = "images/cmd/menu.png";
+                divcmdmenu.src = "images/command/menu.png";
                 divcmdmenu.style.marginTop = "2px";
-
-                //TODO: Make a function from win98con.js to make
-                //      a console window instead. (Alloc)
-                var divcmd = document.createElement("div");
-                divcmd.className = "conscr";
+                
+                var s = new Prompt(new Conhost()).obj;
 
                 f.addNode(divcmdmenu);
-                f.addNode(divcmd);
+                f.addNode(s);
                 break;
             case "tests":
                 var ff = document.createElement("form");

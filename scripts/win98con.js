@@ -9,22 +9,48 @@
  * Creates a new Console screen.
  */
 function Conhost() {
-    //var objr = this.thisRef = this;
-    var taref = this.textareaRef = document.createElement("textarea");
+    //var ref = this.thisRef = this;
+    var o = this.obj = document.createElement("textarea");
+    o.className = "conhost";
+    o.readOnly = true;
+    o.onkeydown = function (e) {
 
+    };
 }
 
 Conhost.prototype = {
     thisRef: null,
-    textareaRef: null
+    obj: null,
+
+    Write: function (input) {
+        obj.value += input;
+    },
+
+    Read: function () {
+
+    }
 }
 
 /**
- * TODO: COMMAND.COM
+ * COMMAND.COM
  */
 
-function Command(conhost) {
+function Prompt(conhost) {
+    this.host = conhost;
+    this.obj = conhost.obj;
 
+
+}
+
+Prompt.prototype = {
+    host: null,
+    obj: null,
+    cd: "C:\\",
+    prompt: ">",
+
+    printPrompt: function () {
+        host.Write("Test");
+    }
 }
 
 function getColor(hex)
