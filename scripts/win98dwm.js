@@ -64,7 +64,7 @@ function Form(title) {
     };*/
 
     // Close
-    var divclose = document.createElement("img");
+    var divclose = this.closeButtonObj = document.createElement("img");
     divclose.className = "ctrlboxbuttonc";
     divclose.src = "images/window/close.png";
     divclose.onclick = function () {
@@ -94,6 +94,7 @@ Form.prototype = {
     obj: null,
     titlebarObj: null,
     titleObj: null,
+    closeButtonObj: null,
     windowAreaObj: null,
     taskbarButtonObj: null,
 
@@ -188,10 +189,8 @@ Form.prototype = {
 function Button(text, width, height) {
     var b = this.obj = document.createElement("div");
     b.className = "button";
-    b.style.width =
-        (width === undefined ? 72 : width < 72 ? 72 : width) + "px";
-    //divbutton.style.height =
-    //(height === undefined ? 22 : height < 22 ? 22 : height) + "px";
+    b.style.minWidth = (width === undefined ? 72 : width) + "px";
+    b.style.minHeight = (height === undefined ? 17 : height) + "px";
     b.onmousedown = function () {
         b.className = "buttondown";
     };
@@ -327,7 +326,7 @@ var WindowManager = {
                 var desc = document.createElement("p");
                 desc.innerText = "Type the name of a program, folder, \
 document, or Internet resource, and Windows will open it for you.";
-                desc.style.fontSize = "11px";
+                desc.style.fontSize = "12px";
                 desc.style.maxWidth = "280px";
                 desc.style.cssFloat = "Right";
                 desc.style.marginTop = "18px";
@@ -488,7 +487,7 @@ document, or Internet resource, and Windows will open it for you.";
                 ff.appendChild(cbt1);
                 f.addNode(ff);
 
-                var tbut = new Button("Button").obj;
+                var tbut = new Button("Button as block").obj;
                 tbut.style.marginBottom = "6px";
                 tbut.style.display = "block";
 
@@ -583,33 +582,38 @@ monetize it." + dnl +
                     (innerWidth / 2) - (288 / 2),
                     (innerHeight / 2) - (123)
                 );
-                f.obj.onmousedown = null;
-
+                f.obj.onmousedown = f.titlebarObj.onmousedown = null;
                 f.obj.style.zIndex = "8000001";
 
                 var bg = document.createElement("div");
                 bg.className = "shutdownbg";
 
                 var shimg = document.createElement("img");
+                shimg.style = "display: inline-block;margin: 12px;";
                 shimg.src = "images/Startmenu/item02.png";
 
                 var desc = document.createElement("p");
-                
+                desc.style = "display: inline-block;margin: 12px 0 0 0;";
                 desc.innerText = "Are you sure you want to log off?";
 
                 var bcon = document.createElement("div");
                 bcon.style = "text-align: center; margin: 12px 0 14px 0;";
 
-                var btnyes = new Button("Yes").obj;
+                var btnyes = new Button("Yes", 65).obj;
                 btnyes.onclick = function (e) {
-
+                    href = "../index.html";
                 }
 
-                var btnno = new Button("No").obj;
-                btnno.onclick = function (e) {
+                var fca = function (e) {
                     f.close();
                     bg.remove();
                 }
+
+                var btnno = new Button("No", 65).obj;
+                btnno.onclick = fca;
+                btnno.style.marginLeft = "10px";
+
+                f.closeButtonObj.onclick = fca;
 
                 bcon.appendChild(btnyes);
                 bcon.appendChild(btnno);
@@ -734,5 +738,5 @@ var Startmenu = {
  * Events
  */
 
-win98menu.onmousedown = Startmenu.show;
+startbutton.onmousedown = Startmenu.show;
 desktoparea.onmousedown = Startmenu.hide;

@@ -259,10 +259,10 @@ input[type=checkbox]:checked + label:before {
 
 .msgboxMsg
 {
-    font-size: 11px;
+    font-size: 12px;
     max-width: 300px;
     display: inline-block;
-    margin: 12px 12px 12px 0;
+    margin: 20px 12px 12px 0;
     word-wrap: break-word;
 }
 
@@ -340,12 +340,6 @@ input[type=checkbox]:checked + label:before {
     width: calc(100% - 155px);
 }
 
-/*.tb img
-{
-    width: 16px;
-    height: 16px;
-}*/
-
 #maintoolbar .tb,
 #maintoolbar .tb-focus,
 #maintoolbar .tb-down
@@ -360,9 +354,12 @@ input[type=checkbox]:checked + label:before {
     line-height: 18px;
 }
 
-#maintoolbar .tb span, #maintoolbar .tb img,
-#maintoolbar .tb-focus span, #maintoolbar .tb-focus img,
-#maintoolbar .tb-down span, #maintoolbar .tb-down img
+#maintoolbar .tb span,
+#maintoolbar .tb img,
+#maintoolbar .tb-focus span,
+#maintoolbar .tb-focus img,
+#maintoolbar .tb-down span,
+#maintoolbar .tb-down img
 {
     float: left;
     margin: 3px 0 3px 3px;
@@ -526,7 +523,7 @@ input[type=checkbox]:checked + label:before {
 {
     height: 16px;
     width: 16px;
-    margin: 0 -3px 0 3px;
+    margin: 0 0 0 3px;
 }
 
 #win98menu .submenu>div:hover
@@ -534,12 +531,6 @@ input[type=checkbox]:checked + label:before {
     background-color: #000080;
     color: white;
 }
-
-#win98menu .submenu>div>span
-{
-    width: 100%;
-}
-
 #win98menu .submenu .submenu
 {
     margin: -5px 0 0 116px; /* Temporary */
