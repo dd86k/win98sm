@@ -434,6 +434,17 @@ document, or Internet resource, and Windows will open it for you.";
                 f.addNode(divcmdmenu);
                 f.addNode(s);
                 break;
+            case "contests":
+                var c = new Conhost();
+
+                var btnWrite = new Button("Write 'Test'").obj;
+                btnWrite.onclick = function () {
+                    c.write("Test");
+                }
+
+                f.addNode(btnWrite);
+                f.addNode(c.obj);
+                break;
             case "tests":
                 var ff = document.createElement("form");
 

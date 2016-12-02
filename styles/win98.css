@@ -434,7 +434,6 @@ input[type=checkbox]:checked + label:before {
     url('../images/startmenu/sm-b.png') repeat-x bottom,
     url('../images/startmenu/sm-br.png') no-repeat bottom right,
     url('../images/startmenu/sm-r.png') repeat-y right, #C0C0C0;
-    width: 186px;
     padding: 3px 3px 3px 24px;
     z-index: 5000001;
 }
@@ -444,7 +443,7 @@ input[type=checkbox]:checked + label:before {
     color: black;
     margin: 0;
     height: 28px;
-    padding-top: 4px;
+    padding: 4px 15px 0 0;
 }
 
 #startmenu>div:hover:not(.sep)
@@ -478,6 +477,25 @@ input[type=checkbox]:checked + label:before {
     border-bottom: 1px solid white;
 }
 
+#startmenu .submenu
+{
+    position: fixed;
+    display: none;
+    left: 198px;
+    margin: -7px 0 0 0;
+    padding: 3px 3px 4px;
+    color: black;
+    background:
+    url('../images/button/topright.png') no-repeat right top,
+    url('../images/button/topleft.png') no-repeat left top,
+    url('../images/button/bottomright.png') no-repeat right bottom,
+    url('../images/button/bottomleft.png') no-repeat left bottom,
+    url('../images/button/right.png') repeat-y right,
+    url('../images/button/top.png') repeat-x top,
+    url('../images/button/left.png') repeat-y left,
+    url('../images/button/bottom.png') repeat-x bottom, #C0C0C0;
+}
+
 #startmenu .folder,
 #startmenu .subfolder
 {
@@ -494,25 +512,6 @@ input[type=checkbox]:checked + label:before {
 #startmenu .subfolder:hover>.submenu
 {
     display: inline-block;
-}
-
-#startmenu .submenu
-{
-    position: fixed;
-    display: none;
-    left: 208px;
-    margin: -7px 0 0 0;
-    padding: 3px 3px 4px;
-    color: black;
-    background:
-    url('../images/button/topright.png') no-repeat right top,
-    url('../images/button/topleft.png') no-repeat left top,
-    url('../images/button/bottomright.png') no-repeat right bottom,
-    url('../images/button/bottomleft.png') no-repeat left bottom,
-    url('../images/button/right.png') repeat-y right,
-    url('../images/button/top.png') repeat-x top,
-    url('../images/button/left.png') repeat-y left,
-    url('../images/button/bottom.png') repeat-x bottom, #C0C0C0;
 }
 
 #startmenu .submenu .submenu

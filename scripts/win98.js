@@ -6,17 +6,7 @@
  */
 
 /* TODOs:
-- Start menu new design (HTML) for submenus:
-<div class="smi">
-  <img/><span>Test</span>
-  <div class="smsm">
-    <div class="smsi">
-      <img/><span>Test</span>
-    </div>
-  </div>
-</div>
 - win98wsh.js (Windows Scripting Host)
-- IE4 (iexplore)
 */
 
 /**
@@ -28,7 +18,7 @@ var Project = {
     minorVersion: 6,
     revision: 0,
     branch: "git",
-    commit: 5,
+    commit: 6,
     get version () {
         var t = Project.majorVersion + "." + Project.minorVersion + "." +
             Project.revision;
@@ -157,6 +147,9 @@ var Shell = {
                         return 0;
                     case "shell:tests":
                         WindowManager.createWindow("Tests", 50, 50, "tests");
+                        return 0;
+                    case "shell:contests":
+                        WindowManager.createWindow("Tests", 50, 50, "contests");
                         return 0;
                     default:
                         WindowManager.showError(file,

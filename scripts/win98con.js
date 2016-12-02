@@ -6,27 +6,52 @@
  */
 
 /**
- * Creates a new Console screen.
+ * Creates a new Console screen. Inline only. Unicolor.
  */
 function Conhost() {
-    //var ref = this.thisRef = this;
+    var tref = this.thisRef = this;
     var o = this.obj = document.createElement("textarea");
     o.className = "conhost";
     o.readOnly = true;
     o.onkeydown = function (e) {
-
+        tref.readKey(e);
+        if (tref.echo)
+            o.value = o.value + this.readBuf;
     };
 }
 
 Conhost.prototype = {
     thisRef: null,
     obj: null,
+    rbuf: "",
+    echo: true,
 
-    Write: function (input) {
-        obj.value += input;
+    readKey: function (e) {
+        e = e || window.event;
+        console.log(e);
+        var c = e.keyCode;
+        console.log(c);
+        switch (c) {
+            // Blacklist
+            case 37: case 38: case 39: case 40: // Arrow keys
+                break;
+            // Important keys
+            case 8: // Backspace
+                this.rbuf = this.rbuf.substring(0, this.rbuf.length - 1);
+                break;
+            default:
+                if (c !== undefined)
+                    this.rbuf += String.fromCharCode(c);
+                console.log(this.rbuf);
+                break;
+        }
     },
 
-    Read: function () {
+    write: function (input) {
+        this.obj.value += input;
+    },
+
+    read: function () {
 
     }
 }
@@ -43,15 +68,21 @@ function Prompt(conhost) {
 }
 
 Prompt.prototype = {
-    host: null,
+    con: null,
     obj: null,
     cd: "C:\\",
     prompt: ">",
 
+    start: function () {
+        
+    },
+
     printPrompt: function () {
-        host.Write("Test");
+        con.write("Test");
     }
 }
+
+
 
 function getColor(hex)
 {
