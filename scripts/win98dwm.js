@@ -13,7 +13,7 @@
 function Form(title) {
     var thisref = this.thisRef = activeForm = this; // Object reference
     // Make the window, and make a reference.
-    var winobjref = this.divObject = document.createElement("div");
+    var winobjref = this.obj = document.createElement("div");
 
     winobjref.className = "window";
     winobjref.style.visibility = "visible";
@@ -91,7 +91,7 @@ function Form(title) {
 Form.prototype = {
     /* References */
     thisRef: null,
-    divObject: null, // rename to windowObj
+    obj: null,
     titlebarObj: null,
     titleObj: null,
     windowAreaObj: null,
@@ -102,14 +102,14 @@ Form.prototype = {
 
     /* Form size */
     setSize: function (w, h) {
-        this.divObject.style.width = w + "px";
-        this.divObject.style.height = h + "px";
+        this.obj.style.width = w + "px";
+        this.obj.style.height = h + "px";
     },
     setWidth: function (w) {
-        this.divObject.style.width = w + "px";
+        this.obj.style.width = w + "px";
     },
     setHeight: function (h) {
-        this.divObject.style.height = h + "px";
+        this.obj.style.height = h + "px";
     },
 
     /* Focus */
@@ -118,7 +118,7 @@ Form.prototype = {
             activeForm.unfocus();
         activeForm = this.thisRef;
         this.titlebarObj.className = "atitlebar";
-        this.divObject.style.zIndex = ++WindowZIndex;
+        this.obj.style.zIndex = ++WindowZIndex;
         if (this.taskbarButtonObj != null)
             this.taskbarButtonObj.className = "tb-focus";
     },
@@ -131,15 +131,15 @@ Form.prototype = {
 
     /* Controlbox */
     removeMinAndMaxButtons: function () {
-        var b = this.divObject.childNodes[0].getElementsByClassName("ctrlboxbutton");
+        var b = this.obj.childNodes[0].getElementsByClassName("ctrlboxbutton");
         for (var i = b.length - 1; i >= 0; --i) {
             b[i].remove();
         }
     },
 
     /* Form title */
-    setTitle: function (t) {
-        this.titleObj.innerText = t;
+    setTitle: function (text) {
+        this.titleObj.innerText = text;
     },
     getTitle: function () {
         return this.titleObj.innerText;
@@ -148,28 +148,28 @@ Form.prototype = {
     /* Form icon */
     setIcon: function (path) {
         if (this.iconExists)
-            this.divObject.childNodes[0].childNodes[0].src = path;
+            this.obj.childNodes[0].childNodes[0].src = path;
     },
     getIcon: function () {
         if (this.iconExists)
-            return this.divObject.childNodes[0].childNodes[0].src;
+            return this.obj.childNodes[0].childNodes[0].src;
         else return null;
     },
     hideIcon: function () {
         if (this.iconExists)
-            this.divObject.childNodes[0].childNodes[0].style.display = "none";
+            this.obj.childNodes[0].childNodes[0].style.display = "none";
     },
     removeIcon: function () {
         if (this.iconExists) {
-            this.divObject.childNodes[0].childNodes[0].remove();
+            this.obj.childNodes[0].childNodes[0].remove();
             this.iconExists = false;
         }
     },
 
     /* Form location */
     setLocation: function (x, y) {
-        this.divObject.style.left = x + "px";
-        this.divObject.style.top = y + "px";
+        this.obj.style.left = x + "px";
+        this.obj.style.top = y + "px";
     },
 
     /* Form functions */
@@ -179,7 +179,7 @@ Form.prototype = {
     },
 
     close: function () {
-        this.divObject.remove();
+        this.obj.remove();
         if (this.taskbarButtonObj != null)
             this.taskbarButtonObj.remove();
     }
@@ -226,21 +226,27 @@ var WindowZIndex = 0, activeForm = null;
  */
 
 var WindowManager = {
-    showInfo: function (title, msg) {
+    showError: function (title, msg) {
         var f = new Form(title);
-        WindowManager.makeMsgBox(f, msg, 0);
+        WindowManager.makeMsgBox(f, msg, 16);
+        WindowManager.addFormToDesktop(f);
+    },
+
+    showQuestion: function (title, msg) {
+        var f = new Form(title);
+        WindowManager.makeMsgBox(f, msg, 32);
         WindowManager.addFormToDesktop(f);
     },
 
     showWarning: function (title, msg) {
         var f = new Form(title);
-        WindowManager.makeMsgBox(f, msg, 1);
+        WindowManager.makeMsgBox(f, msg, 48);
         WindowManager.addFormToDesktop(f);
     },
 
-    showError: function (title, msg) {
+    showInfo: function (title, msg) {
         var f = new Form(title);
-        WindowManager.makeMsgBox(f, msg, 2);
+        WindowManager.makeMsgBox(f, msg, 64);
         WindowManager.addFormToDesktop(f);
     },
 
@@ -264,21 +270,24 @@ var WindowManager = {
         divmsgicon.className = "msgboxIcon";
 
         switch (type) {
-            case 0:
-                divmsgicon.src = "images/msgbox/infoicon.png";
+            case 16:
+                divmsgicon.src = "images/msgbox/critical.png";
                 break;
-            case 1:
-                divmsgicon.src = "images/msgbox/warningicon.png";
+            case 32:
+                divmsgicon.src = "images/msgbox/question.png";
                 break;
-            case 2:
-                divmsgicon.src = "images/msgbox/erroricon.png";
+            case 48:
+                divmsgicon.src = "images/msgbox/exclamation.png";
+                break;
+            case 64:
+                divmsgicon.src = "images/msgbox/info.png";
                 break;
         }
 
         var btnOk = new Button("OK").obj;
         btnOk.tabIndex = 25;
         btnOk.addEventListener("click", function () {
-            WindowManager.deleteWindow(f.divObject);
+            f.close();
         });
 
         var divcont = document.createElement("div");
@@ -555,9 +564,9 @@ monetize it." + dnl +
 
                 var btnSpin = new Button("Spin!").obj;
                 btnSpin.onclick = function () {
-                    f.divObject.style.animation = "spin 1s";
+                    f.obj.style.animation = "spin 1s";
                     setTimeout(function () {
-                        f.divObject.style.animation = null;
+                        f.obj.style.animation = null;
                     }, 1000);
                 };
 
@@ -566,6 +575,53 @@ monetize it." + dnl +
                 f.addNode(lblAbout);
                 f.addNode(bottomlayout);
                 break;
+            case "logoff":
+                f.removeMinAndMaxButtons();
+                f.removeIcon();
+                f.setSize(288, 123);
+                f.setLocation(
+                    (innerWidth / 2) - (288 / 2),
+                    (innerHeight / 2) - (123)
+                );
+                f.obj.onmousedown = null;
+
+                f.obj.style.zIndex = "8000001";
+
+                var bg = document.createElement("div");
+                bg.className = "shutdownbg";
+
+                var shimg = document.createElement("img");
+                shimg.src = "images/Startmenu/item02.png";
+
+                var desc = document.createElement("p");
+                
+                desc.innerText = "Are you sure you want to log off?";
+
+                var bcon = document.createElement("div");
+                bcon.style = "text-align: center; margin: 12px 0 14px 0;";
+
+                var btnyes = new Button("Yes").obj;
+                btnyes.onclick = function (e) {
+
+                }
+
+                var btnno = new Button("No").obj;
+                btnno.onclick = function (e) {
+                    f.close();
+                    bg.remove();
+                }
+
+                bcon.appendChild(btnyes);
+                bcon.appendChild(btnno);
+
+                f.addNode(shimg);
+                f.addNode(desc);
+                f.addNode(bcon);
+
+                Startmenu.hide();
+                desktop.appendChild(bg);
+                desktop.appendChild(f.obj);
+                return;
             default: break;
         }
 
@@ -575,8 +631,8 @@ monetize it." + dnl +
     addFormToDesktop: function (form) {
         if (form.iconExists)
             WindowManager.addTaskbarButton(form);
-        desktoparea.appendChild(form.divObject);
-        StartMenu.hide();
+        desktoparea.appendChild(form.obj);
+        Startmenu.hide();
     },
 
     addTaskbarButton: function (form) {
@@ -586,7 +642,7 @@ monetize it." + dnl +
             c.className = "tb-down";
         }
         c.onclick = function (e) {
-            StartMenu.hide();
+            Startmenu.hide();
             form.focus();
         }
 
@@ -600,10 +656,6 @@ monetize it." + dnl +
         c.appendChild(text);
 
         form.taskbarButtonObj = c;
-    },
-
-    deleteWindow: function (div) {
-        div.remove();
     },
 
     unfocusActiveWindow: function () {
@@ -642,7 +694,6 @@ monetize it." + dnl +
                 if (aY < 0) aY = 0;
                 if (aX + eWi > cWi) aX = cWi - eWi;
                 if (aY + eHe > cHe) aY = cHe - eHe;*/
-                // Absolute reference.
                 WindowManager.Drag.move(div, aX, aY);
             };
         },
@@ -661,21 +712,21 @@ monetize it." + dnl +
  * Start menu.
  */
 
-var StartMenu = {
+var Startmenu = {
     show: function () {
         WindowManager.unfocusActiveWindow();
-        if (startmenu.style.visibility == 'hidden') {
-            startmenu.style.visibility = 'visible';
-            startbutton.src = 'images/startmenu/on.png';
+        if (win98menu.style.visibility == 'hidden') {
+            win98menu.style.visibility = 'visible';
+            startbutton.src = 'images/Startmenu/on.png';
         } else {
-            startmenu.style.visibility = 'hidden';
-            startbutton.src = 'images/startmenu/off.png';
+            win98menu.style.visibility = 'hidden';
+            startbutton.src = 'images/Startmenu/off.png';
         }
     },
 
     hide: function () {
-        startmenu.style.visibility = 'hidden';
-        startbutton.src = 'images/startmenu/off.png';
+        win98menu.style.visibility = 'hidden';
+        startbutton.src = 'images/Startmenu/off.png';
     }
 }
 
@@ -683,5 +734,5 @@ var StartMenu = {
  * Events
  */
 
-startbutton.onmousedown = StartMenu.show;
-desktoparea.onmousedown = StartMenu.hide;
+win98menu.onmousedown = Startmenu.show;
+desktoparea.onmousedown = Startmenu.hide;

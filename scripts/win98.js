@@ -18,7 +18,7 @@ var Project = {
     minorVersion: 6,
     revision: 0,
     branch: "git",
-    commit: 6,
+    commit: 7,
     get version () {
         var t = Project.majorVersion + "." + Project.minorVersion + "." +
             Project.revision;
@@ -34,6 +34,7 @@ var Project = {
 };
 
 function start() {
+    Object.freeze(Project);
     websimversion.innerText = Project.full;
     updateTime24h();
 }
@@ -53,15 +54,15 @@ function updateTime12h() {
         minutes = "0" + minutes;
     }
 
-    var t = "";
+    var t = null;
 
     if (hours > 12) {
-        t += "PM";
+        t = "PM";
         hours = hours - 12;
     } else if (hours == 12) {
-        t += "PM";
+        t = "PM";
     } else {
-        t += "AM";
+        t = "AM";
     }
 
     ostime.innerHTML = hours + ":" + minutes + " " + t;
@@ -127,7 +128,8 @@ var Shell = {
                 var s = file.split(" ", 128);
                 switch (s[0].toLowerCase()) {
                     case "command": case "command.com":
-                        WindowManager.createWindow('MS-DOS Prompt', Utils.r(200), Utils.r(200), 'command');
+                        WindowManager.createWindow('MS-DOS Prompt',
+                            Utils.r(200), Utils.r(200), 'command');
                         return 0;
                     case "notepad": case "notepad.exe":
                         WindowManager.createWindow(
@@ -140,7 +142,7 @@ var Shell = {
                         );
                         return 0;*/
                     case "shell:run":
-                        WindowManager.createWindow('Run', 150, 50, 'rundialog');
+                        WindowManager.createWindow('Run', 0, 0, 'rundialog');
                         return 0;
                     case "shell:about":
                         WindowManager.createWindow('About', 150, 50, 'aboutdialog');
@@ -150,6 +152,9 @@ var Shell = {
                         return 0;
                     case "shell:contests":
                         WindowManager.createWindow("Tests", 50, 50, "contests");
+                        return 0;
+                    case "shell:logoff":
+                        WindowManager.createWindow("Log Off Windows", 0, 0, "logoff");
                         return 0;
                     default:
                         WindowManager.showError(file,

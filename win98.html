@@ -13,10 +13,22 @@
 </head>
 
 <body>
-    <div id="desktoparea"></div>
-    <p id="websimversion"></p>
+    <div id="desktop">
+        <div id="desktoparea"></div>
+        <p id="websimversion"></p>
+        <div id="taskbar">
+            <img id="startbutton" src="images/startmenu/off.png" alt="Start" title="Click here to start." />
+            <table id="maintoolbar">
+                <tbody>
+                    <tr></tr>
+                </tbody>
+            </table>
+            <div id="systray"><span id="ostime">...</span></div>
+            <div class="sep"></div>
+        </div>
+    </div>
 
-    <div id="startmenu" style="visibility: hidden;">
+    <div id="win98menu" style="visibility: hidden;">
         <div onclick="Shell.run('shell:about')">
             <img src="images/startmenu/item11.png" />
             <span>About</span>
@@ -95,7 +107,7 @@
             <span>Run...</span>
         </div>
         <div class="sep"></div>
-        <div>
+        <div onclick="Shell.run('shell:logoff')">
             <img src="images/startmenu/item02.png" />
             <span>Log Off...</span>
         </div>
@@ -103,17 +115,6 @@
             <img src="images/startmenu/item01.png" />
             <span>Shut Down...</span>
         </div>
-    </div>
-
-    <div id="taskbar">
-        <img id="startbutton" src="images/startmenu/off.png" alt="Start" title="Click here to start." />
-        <table id="maintoolbar">
-            <tbody>
-                <tr></tr>
-            </tbody>
-        </table>
-        <div id="systray"><span id="ostime">...</span></div>
-        <div class="sep"></div>
     </div>
 
     <script src="scripts/win98.js"></script>

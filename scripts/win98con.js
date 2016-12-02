@@ -51,6 +51,10 @@ Conhost.prototype = {
         this.obj.value += input;
     },
 
+    writel: function (input) {
+        this.obj.value += input + '\n';
+    },
+
     read: function () {
 
     }

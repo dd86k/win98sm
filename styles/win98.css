@@ -12,7 +12,6 @@
 
 body
 {
-    font-family: monospace;
     margin: 0;
     padding: 0;
     background-color: #008080;
@@ -150,8 +149,7 @@ img { border: 0; }
     url('../images/button/right.png') repeat-y right,
     url('../images/button/top.png') repeat-x top,
     url('../images/button/left.png') repeat-y left,
-    url('../images/button/bottom.png') repeat-x bottom,
-    #C0C0C0;
+    url('../images/button/bottom.png') repeat-x bottom, #C0C0C0;
 }
 
 .buttondown
@@ -264,7 +262,7 @@ input[type=checkbox]:checked + label:before {
     font-size: 11px;
     max-width: 300px;
     display: inline-block;
-    margin: 20px 12px 12px 0;
+    margin: 12px 12px 12px 0;
     word-wrap: break-word;
 }
 
@@ -278,11 +276,15 @@ input[type=checkbox]:checked + label:before {
 
 /* Shutdown */
 
-/*
 .shutdownbg
 {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
     z-index: 8000000;
+    background: url('../images/misc/sdbg.png') repeat;
 }
+/*
 .shutdowndialog
 {
     
@@ -420,7 +422,7 @@ input[type=checkbox]:checked + label:before {
  * Start menu.
  */
 
-#startmenu
+#win98menu
 {
     position: fixed;
     bottom: 24px;
@@ -438,7 +440,7 @@ input[type=checkbox]:checked + label:before {
     z-index: 5000001;
 }
 
-#startmenu>div
+#win98menu>div
 {
     color: black;
     margin: 0;
@@ -446,14 +448,14 @@ input[type=checkbox]:checked + label:before {
     padding: 4px 15px 0 0;
 }
 
-#startmenu>div:hover:not(.sep)
+#win98menu>div:hover:not(.sep)
 {
     color: white;
     background-color: #000080;
     cursor: default;
 }
 
-#startmenu img
+#win98menu img
 {
     display: inline-block;
     width: 24px;
@@ -461,14 +463,14 @@ input[type=checkbox]:checked + label:before {
     margin: 0px 6px;
 }
 
-#startmenu span
+#win98menu span
 {
     position: relative;
     top: -25%;
     font-size: 11px;
 }
 
-#startmenu .sep
+#win98menu .sep
 {
     height: 0;
     margin: 3px 2px;
@@ -477,11 +479,11 @@ input[type=checkbox]:checked + label:before {
     border-bottom: 1px solid white;
 }
 
-#startmenu .submenu
+#win98menu .submenu
 {
     position: fixed;
     display: none;
-    left: 198px;
+    left: 170px; /* Temporary */
     margin: -7px 0 0 0;
     padding: 3px 3px 4px;
     color: black;
@@ -496,51 +498,51 @@ input[type=checkbox]:checked + label:before {
     url('../images/button/bottom.png') repeat-x bottom, #C0C0C0;
 }
 
-#startmenu .folder,
-#startmenu .subfolder
+#win98menu .folder,
+#win98menu .subfolder
 {
     background: url('../images/misc/subfolder.png') no-repeat right center;
 }
 
-#startmenu .folder:hover,
-#startmenu .subfolder:hover
+#win98menu .folder:hover,
+#win98menu .subfolder:hover
 {
     background: url('../images/misc/subfolderi.png') no-repeat right center;
 }
 
-#startmenu .folder:hover>.submenu,
-#startmenu .subfolder:hover>.submenu
+#win98menu .folder:hover>.submenu,
+#win98menu .subfolder:hover>.submenu
 {
     display: inline-block;
 }
 
-#startmenu .submenu .submenu
-{
-    margin: -5px 0 0 116px; /* Temporary */
-}
-
-#startmenu .submenu>div
+#win98menu .submenu>div
 {
     height: 18px;
     padding: 2px 15px 0 0;
 }
 
-#startmenu .submenu>div>img
+#win98menu .submenu>div>img
 {
     height: 16px;
     width: 16px;
     margin: 0 -3px 0 3px;
 }
 
-#startmenu .submenu>div:hover
+#win98menu .submenu>div:hover
 {
     background-color: #000080;
     color: white;
 }
 
-#startmenu .submenu>div>span
+#win98menu .submenu>div>span
 {
     width: 100%;
+}
+
+#win98menu .submenu .submenu
+{
+    margin: -5px 0 0 116px; /* Temporary */
 }
 
 /* OS Time */
