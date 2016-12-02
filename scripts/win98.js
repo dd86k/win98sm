@@ -28,7 +28,7 @@ var Project = {
     minorVersion: 6,
     revision: 0,
     branch: "git",
-    commit: 3,
+    commit: 4,
     get version () {
         var t = Project.majorVersion + "." + Project.minorVersion + "." +
             Project.revision;
@@ -137,7 +137,7 @@ var Shell = {
                 var s = file.split(" ", 128);
                 switch (s[0].toLowerCase()) {
                     case "command": case "command.com":
-                        WindowManager.createWindow('MS-DOS Prompt', Utils.r(200), Utils.r(200), 'cmd');
+                        WindowManager.createWindow('MS-DOS Prompt', Utils.r(200), Utils.r(200), 'command');
                         return 0;
                     case "notepad": case "notepad.exe":
                         WindowManager.createWindow(

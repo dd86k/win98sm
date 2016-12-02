@@ -34,7 +34,7 @@ function Form(title) {
 
     // Titlebar icon
     var divtitleicon = document.createElement("img");
-    divtitleicon.src = "images/window/titleleft.png";
+    divtitleicon.src = "images/window/icon.png";
 
     // Icon
     divtitleicon.className = "windowicon";
@@ -185,6 +185,40 @@ Form.prototype = {
     }
 }
 
+function Button(text, width, height) {
+    var b = this.obj = document.createElement("div");
+    b.className = "button";
+    b.style.width =
+        (width === undefined ? 72 : width < 72 ? 72 : width) + "px";
+    //divbutton.style.height =
+    //(height === undefined ? 22 : height < 22 ? 22 : height) + "px";
+    b.onmousedown = function () {
+        b.className = "buttondown";
+    };
+    b.onmouseup = function () {
+        b.className = "button";
+    };
+    b.tabIndex = 0;
+
+    var t = document.createElement("div");
+    t.className = "innerbutton";
+    t.innerText = text;
+
+    b.appendChild(t);
+}
+
+Button.prototype = {
+    obj: null
+}
+
+function ProgressBar() {
+
+}
+
+ProgressBar.prototype = {
+
+}
+
 var WindowZIndex = 0, activeForm = null;
 
 /**
@@ -241,7 +275,7 @@ var WindowManager = {
                 break;
         }
 
-        var btnOk = WindowManager.makeButton("OK");
+        var btnOk = new Button("OK").obj;
         btnOk.tabIndex = 25;
         btnOk.addEventListener("click", function () {
             WindowManager.deleteWindow(f.divObject);
@@ -311,18 +345,18 @@ document, or Internet resource, and Windows will open it for you.";
                 buttons.style.textAlign = "right";
                 buttons.style.margin = "6px 8px";
 
-                var okbut = WindowManager.makeButton("OK");
+                var okbut = new Button("OK").obj;
                 okbut.style.marginRight = "6px";
                 okbut.onclick = function () {
                     f.close();
                     Shell.run(input.value);
                 };
-                var canbut = WindowManager.makeButton("Cancel");
+                var canbut = new Button("Cancel").obj;
                 canbut.style.marginRight = "6px";
                 canbut.onclick = function () {
                     f.close();
                 };
-                var brobut = WindowManager.makeButton("Browse...");
+                var brobut = new Button("Browse...").obj;
 
                 body.appendChild(img);
                 body.appendChild(desc);
@@ -337,7 +371,7 @@ document, or Internet resource, and Windows will open it for you.";
                 f.addNode(buttons);
                 break;
             case "notepad":
-                f.setIcon("images/notepad/titleleft.png");
+                f.setIcon("images/notepad/icon.png");
 
                 var divmenu = document.createElement("div");
                 divmenu.className = "menubar";
@@ -387,8 +421,8 @@ document, or Internet resource, and Windows will open it for you.";
                 f.addNode(mbc);
                 f.addNode(netframe);
                 break;
-            case "cmd":
-                f.setIcon("images/cmd/titleleft.png");
+            case "command":
+                f.setIcon("images/cmd/icon.png");
 
                 var divcmdmenu = document.createElement("img");
                 divcmdmenu.src = "images/cmd/menu.png";
@@ -436,7 +470,7 @@ document, or Internet resource, and Windows will open it for you.";
                 ff.appendChild(cbt1);
                 f.addNode(ff);
 
-                var tbut = WindowManager.makeButton("Button");
+                var tbut = new Button("Button").obj;
                 tbut.style.marginBottom = "6px";
                 tbut.style.display = "block";
 
@@ -453,17 +487,17 @@ document, or Internet resource, and Windows will open it for you.";
 
                 var makecont = document.createElement("div");
 
-                var btnMakeInfo = WindowManager.makeButton("Create info");
+                var btnMakeInfo = new Button("Create info").obj;
                 btnMakeInfo.style.marginRight = "4px";
                 btnMakeInfo.onclick = function () {
                     WindowManager.showInfo(txt1.value, txt2.value);
                 }
-                var btnMakeWarning = WindowManager.makeButton("Create warning");
+                var btnMakeWarning = new Button("Create warning").obj;
                 btnMakeWarning.style.marginRight = "4px";
                 btnMakeWarning.onclick = function () {
                     WindowManager.showWarning(txt1.value, txt2.value);
                 }
-                var btnMakeError = WindowManager.makeButton("Create error");
+                var btnMakeError = new Button("Create error").obj;
                 btnMakeError.onclick = function () {
                     WindowManager.showError(txt1.value, txt2.value);
                 }
@@ -476,7 +510,7 @@ document, or Internet resource, and Windows will open it for you.";
                 f.addNode(txt2);
                 f.addNode(makecont);
 
-                var tc = WindowManager.makeButton("Close");
+                var tc = new Button("Close").obj;
                 tc.style.cssFloat = "right";
                 tc.style.marginTop = "4px";
                 tc.onclick = function () { f.close(); };
@@ -506,11 +540,11 @@ monetize it." + dnl +
                 bottomlayout.style.width = "100%";
                 bottomlayout.style.textAlign = "right";
 
-                var btnOK = WindowManager.makeButton("Close");
+                var btnOK = new Button("Close").obj;
                 btnOK.onclick = function () { f.close(); };
                 btnOK.style.marginLeft = "6px";
 
-                var btnSpin = WindowManager.makeButton("Spin!");
+                var btnSpin = new Button("Spin!").obj;
                 btnSpin.onclick = function () {
                     f.divObject.style.animation = "spin 1s";
                     setTimeout(function () {
@@ -557,30 +591,6 @@ monetize it." + dnl +
         c.appendChild(text);
 
         form.taskbarButtonObj = c;
-    },
-
-    makeButton: function (text, width, height) {
-        var b = document.createElement("div");
-        b.className = "button";
-        b.style.width =
-            (width === undefined ? 72 : width < 72 ? 72 : width) + "px";
-        //divbutton.style.height =
-        //(height === undefined ? 22 : height < 22 ? 22 : height) + "px";
-        b.onmousedown = function () {
-            b.className = "buttondown";
-        };
-        b.onmouseup = function () {
-            b.className = "button";
-        };
-        b.tabIndex = 0;
-
-        var t = document.createElement("div");
-        t.className = "innerbutton";
-        t.innerText = text;
-
-        b.appendChild(t);
-
-        return b;
     },
 
     deleteWindow: function (div) {
