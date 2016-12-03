@@ -326,10 +326,8 @@ var WindowManager = {
                 var desc = document.createElement("p");
                 desc.innerText = "Type the name of a program, folder, \
 document, or Internet resource, and Windows will open it for you.";
-                desc.style.fontSize = "12px";
-                desc.style.maxWidth = "280px";
-                desc.style.cssFloat = "Right";
-                desc.style.marginTop = "18px";
+                desc.style = 
+                    "font-size:12px;max-width:280px;float:right;margin-top:18px;";
 
                 var open = document.createElement("p");
                 open.innerText = "Open:";
@@ -589,11 +587,11 @@ monetize it." + dnl +
                 bg.className = "shutdownbg";
 
                 var shimg = document.createElement("img");
-                shimg.style = "display: inline-block;margin: 12px;";
+                shimg.style = "float:left;margin:19px 22px;";
                 shimg.src = "images/Startmenu/item02.png";
 
                 var desc = document.createElement("p");
-                desc.style = "display: inline-block;margin: 12px 0 0 0;";
+                desc.style = "display:inline-block;margin:22px 0 14px 0;";
                 desc.innerText = "Are you sure you want to log off?";
 
                 var bcon = document.createElement("div");
@@ -601,7 +599,7 @@ monetize it." + dnl +
 
                 var btnyes = new Button("Yes", 65).obj;
                 btnyes.onclick = function (e) {
-                    href = "../index.html";
+                    //location.href = "../index.html";
                 }
 
                 var fca = function (e) {
@@ -717,20 +715,25 @@ monetize it." + dnl +
  */
 
 var Startmenu = {
+    visible: false, // Faster than checking with DOM
+
     show: function () {
         WindowManager.unfocusActiveWindow();
-        if (win98menu.style.visibility == 'hidden') {
-            win98menu.style.visibility = 'visible';
-            startbutton.src = 'images/Startmenu/on.png';
-        } else {
+        if (Startmenu.visible) {
             win98menu.style.visibility = 'hidden';
             startbutton.src = 'images/Startmenu/off.png';
+            Startmenu.visible = false;
+        } else {
+            win98menu.style.visibility = 'visible';
+            startbutton.src = 'images/Startmenu/on.png';
+            Startmenu.visible = true;
         }
     },
 
     hide: function () {
         win98menu.style.visibility = 'hidden';
         startbutton.src = 'images/Startmenu/off.png';
+        Startmenu.visible = false;
     }
 }
 

@@ -215,44 +215,17 @@ img { border: 0; }
 }
 
 /* Radio and checkbox */
-label {
-    display: block;
-    cursor: pointer;
-    position: relative;
-    padding-left: 25px;
-    margin-right: 15px;
-    font-size: 13px;
-    margin: 5px;
-}
 input[type=radio],
-input[type=checkbox] {
+input[type=checkbox]
+{
     display: none;
 }
-label:before {
-    content: "";
+
+input[type=radio] + label,
+input[type=checkbox] + label
+{
     display: inline-block;
-    
-    width: 16px;
-    height: 16px;
-    
-    margin-right: 10px;
-    position: absolute;
-    left: 0;
-    bottom: 1px;
-    background-color: #aaa;
-    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
-}
-input[type=radio] label:before,
-input[type=checkbox] label:before {
-    border-radius: 8px;
-}
-input[type=radio]:checked + label:before,
-input[type=checkbox]:checked + label:before {
-    content: "\2022";
-    color: #f3f3f3;
-    font-size: 30px;
-    text-align: center;
-    line-height: 18px;
+    cursor: pointer;
 }
 
 /* MessageBox */
@@ -475,6 +448,9 @@ input[type=checkbox]:checked + label:before {
     border-top: 1px solid #808080;
     border-bottom: 1px solid white;
 }
+
+#win98menu .empty>img { visibility: hidden; }
+#win98menu .empty>span { color: gray; }
 
 #win98menu .submenu
 {

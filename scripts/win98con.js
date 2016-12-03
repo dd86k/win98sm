@@ -64,11 +64,13 @@ Conhost.prototype = {
  * COMMAND.COM
  */
 
-function Prompt(conhost) {
-    this.host = conhost;
+function Prompt(host) {
+    this.host = host;
     this.obj = conhost.obj;
 
-
+    host.writel("Still in development.");
+    host.writel("Still in development.");
+    host.writel("Still in development.");
 }
 
 Prompt.prototype = {
