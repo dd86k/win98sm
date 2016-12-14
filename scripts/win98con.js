@@ -16,6 +16,7 @@ function Conhost() {
 }
 
 Conhost.prototype = {
+    version: "0.1.0",
     // 'this', textarea, and form references.
     thisRef: null, obj: null, form: null,
     stdin: "", stdout: "",
@@ -32,6 +33,7 @@ Conhost.prototype = {
     write: function (input) {
         this.stdout += input;
         this.update();
+        this.obj.scrollTop = this.obj.scrollHeight;
     },
 
     writel: function (input) {
@@ -41,6 +43,7 @@ Conhost.prototype = {
             this.stdout += '\n';
 
         this.update();
+        this.obj.scrollTop = this.obj.scrollHeight;
     },
 
     clearIn: function () {
@@ -186,7 +189,8 @@ Command.prototype = {
                 case "ver":
                     this.con.writel();
                     this.con.writel("Windows 98 [" + Project.version + "]");
-                    this.con.writel("Prompt Version " + this.version);
+                    this.con.writel("Prompt Version " + this.version +
+                        ", Host: " + this.con.version);
                     this.con.writel();
                     break;
 

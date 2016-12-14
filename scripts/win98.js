@@ -7,6 +7,7 @@
 
 /* TODOs:
 - win98wsh.js (Windows Scripting Host)
+  - Move stuff from win98con (Command.prototype.execute)
 */
 
 /**
@@ -18,7 +19,7 @@ var Project = {
     minorVersion: 6,
     revision: 0,
     branch: "git",
-    commit: 10,
+    commit: 11,
     get version () {
         var t = Project.majorVersion + "." + Project.minorVersion + "." +
             Project.revision;
