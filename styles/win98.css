@@ -20,6 +20,7 @@ body
     -ms-user-select: none;
     user-select: none;
     cursor: default;
+    font: 12px "Arial";
 }
 
 /* IE Fixes */
@@ -188,12 +189,8 @@ img { border: 0; }
 
 .conhost
 {
-    display: block;
-    position: relative;
-
     font-family: monospace;
 
-    margin: 0;
     padding: 2px;
     width: 483px;
     height: 248px;
@@ -202,7 +199,6 @@ img { border: 0; }
     background-color: black;
 
     word-wrap: break-word;
-    overflow-y: hidden;
     font-size: 12px;
     border: 1px solid #808080;
 }
@@ -408,6 +404,7 @@ input[type=checkbox] + label
     url('../images/startmenu/sm-r.png') repeat-y right, #C0C0C0;
     padding: 3px 3px 3px 24px;
     z-index: 5000001;
+    font: 11px "Arial";
 }
 
 #win98menu>div
@@ -456,7 +453,7 @@ input[type=checkbox] + label
 {
     position: fixed;
     display: none;
-    left: 170px; /* Temporary */
+    left: 172px; /* Temporary */
     margin: -7px 0 0 0;
     padding: 3px 3px 4px;
     color: black;
@@ -509,7 +506,7 @@ input[type=checkbox] + label
 }
 #win98menu .submenu .submenu
 {
-    margin: -5px 0 0 116px; /* Temporary */
+    margin: -5px 0 0 118px; /* Temporary */
 }
 
 /* OS Time */
@@ -530,7 +527,6 @@ input[type=checkbox] + label
 #ostime
 {
     line-height: 20px;
-    font-size: 12px;
 }
 
 /* Specials/Animations */

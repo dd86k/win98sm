@@ -435,7 +435,9 @@ document, or Internet resource, and Windows will open it for you.";
                 divcmdmenu.src = "images/command/menu.png";
                 divcmdmenu.style.marginTop = "2px";
                 
-                var s = new Prompt(new Conhost()).obj;
+                var com = new Command();
+                com.con.form = f;
+                var s = com.obj;
 
                 f.addNode(divcmdmenu);
                 f.addNode(s);

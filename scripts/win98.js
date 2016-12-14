@@ -18,12 +18,12 @@ var Project = {
     minorVersion: 6,
     revision: 0,
     branch: "git",
-    commit: 9,
+    commit: 10,
     get version () {
         var t = Project.majorVersion + "." + Project.minorVersion + "." +
             Project.revision;
 
-        if (Project.branch == "git")
+        if (Project.branch.toLowerCase() == "git")
             t = t + "-" + Project.branch + "-" + Project.commit;
 
         return t;
@@ -117,10 +117,12 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function () {
 var Shell = {
     /**
      * Run a file. (Fake)
-     * @param {String} path The virtual path to the file.
+     * @param {string} path - The virtual path to the file.
+     * @param {string} args - Command arguments.
+     * @param {boolean} console - In console. 
      * @returns {Number} Error code.
      */
-    run: function (file, args) {
+    run: function (file, args, console) {
         if (file != null && file.length > 0) {
             if (/^(http)/i.test(file)) {
                 open(file);
@@ -157,15 +159,17 @@ var Shell = {
                         WindowManager.createWindow("Log Off Windows", 0, 0, "logoff");
                         return 0;
                     default:
-                        WindowManager.showError(file,
-                            "The file \"" + file + "\" (or one of its components) cannot \
-be found. Verify the path and the filename are correct, \
+                        if (!console)
+                            WindowManager.showError(file,
+                                "The file \"" + file + "\" (or one of its components)\
+cannot be found. Verify the path and the filename are correct, \
 and all the libraries required are available.");
                         return 1;
                 }
             }
         } else {
-            WindowManager.showError("Shell", "Empty command");
+            if (!console)
+                WindowManager.showError("Shell", "Empty command");
             return 2;
         }
     }
