@@ -722,19 +722,19 @@ var Startmenu = {
     show: function () {
         WindowManager.unfocusActiveWindow();
         if (Startmenu.visible) {
-            win98menu.style.visibility = 'hidden';
-            startbutton.src = 'images/Startmenu/off.png';
+            win98menu.style.display = "none";
+            startbutton.src = 'images/startmenu/off.png';
             Startmenu.visible = false;
         } else {
-            win98menu.style.visibility = 'visible';
-            startbutton.src = 'images/Startmenu/on.png';
+            win98menu.style.display = "block";;
+            startbutton.src = 'images/startmenu/on.png';
             Startmenu.visible = true;
         }
     },
 
     hide: function () {
-        win98menu.style.visibility = 'hidden';
-        startbutton.src = 'images/Startmenu/off.png';
+        win98menu.style.display = "none";
+        startbutton.src = 'images/startmenu/off.png';
         Startmenu.visible = false;
     }
 }
