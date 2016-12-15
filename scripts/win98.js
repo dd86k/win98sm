@@ -18,14 +18,14 @@ var Project = {
     majorVersion: 0,
     minorVersion: 6,
     revision: 0,
-    branch: "git",
-    commit: 15,
+    branch: "stable",
+    commit: 0,
     get version () {
         var t = Project.majorVersion + "." + Project.minorVersion + "." +
             Project.revision;
 
-        if (Project.branch.toLowerCase() == "git")
-            t = t + "-" + Project.branch + "-" + Project.commit;
+        if (Project.branch == "git" || Project.branch == "rc")
+            t += "-" + Project.branch + "-" + Project.commit;
 
         return t;
     },

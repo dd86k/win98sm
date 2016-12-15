@@ -431,7 +431,6 @@ document, or Internet resource, and Windows will open it for you.";
                 break;
             case "command":
                 f.setIcon("images/command/icon.png");
-                f.setSize(493, 308);
 
                 var divcmdmenu = document.createElement("img");
                 divcmdmenu.src = "images/command/menu.png";

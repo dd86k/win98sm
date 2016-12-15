@@ -84,7 +84,7 @@ Conhost.prototype = {
 
 function Command() {
     var con = this.con = new Conhost();
-    this.obj = this.con.obj;
+    this.obj = con.obj;
     var tref = this;
     // Cheap hack.
     this.obj.onkeydown = function (e) {
@@ -97,7 +97,7 @@ function Command() {
     con.writel("Microsoft Windows(R)");
     con.writel("   (C)Copyright Microsoft Corp 1981-1998");
     con.writel();
-    con.writel("Still in development. Prompt version " + this.version);
+    con.writel("Prompt version " + this.version);
     this.printPrompt();
 }
 
@@ -141,10 +141,17 @@ Command.prototype = {
                 break;
             case 13: // Enter
                 var c = this.con.stdin;
-                this.con.stdin = "";
-                this.con.writel(c);
-                this.execute(c);
-                this.printPrompt();
+                if (c.length > 0)
+                {
+                    this.con.stdin = "";
+                    this.con.writel(c);
+                    this.execute(c);
+                    this.printPrompt();
+                }
+                else
+                {
+                    this.printPrompt();
+                }
                 break;
 
             // Important keys

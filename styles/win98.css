@@ -191,6 +191,7 @@ img { border: 0; }
 {
     font-family: monospace;
     display: block;
+    resize: none;
 
     padding: 2px;
     width: 486px;
