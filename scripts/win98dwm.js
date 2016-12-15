@@ -590,7 +590,7 @@ monetize it." + dnl +
 
                 var shimg = document.createElement("img");
                 shimg.style = "float:left;margin:19px 22px;";
-                shimg.src = "images/Startmenu/item02.png";
+                shimg.src = "images/startmenu/item02.png";
 
                 var desc = document.createElement("p");
                 desc.style = "display:inline-block;margin:22px 0 14px 0;";

@@ -130,6 +130,14 @@ Command.prototype = {
         switch (e.keyCode) {
             // Blacklist
             case 38: case 39: case 40: // Arrow keys
+            case 9: // Tab
+            case 20: // Caps
+            case 112: case 113: case 114: case 115: // F1-F4
+            case 116: case 117: case 118: case 119: // F5-F8
+            case 120: case 121: case 122: case 123: // F9-F12
+            case 145: case 19: // Scroll and Pause
+            // Shift, Ctrl, Alt, Left and Right Meta
+            case 16: case 17: case 18: case 91: case 92:
                 break;
             case 13: // Enter
                 var c = this.con.stdin;
@@ -147,7 +155,14 @@ Command.prototype = {
                         this.con.stdin.substring(0, this.con.stdin.length - 1);
                 break;
             default:
-                if (!(e.ctrlKey || e.metaKey || e.shiftKey || e.altKey))
+                if (e.shiftKey)
+                {
+                    if (e.keyCode >= 0x41 && e.keyCode <= 0x5A)
+                        this.con.stdin += String.fromCharCode(e.keyCode);
+                    else
+                        this.con.stdin += e.key;
+                }
+                else
                     this.con.stdin += e.key;
                 break;
         }
@@ -184,6 +199,10 @@ Command.prototype = {
 
                 case "exit":
                     this.con.form.close();
+                    break;
+
+                case "help":
+                    this.con.writel("Good luck.");
                     break;
 
                 case "ver":
