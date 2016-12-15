@@ -74,7 +74,7 @@ Conhost.prototype = {
      * @param {number} e - Errorcode.
      */
     exit: function (e) {
-
+        this.form.close();
     }
 }
 
@@ -102,9 +102,8 @@ function Command() {
 }
 
 Command.prototype = {
-    version: "0.0.0",
-    con: null,
-    obj: null,
+    version: "0.1.0",
+    con: null, obj: null,
     cd: "C:\\",
     /* PROMPT CHARACTER COMBINATIONS
     $Q    = (equal sign)
@@ -112,7 +111,7 @@ Command.prototype = {
     $T    Current time
     $D    Current date
     $P    Current drive and path
-    $V    MS-DOS
+    $V    MS-DOS version
     $N    Current drive
     $G    > (greater-than sign)
     $L    < (less-than sign)
@@ -135,6 +134,7 @@ Command.prototype = {
             case 112: case 113: case 114: case 115: // F1-F4
             case 116: case 117: case 118: case 119: // F5-F8
             case 120: case 121: case 122: case 123: // F9-F12
+            case 144: // Numlock
             case 145: case 19: // Scroll and Pause
             // Shift, Ctrl, Alt, Left and Right Meta
             case 16: case 17: case 18: case 91: case 92:
@@ -202,19 +202,44 @@ Command.prototype = {
                     this.con.update();
                     break;
 
+                case "date":
+                    this.con.writel("Current date is " + new Date().toDateString());
+                    break;
+
                 case "exit":
-                    this.con.form.close();
+                    this.con.exit();
                     break;
 
                 case "help":
                     this.con.writel("Good luck.");
                     break;
 
+                case "time":
+                    this.con.writel("Current time is " + new Date().toTimeString());
+                    break;
+
+                case "spin":
+                    var fref = this.con.form.obj;
+                    fref.style.animation = "spin 1s";
+                    setTimeout(function () {
+                        fref.style.animation = null;
+                    }, 1000);
+                    break;
+
+                case "rem": break;
+
                 case "ver":
                     this.con.writel();
-                    this.con.writel("Windows 98 [" + Project.version + "]");
+                    this.con.writel("Windows 98 [Version " + Project.version + "]");
                     this.con.writel("Prompt Version " + this.version +
                         ", Host: " + this.con.version);
+                    this.con.writel();
+                    break;
+
+                case "vol":
+                    this.con.writel();
+                    this.con.writel(" Volume in C is WIN98");
+                    this.con.writel(" Volume Serial Numner is 497D-039A");
                     this.con.writel();
                     break;
 
@@ -225,10 +250,6 @@ Command.prototype = {
                 break;
             }
         }
-    },
-
-    start: function () {
-        
     },
 
     printPrompt: function () {

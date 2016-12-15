@@ -19,7 +19,7 @@ var Project = {
     minorVersion: 6,
     revision: 0,
     branch: "git",
-    commit: 14,
+    commit: 15,
     get version () {
         var t = Project.majorVersion + "." + Project.minorVersion + "." +
             Project.revision;

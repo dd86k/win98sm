@@ -15,7 +15,7 @@ body
     margin: 0;
     padding: 0;
     background-color: #008080;
-    -webkit-user-select: none; /* 53 */
+    -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -530,7 +530,7 @@ input[type=checkbox] + label
     line-height: 20px;
 }
 
-/* Specials/Animations */
+/* Animations */
 
 @keyframes spin
 {
