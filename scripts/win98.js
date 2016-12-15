@@ -19,7 +19,7 @@ var Project = {
     minorVersion: 6,
     revision: 0,
     branch: "git",
-    commit: 13,
+    commit: 14,
     get version () {
         var t = Project.majorVersion + "." + Project.minorVersion + "." +
             Project.revision;
@@ -154,7 +154,7 @@ var Shell = {
                         WindowManager.createWindow("Tests", 50, 50, "tests");
                         return 0;
                     case "shell:contests":
-                        WindowManager.createWindow("Tests", 50, 50, "contests");
+                        WindowManager.createWindow("Console tests", 50, 50, "contests");
                         return 0;
                     case "shell:logoff":
                         WindowManager.createWindow("Log Off Windows", 0, 0, "logoff");

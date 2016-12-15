@@ -89,8 +89,8 @@ function Command() {
     // Cheap hack.
     this.obj.onkeydown = function (e) {
         tref.readKey(e);
-        if (con.echo)
-            con.update();
+        con.update();
+        return false;
     };
 
     con.writel();
@@ -159,11 +159,16 @@ Command.prototype = {
                 {
                     if (e.keyCode >= 0x41 && e.keyCode <= 0x5A)
                         this.con.stdin += String.fromCharCode(e.keyCode);
-                    else
+                    else 
                         this.con.stdin += e.key;
                 }
                 else
-                    this.con.stdin += e.key;
+                {
+                    if (e.keyCode == 0x20)
+                        this.con.stdin += " "; // IE11 fix
+                    else
+                        this.con.stdin += e.key;
+                }
                 break;
         }
     },

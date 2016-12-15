@@ -190,7 +190,7 @@ img { border: 0; }
 .conhost
 {
     font-family: monospace;
-    display: inline-block;
+    display: block;
 
     padding: 2px;
     width: 486px;

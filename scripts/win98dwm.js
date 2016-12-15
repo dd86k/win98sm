@@ -326,8 +326,10 @@ var WindowManager = {
                 var desc = document.createElement("p");
                 desc.innerText = "Type the name of a program, folder, \
 document, or Internet resource, and Windows will open it for you.";
-                desc.style = 
-                    "font-size:12px;max-width:280px;float:right;margin-top:18px;";
+                desc.style.fontSize = "12px";
+                desc.style.maxWidth = "280px";
+                desc.style.cssFloat = "right";
+                desc.style.marginTop = "18px";
 
                 var open = document.createElement("p");
                 open.innerText = "Open:";
@@ -589,15 +591,18 @@ monetize it." + dnl +
                 bg.className = "shutdownbg";
 
                 var shimg = document.createElement("img");
-                shimg.style = "float:left;margin:19px 22px;";
                 shimg.src = "images/startmenu/item02.png";
+                shimg.style.cssFloat = "left";
+                shimg.style.margin = "19px 22px";
 
                 var desc = document.createElement("p");
-                desc.style = "display:inline-block;margin:22px 0 14px 0;";
+                desc.style.display = "inline-block";
+                desc.style.margin  = "22px 0 14px 0";
                 desc.innerText = "Are you sure you want to log off?";
 
                 var bcon = document.createElement("div");
-                bcon.style = "text-align: center; margin: 12px 0 14px 0;";
+                bcon.style.textAlign = "center";
+                bcon.style.margin = "12px 0 14px 0";
 
                 var btnyes = new Button("Yes", 65).obj;
                 btnyes.onclick = function (e) {
