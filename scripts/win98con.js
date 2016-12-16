@@ -89,7 +89,7 @@ function Command() {
     // Cheap hack.
     c.node.onkeydown = function (e) {
         tref.readKey(e);
-        con.update();
+        c.update();
         return false;
     };
 
