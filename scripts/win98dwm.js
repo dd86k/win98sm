@@ -5,226 +5,6 @@
  * @author dd86k
  */
 
-/**
- * Creates a new Form.
- * @param {string} title Title.
- * @class
- */
-function Form(title) {
-    var thisref = this.thisRef = activeForm = this; // Object reference
-    // Make the window, and make a reference.
-    var winobjref = this.obj = document.createElement("div");
-
-    winobjref.className = "window";
-    winobjref.style.visibility = "visible";
-    winobjref.style.left = "0px";
-    winobjref.style.top = "0px";
-    winobjref.style.zIndex = ++WindowZIndex;
-    winobjref.onmousedown = function () { thisref.focus(); };
-
-    // Titlebar
-    var divtitle = this.titlebarObj = document.createElement("div");
-    divtitle.className = "atitlebar";
-    divtitle.onmousedown = function (e) {
-        WindowManager.Drag.startMoving(winobjref, desktoparea, e);
-    };
-    divtitle.onmouseup = function () {
-        WindowManager.Drag.stopMoving();
-    };
-
-    // Titlebar icon
-    var divtitleicon = document.createElement("img");
-    divtitleicon.src = "images/window/icon.png";
-
-    // Icon
-    divtitleicon.className = "windowicon";
-
-    // Text
-    var divtitletext = this.titleObj = document.createElement("span");
-    divtitletext.className = "titlebartext";
-    divtitletext.innerText = title;
-
-    // Minimize
-    var divmin = document.createElement("img");
-    divmin.className = "ctrlboxbutton";
-    divmin.src = "images/window/min.png";
-    /*divmin.onmousedown = function () {
-        divmin.src = "images/window/minp.png";
-    };
-    divmin.onclick = function () {
-        
-    };*/
-
-    // Maximize
-    var divmax = document.createElement("img");
-    divmax.className = "ctrlboxbutton";
-    divmax.src = "images/window/max.png";
-    /*divmax.onclick = function () {
-        
-    };*/
-
-    // Close
-    var divclose = this.closeButtonObj = document.createElement("img");
-    divclose.className = "ctrlboxbuttonc";
-    divclose.src = "images/window/close.png";
-    divclose.onclick = function () {
-        thisref.close();
-    };
-    divclose.onmousedown = function () {
-        divclose.src = "images/window/closep.png";
-    };
-
-    divtitle.appendChild(divtitleicon);
-    divtitle.appendChild(divtitletext);
-    divtitle.appendChild(divclose);
-    divtitle.appendChild(divmax);
-    divtitle.appendChild(divmin);
-
-    winobjref.appendChild(divtitle);
-
-    // Form client area
-    var divwindowarea = this.windowAreaObj = document.createElement("div");
-    divwindowarea.className = "windowarea";
-    winobjref.appendChild(divwindowarea);
-}
-
-Form.prototype = {
-    /* References */
-    thisRef: null,
-    obj: null,
-    titlebarObj: null,
-    titleObj: null,
-    closeButtonObj: null,
-    windowAreaObj: null,
-    taskbarButtonObj: null,
-
-    /* Properties */
-    iconExists: true,
-
-    /* Form size */
-    setSize: function (w, h) {
-        this.obj.style.width = w + "px";
-        this.obj.style.height = h + "px";
-    },
-    setWidth: function (w) {
-        this.obj.style.width = w + "px";
-    },
-    setHeight: function (h) {
-        this.obj.style.height = h + "px";
-    },
-
-    /* Focus */
-    focus: function () {
-        if (activeForm != null)
-            activeForm.unfocus();
-        activeForm = this.thisRef;
-        this.titlebarObj.className = "atitlebar";
-        this.obj.style.zIndex = ++WindowZIndex;
-        if (this.taskbarButtonObj != null)
-            this.taskbarButtonObj.className = "tb-focus";
-    },
-    unfocus: function () {
-        this.titlebarObj.className = "ititlebar";
-        activeForm = null;
-        if (this.taskbarButtonObj != null)
-            this.taskbarButtonObj.className = "tb";
-    },
-
-    /* Controlbox */
-    removeMinAndMaxButtons: function () {
-        var b = this.obj.childNodes[0].getElementsByClassName("ctrlboxbutton");
-        for (var i = b.length - 1; i >= 0; --i) {
-            b[i].remove();
-        }
-    },
-
-    /* Form title */
-    setTitle: function (text) {
-        this.titleObj.innerText = text;
-    },
-    getTitle: function () {
-        return this.titleObj.innerText;
-    },
-
-    /* Form icon */
-    setIcon: function (path) {
-        if (this.iconExists)
-            this.obj.childNodes[0].childNodes[0].src = path;
-    },
-    getIcon: function () {
-        if (this.iconExists)
-            return this.obj.childNodes[0].childNodes[0].src;
-        else return null;
-    },
-    hideIcon: function () {
-        if (this.iconExists)
-            this.obj.childNodes[0].childNodes[0].style.display = "none";
-    },
-    removeIcon: function () {
-        if (this.iconExists) {
-            this.obj.childNodes[0].childNodes[0].remove();
-            this.iconExists = false;
-        }
-    },
-
-    /* Form location */
-    setLocation: function (x, y) {
-        this.obj.style.left = x + "px";
-        this.obj.style.top = y + "px";
-    },
-
-    /* Form functions */
-    addNode: function (node) {
-        // Main window area.
-        this.windowAreaObj.appendChild(node);
-    },
-
-    close: function () {
-        this.obj.remove();
-        if (this.taskbarButtonObj != null)
-            this.taskbarButtonObj.remove();
-    }
-}
-
-function Button(text, width, height) {
-    var b = this.obj = document.createElement("div");
-    b.className = "button";
-    b.style.minWidth = (width === undefined ? 72 : width) + "px";
-    b.style.minHeight = (height === undefined ? 17 : height) + "px";
-    b.onmousedown = function () {
-        b.className = "buttondown";
-    };
-    b.onmouseup = function () {
-        b.className = "button";
-    };
-    b.tabIndex = 0;
-
-    var t = this.innerDiv = document.createElement("div");
-    t.className = "innerbutton";
-    t.innerText = text;
-
-    b.appendChild(t);
-}
-
-Button.prototype = {
-    obj: null, innerDiv: null,
-
-    set text (e) {
-        this.innerDiv.innerText = e;
-    },
-    get text () {
-        return this.innerDiv.innerText;
-    }
-}
-
-function ProgressBar() {
-
-}
-
-ProgressBar.prototype = {
-
-}
-
 var WindowZIndex = 0, activeForm = null;
 
 /**
@@ -235,25 +15,25 @@ var WindowManager = {
     showError: function (title, msg) {
         var f = new Form(title);
         WindowManager.makeMsgBox(f, msg, 16);
-        WindowManager.addFormToDesktop(f);
+        f.show();
     },
 
     showQuestion: function (title, msg) {
         var f = new Form(title);
         WindowManager.makeMsgBox(f, msg, 32);
-        WindowManager.addFormToDesktop(f);
+        f.show();
     },
 
     showWarning: function (title, msg) {
         var f = new Form(title);
         WindowManager.makeMsgBox(f, msg, 48);
-        WindowManager.addFormToDesktop(f);
+        f.show();
     },
 
     showInfo: function (title, msg) {
         var f = new Form(title);
         WindowManager.makeMsgBox(f, msg, 64);
-        WindowManager.addFormToDesktop(f);
+        f.show();
     },
 
     /**
@@ -290,7 +70,7 @@ var WindowManager = {
                 break;
         }
 
-        var btnOk = new Button("OK").obj;
+        var btnOk = new Button("OK").node;
         btnOk.tabIndex = 25;
         btnOk.addEventListener("click", function () {
             f.close();
@@ -363,18 +143,18 @@ document, or Internet resource, and Windows will open it for you.";
                 buttons.style.textAlign = "right";
                 buttons.style.margin = "6px 8px";
 
-                var okbut = new Button("OK").obj;
+                var okbut = new Button("OK").node;
                 okbut.style.marginRight = "6px";
                 okbut.onclick = function () {
                     f.close();
                     Shell.run(input.value);
                 };
-                var canbut = new Button("Cancel").obj;
+                var canbut = new Button("Cancel").node;
                 canbut.style.marginRight = "6px";
                 canbut.onclick = function () {
                     f.close();
                 };
-                var brobut = new Button("Browse...").obj;
+                var brobut = new Button("Browse...").node;
 
                 body.appendChild(img);
                 body.appendChild(desc);
@@ -448,7 +228,7 @@ document, or Internet resource, and Windows will open it for you.";
                 
                 var com = new Command();
                 com.con.form = f;
-                var s = com.obj;
+                var s = com.node;
 
                 f.addNode(divcmdmenu);
                 f.addNode(s);
@@ -456,13 +236,13 @@ document, or Internet resource, and Windows will open it for you.";
             case "contests":
                 var c = new Conhost();
 
-                var btnWrite = new Button("Write 'Test'").obj;
+                var btnWrite = new Button("Write 'Test'").node;
                 btnWrite.onclick = function () {
                     c.write("Test");
                 }
 
                 f.addNode(btnWrite);
-                f.addNode(c.obj);
+                f.addNode(c.node);
                 break;
             case "tests":
                 var ff = document.createElement("form");
@@ -498,7 +278,7 @@ document, or Internet resource, and Windows will open it for you.";
                 ff.appendChild(cbt1);
                 f.addNode(ff);
 
-                var tbut = new Button("Button as block").obj;
+                var tbut = new Button("Button as block").node;
                 tbut.style.marginBottom = "6px";
                 tbut.style.display = "block";
 
@@ -515,17 +295,17 @@ document, or Internet resource, and Windows will open it for you.";
 
                 var makecont = document.createElement("div");
 
-                var btnMakeInfo = new Button("Create info").obj;
+                var btnMakeInfo = new Button("Create info").node;
                 btnMakeInfo.style.marginRight = "4px";
                 btnMakeInfo.onclick = function () {
                     WindowManager.showInfo(txt1.value, txt2.value);
                 }
-                var btnMakeWarning = new Button("Create warning").obj;
+                var btnMakeWarning = new Button("Create warning").node;
                 btnMakeWarning.style.marginRight = "4px";
                 btnMakeWarning.onclick = function () {
                     WindowManager.showWarning(txt1.value, txt2.value);
                 }
-                var btnMakeError = new Button("Create error").obj;
+                var btnMakeError = new Button("Create error").node;
                 btnMakeError.onclick = function () {
                     WindowManager.showError(txt1.value, txt2.value);
                 }
@@ -538,7 +318,7 @@ document, or Internet resource, and Windows will open it for you.";
                 f.addNode(txt2);
                 f.addNode(makecont);
 
-                var tc = new Button("Close").obj;
+                var tc = new Button("Close").node;
                 tc.style.cssFloat = "right";
                 tc.style.marginTop = "4px";
                 tc.onclick = function () { f.close(); };
@@ -554,7 +334,7 @@ document, or Internet resource, and Windows will open it for you.";
                 var lblAbout = document.createElement("p");
                 lblAbout.innerHTML =
                     Project.name + "<br/>\
-                    Version " + Project.version + dnl +
+                    Version " + Project.Version.text + dnl +
                     "A web-based Windows 98 simulator. Made from scratch using \
 only HTML5, CSS3, and Javascript (ECMAScript 5.1). No libraries." + dnl +
                     "This is only a personal project, I do not plan to \
@@ -568,15 +348,15 @@ monetize it." + dnl +
                 bottomlayout.style.width = "100%";
                 bottomlayout.style.textAlign = "right";
 
-                var btnOK = new Button("Close").obj;
+                var btnOK = new Button("Close").node;
                 btnOK.onclick = function () { f.close(); };
                 btnOK.style.marginLeft = "6px";
 
-                var btnSpin = new Button("Spin!").obj;
+                var btnSpin = new Button("Spin!").node;
                 btnSpin.onclick = function () {
-                    f.obj.style.animation = "spin 1s";
+                    f.node.style.animation = "spin 1s";
                     setTimeout(function () {
-                        f.obj.style.animation = null;
+                        f.node.style.animation = null;
                     }, 1000);
                 };
 
@@ -593,8 +373,8 @@ monetize it." + dnl +
                     (innerWidth / 2) - (288 / 2),
                     (innerHeight / 2) - (123)
                 );
-                f.obj.onmousedown = f.titlebarObj.onmousedown = null;
-                f.obj.style.zIndex = "8000001";
+                f.node.onmousedown = f.titlebarObj.onmousedown = null;
+                f.node.style.zIndex = "8000001";
 
                 var bg = document.createElement("div");
                 bg.className = "shutdownbg";
@@ -613,7 +393,7 @@ monetize it." + dnl +
                 bcon.style.textAlign = "center";
                 bcon.style.margin = "12px 0 14px 0";
 
-                var btnyes = new Button("Yes", 65).obj;
+                var btnyes = new Button("Yes", 65).node;
                 btnyes.onclick = function (e) {
                     //location.href = "../index.html";
                 }
@@ -623,7 +403,7 @@ monetize it." + dnl +
                     bg.remove();
                 }
 
-                var btnno = new Button("No", 65).obj;
+                var btnno = new Button("No", 65).node;
                 btnno.onclick = fca;
                 btnno.style.marginLeft = "10px";
 
@@ -638,19 +418,12 @@ monetize it." + dnl +
 
                 Startmenu.hide();
                 desktop.appendChild(bg);
-                desktop.appendChild(f.obj);
+                desktop.appendChild(f.node);
                 return;
             default: break;
         }
 
-        WindowManager.addFormToDesktop(f);
-    },
-
-    addFormToDesktop: function (form) {
-        if (form.iconExists)
-            WindowManager.addTaskbarButton(form);
-        desktoparea.appendChild(form.obj);
-        Startmenu.hide();
+        f.show();
     },
 
     addTaskbarButton: function (form) {
@@ -695,7 +468,7 @@ monetize it." + dnl +
          * @param {Node} c Parent container.
          * @param {Event} e Event parameter.
          */
-        startMoving: function (div, c, e) {
+        start: function (div, c, e) {
             var posX = e.clientX, posY = e.clientY,
                 divTop = div.style.top, divLeft = div.style.left,
                 eWi = parseInt(div.style.width),
@@ -716,7 +489,7 @@ monetize it." + dnl +
             };
         },
 
-        stopMoving: function () {
+        stop: function () {
             document.onmousemove = null;
         }
     },
@@ -734,7 +507,6 @@ var Startmenu = {
     visible: false, // Faster than checking with DOM
 
     show: function () {
-        WindowManager.unfocusActiveWindow();
         if (Startmenu.visible) {
             win98menu.style.display = "none";
             startbutton.src = 'images/startmenu/off.png';
@@ -758,4 +530,258 @@ var Startmenu = {
  */
 
 startbutton.onmousedown = Startmenu.show;
-desktoparea.onmousedown = Startmenu.hide;
+desktoparea.onmousedown = function (e) {
+    WindowManager.unfocusActiveWindow();
+    Startmenu.hide();
+};
+
+/**
+ * Creates a new Form.
+ * @param {string} title Title.
+ */
+function Form(title) {
+    var tr = this.tref = this; // Object reference
+    // Make the window, and make a reference.
+    var node = this.node = document.createElement("div");
+
+    node.className = "window";
+    node.style.visibility = "visible";
+    node.style.left = "0px";
+    node.style.top = "0px";
+    node.style.zIndex = ++WindowZIndex;
+    node.style.display = "none";
+    node.onmousedown = function () { tr.focus(); };
+
+    // Titlebar
+    var divtitle = this.titlebarNode = document.createElement("div");
+    divtitle.className = "atitlebar";
+    divtitle.onmousedown = function (e) {
+        WindowManager.Drag.start(node, desktoparea, e);
+    };
+    divtitle.onmouseup = function () {
+        WindowManager.Drag.stop();
+    };
+
+    // Titlebar icon
+    var divtitleicon = document.createElement("img");
+    divtitleicon.src = "images/window/icon.png";
+
+    // Icon
+    divtitleicon.className = "windowicon";
+
+    // Text
+    var divtitletext = this.titleNode = document.createElement("span");
+    divtitletext.className = "titlebartext";
+    if (title != undefined)
+        divtitletext.innerText = this._title = title;
+    else
+        divtitletext.innerText = this._title = "Form";
+
+    // Minimize
+    var divmin = document.createElement("img");
+    divmin.className = "ctrlboxbutton";
+    divmin.src = "images/window/min.png";
+    /*divmin.onclick = function () {
+        
+    };
+    divmin.onmousedown = function () {
+        divmin.src = "images/window/minp.png";
+    };*/
+
+    // Maximize
+    var divmax = document.createElement("img");
+    divmax.className = "ctrlboxbutton";
+    divmax.src = "images/window/max.png";
+    /*divmax.onclick = function () {
+        
+    };
+    divmax.onmousedown = function () {
+        divmin.src = "images/window/maxp.png";
+    };*/
+
+    // Close
+    var divclose = this.closeButtonObj = document.createElement("img");
+    divclose.className = "ctrlboxbuttonc";
+    divclose.src = "images/window/close.png";
+    divclose.onclick = function () {
+        tr.close();
+    };
+    divclose.onmousedown = function () {
+        divclose.src = "images/window/closep.png";
+    };
+
+    divtitle.appendChild(divtitleicon);
+    divtitle.appendChild(divtitletext);
+    divtitle.appendChild(divclose);
+    divtitle.appendChild(divmax);
+    divtitle.appendChild(divmin);
+
+    node.appendChild(divtitle);
+
+    // Form client area
+    var divwindowarea = this.windowAreaNode = document.createElement("div");
+    divwindowarea.className = "windowarea";
+    node.appendChild(divwindowarea);
+}
+
+Form.prototype = {
+    /* References */
+    tref: null, node: null,
+    titlebarNode: null,
+    titleTextNode: null,
+    closeButtonNode: null,
+    windowAreaNode: null,
+    taskbarButtonNode: null,
+    _title: null,
+
+    /* Properties */
+    iconExists: true,
+
+    /* Form size */
+    setSize: function (w, h) {
+        this.node.style.width = w + "px";
+        this.node.style.height = h + "px";
+    },
+    setWidth: function (w) {
+        this.node.style.width = w + "px";
+    },
+    setHeight: function (h) {
+        this.node.style.height = h + "px";
+    },
+
+    /* Focus */
+    focus: function () {
+        if (activeForm != null)
+            activeForm.unfocus();
+        activeForm = this.tref;
+        this.titlebarNode.className = "atitlebar";
+        this.node.style.zIndex = ++WindowZIndex;
+        if (this.taskbarButtonNode != null)
+            this.taskbarButtonNode.className = "tb-focus";
+    },
+    unfocus: function () {
+        this.titlebarNode.className = "ititlebar";
+        activeForm = null;
+        if (this.taskbarButtonNode != null)
+            this.taskbarButtonNode.className = "tb";
+    },
+
+    /* Controlbox */
+    removeMinAndMaxButtons: function () {
+        var b = this.node.childNodes[0].getElementsByClassName("ctrlboxbutton");
+        for (var i = b.length - 1; i >= 0; --i) {
+            b[i].remove();
+        }
+    },
+
+    /* Form title */
+    setTitle: function (text) {
+        if (this.titleNode != undefined)
+            this.titleNode.innerText = this._text = text;
+        else
+            this._title = text;
+    },
+    getTitle: function () {
+        return this._title;
+    },
+
+    /* Form icon */
+    setIcon: function (path) {
+        if (this.iconExists)
+            this.node.childNodes[0].childNodes[0].src = path;
+    },
+    getIcon: function () {
+        if (this.iconExists)
+            return this.node.childNodes[0].childNodes[0].src;
+        else return null;
+    },
+    hideIcon: function () {
+        if (this.iconExists)
+            this.node.childNodes[0].childNodes[0].style.display = "none";
+    },
+    removeIcon: function () {
+        if (this.iconExists) {
+            this.node.childNodes[0].childNodes[0].remove();
+            this.iconExists = false;
+        }
+    },
+
+    /* Form location */
+    setLocation: function (x, y) {
+        this.node.style.left = x + "px";
+        this.node.style.top = y + "px";
+    },
+
+    /* Form functions */
+    addNode: function (node) {
+        this.windowAreaNode.appendChild(node);
+    },
+
+    show: function () {
+        if (this.iconExists)
+            WindowManager.addTaskbarButton(this.tref);
+        activeForm = this.tref;
+        this.node.style.display = "block";
+        desktoparea.appendChild(this.node);
+    },
+    close: function () {
+        this.node.remove();
+        if (this.taskbarButtonNode != null)
+            this.taskbarButtonNode.remove();
+    },
+
+    set title (t) {
+        this.setTitle(t);
+    },
+    get title () {
+        return this._title;
+    },
+    set iconPath (p) {
+        if (this.iconExists)
+            this.node.childNodes[0].childNodes[0].src = path;
+    },
+    get iconPath () {
+        if (this.iconExists)
+            return this.node.childNodes[0].childNodes[0].src;
+        else return null;
+    }
+}
+
+function Button(text, width, height) {
+    var b = this.node = document.createElement("div");
+    b.className = "button";
+    b.style.minWidth = (width === undefined ? 72 : width) + "px";
+    b.style.minHeight = (height === undefined ? 17 : height) + "px";
+    b.onmousedown = function () {
+        b.className = "buttondown";
+    };
+    b.onmouseup = function () {
+        b.className = "button";
+    };
+    b.tabIndex = 0;
+
+    var t = this.innerDiv = document.createElement("div");
+    t.className = "innerbutton";
+    t.innerText = text;
+
+    b.appendChild(t);
+}
+
+Button.prototype = {
+    node: null, innerDiv: null,
+
+    set text (e) {
+        this.innerDiv.innerText = e;
+    },
+    get text () {
+        return this.innerDiv.innerText;
+    }
+}
+
+function ProgressBar() {
+
+}
+
+ProgressBar.prototype = {
+
+}

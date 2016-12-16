@@ -10,7 +10,7 @@
  */
 function Conhost() {
     var tref = this.thisRef = this;
-    var o = this.obj = document.createElement("textarea");
+    var o = this.node = document.createElement("textarea");
     o.className = "conhost";
     o.readOnly = true;
 }
@@ -33,7 +33,7 @@ Conhost.prototype = {
     write: function (input) {
         this.stdout += input;
         this.update();
-        this.obj.scrollTop = this.obj.scrollHeight;
+        this.node.scrollTop = this.node.scrollHeight;
     },
 
     writel: function (input) {
@@ -43,7 +43,7 @@ Conhost.prototype = {
             this.stdout += '\n';
 
         this.update();
-        this.obj.scrollTop = this.obj.scrollHeight;
+        this.node.scrollTop = this.node.scrollHeight;
     },
 
     clearIn: function () {
@@ -66,7 +66,7 @@ Conhost.prototype = {
     },
 
     update: function () {
-        this.obj.value = this.stdout + this.stdin;
+        this.node.value = this.stdout + this.stdin;
     },
 
     /**
@@ -84,10 +84,10 @@ Conhost.prototype = {
 
 function Command() {
     var c = this.con = new Conhost();
-    this.obj = c.obj;
+    this.node = c.node;
     var tref = this;
     // Cheap hack.
-    c.obj.onkeydown = function (e) {
+    c.node.onkeydown = function (e) {
         tref.readKey(e);
         con.update();
         return false;
@@ -226,7 +226,7 @@ Command.prototype = {
                     break;
 
                 case "spin":
-                    var fref = this.con.form.obj;
+                    var fref = this.con.form.node;
                     fref.style.animation = "spin 1s";
                     setTimeout(function () {
                         fref.style.animation = null;

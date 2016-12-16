@@ -15,25 +15,27 @@
  */
 var Project = {
     name: "Windows 98 WebSim",
-    majorVersion: 0, minorVersion: 6, revision: 1,
-    branch: "git", commit: 0,
-    get version () {
-        var t = Project.majorVersion + "." + Project.minorVersion + "." +
-            Project.revision;
+    Version: {
+        major: 0, minor: 7, revision: 0,
+        get text () {
+            var t = Project.Version.major + "." + Project.Version.minor + "." +
+                Project.Version.revision;
 
-        if (Project.branch == "git" || Project.branch == "rc")
-            t += "-" + Project.branch + "-" + Project.commit;
+            if (Project.branch == "git" || Project.branch == "rc")
+                t += "-" + Project.branch + "-" + Project.commit;
 
-        return t;
+            return t;
+        },
     },
-    get full () {
-        return Project.name + " " + Project.version;
+    branch: "git", commit: 1,
+    get fullName () {
+        return Project.name + " " + Project.Version.text;
     }
 };
 
 function start() {
     Object.freeze(Project);
-    websimversion.innerText = Project.full;
+    websimversion.innerText = Project.fullName;
     updateTime24h();
 }
 
@@ -152,7 +154,7 @@ var Shell = {
                     default:
                         if (!console)
                             WindowManager.showError(file,
-                                "The file \"" + file + "\" (or one of its components)\
+                                "The file \"" + file + "\" (or one of its components) \
 cannot be found. Verify the path and the filename are correct, \
 and all the libraries required are available.");
                         return 1;
@@ -163,6 +165,8 @@ and all the libraries required are available.");
                 WindowManager.showError("Shell", "Empty command");
             return 2;
         }
+
+        Startmenu.hide();
     }
 }
 
