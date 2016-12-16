@@ -83,27 +83,27 @@ Conhost.prototype = {
  */
 
 function Command() {
-    var con = this.con = new Conhost();
-    this.obj = con.obj;
+    var c = this.con = new Conhost();
+    this.obj = c.obj;
     var tref = this;
     // Cheap hack.
-    this.obj.onkeydown = function (e) {
+    c.obj.onkeydown = function (e) {
         tref.readKey(e);
         con.update();
         return false;
     };
 
-    con.writel();
-    con.writel("Microsoft Windows(R)");
-    con.writel("   (C)Copyright Microsoft Corp 1981-1998");
-    con.writel();
-    con.writel("Prompt version " + this.version);
+    c.writel();
+    c.writel("Microsoft Windows(R)");
+    c.writel("   (C)Copyright Microsoft Corp 1981-1998");
+    c.writel();
+    c.writel("Prompt version " + this.version);
     this.printPrompt();
 }
 
 Command.prototype = {
     version: "0.1.0",
-    con: null, obj: null,
+    con: null,
     cd: "C:\\",
     /* PROMPT CHARACTER COMBINATIONS
     $Q    = (equal sign)

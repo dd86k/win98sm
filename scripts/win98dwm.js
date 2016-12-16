@@ -199,7 +199,7 @@ function Button(text, width, height) {
     };
     b.tabIndex = 0;
 
-    var t = document.createElement("div");
+    var t = this.innerDiv = document.createElement("div");
     t.className = "innerbutton";
     t.innerText = text;
 
@@ -207,7 +207,14 @@ function Button(text, width, height) {
 }
 
 Button.prototype = {
-    obj: null
+    obj: null, innerDiv: null,
+
+    set text (e) {
+        this.innerDiv.innerText = e;
+    },
+    get text () {
+        return this.innerDiv.innerText;
+    }
 }
 
 function ProgressBar() {
@@ -348,6 +355,9 @@ document, or Internet resource, and Windows will open it for you.";
                 };
                 input.style.marginBottom = "-7px";
                 input.style.width = "277px";
+                setTimeout(function () {
+                    input.focus();
+                }, 100);
 
                 var buttons = document.createElement("div");
                 buttons.style.textAlign = "right";
@@ -546,7 +556,7 @@ document, or Internet resource, and Windows will open it for you.";
                     Project.name + "<br/>\
                     Version " + Project.version + dnl +
                     "A web-based Windows 98 simulator. Made from scratch using \
-only HTML5, CSS3, and Javascript. No libraries." + dnl +
+only HTML5, CSS3, and Javascript (ECMAScript 5.1). No libraries." + dnl +
                     "This is only a personal project, I do not plan to \
 monetize it." + dnl +
                     "Copyright Microsoft (C) 1981-1998 for Windows 98" + dnl +

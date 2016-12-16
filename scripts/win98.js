@@ -15,11 +15,8 @@
  */
 var Project = {
     name: "Windows 98 WebSim",
-    majorVersion: 0,
-    minorVersion: 6,
-    revision: 0,
-    branch: "stable",
-    commit: 0,
+    majorVersion: 0, minorVersion: 6, revision: 1,
+    branch: "git", commit: 0,
     get version () {
         var t = Project.majorVersion + "." + Project.minorVersion + "." +
             Project.revision;
@@ -47,47 +44,40 @@ onload = start;
  */
 
 function updateTime12h() {
-    var currentTime = new Date();
-    var hours = currentTime.getHours();
-    var minutes = currentTime.getMinutes();
+    var t = new Date();
+    var h = t.getHours();
+    var m = t.getMinutes();
 
-    if (minutes < 10) {
-        minutes = "0" + minutes;
+    if (m < 10) {
+        m = "0" + m;
     }
 
     var t = null;
 
-    if (hours > 12) {
+    if (h > 12) {
         t = "PM";
-        hours = hours - 12;
-    } else if (hours == 12) {
+        h = h - 12;
+    } else if (h == 12) {
         t = "PM";
     } else {
         t = "AM";
     }
 
-    ostime.innerHTML = hours + ":" + minutes + " " + t;
+    ostime.innerHTML = h + ":" + m + " " + t;
 }
 
 function updateTime24h() {
-    var currentTime = new Date();
-    var hours = currentTime.getHours();
-    var minutes = currentTime.getMinutes();
+    var t = new Date();
+    var m = t.getMinutes();
 
-    if (minutes < 10) {
-        minutes = "0" + minutes;
+    if (m < 10) {
+        m = "0" + m;
     }
 
-    ostime.innerHTML = hours + ":" + minutes;
+    ostime.innerHTML = t.getHours() + ":" + m;
 }
 
 setInterval(updateTime24h, 5000);
-
-/*
- * A program.
- */
-
-
 
 /**
  * Utilities.
