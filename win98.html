@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="description" content="Windows 98 Web Simulator, only with HTML5, CSS3, and Javascript technologies.">
     <meta name="keywords" content="Windows 98,win98,simulator">
-    <meta name="author" content="DD~!">
+    <meta name="author" content="dd86k">
     <title>Windows 98 WebSim</title>
     <link href="styles/win98.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="favicon.png" />
@@ -18,10 +18,7 @@
         <p id="websimversion"></p>
         <div id="taskbar">
             <img id="startbutton" src="images/startmenu/off.png" alt="Start" title="Click here to start." />
-            <table id="maintoolbar">
-                <tbody>
-                    <tr></tr>
-                </tbody>
+            <table id="maintoolbar"><tbody><tr></tr></tbody>
             </table>
             <div id="systray"><time id="ostime">...</time></div>
             <div class="sep"></div>
@@ -29,11 +26,11 @@
     </div>
 
     <div id="win98menu" style="display: none;">
-        <div onclick="Shell.run('shell:about')">
+        <div onclick="Shell.run('shell:about');Startmenu.hide();">
             <img src="images/startmenu/item11.png" />
             <span>About</span>
         </div>
-        <div onclick="Shell.run('https://github.com/dd86k/win98sm')">
+        <div onclick="Shell.run('https://github.com/dd86k/win98sm');Startmenu.hide();">
             <img src="images/startmenu/item10.png" />
             <span>Github Project Page</span>
         </div>
@@ -43,31 +40,31 @@
             <span>Programs</span>
             <div class="submenu">
                 <div class="subfolder">
-                    <img src="images/startmenu/subapps.png" />
+                    <img src="images/x16/appfolder.png" />
                     <span>Accessories</span>
                     <div class=submenu>
-                        <div onclick="Shell.run('notepad.exe')">
+                        <div onclick="Shell.run('notepad.exe');Startmenu.hide();">
                             <img src="images/notepad/icon.png" />
                             <span>Notepad</span>
                         </div>
                     </div>
                 </div>
                 <div class="subfolder">
-                    <img src="images/startmenu/subapps.png" />
+                    <img src="images/x16/appfolder.png" />
                     <span>Debug</span>
                     <div class=submenu>
-                        <div onclick="Shell.run('shell:tests')">
+                        <div onclick="Shell.run('shell:tests');Startmenu.hide();">
                             <img src="images/window/icon.png" />
                             <span>Form Playground</span>
                         </div>
-                        <div onclick="Shell.run('shell:contests')">
+                        <div onclick="Shell.run('shell:contests');Startmenu.hide();">
                             <img src="images/window/icon.png" />
                             <span>Console Playground</span>
                         </div>
                     </div>
                 </div>
                 <div class="subfolder">
-                    <img src="images/startmenu/subapps.png" />
+                    <img src="images/x16/appfolder.png" />
                     <span>StartUp</span>
                     <div class=submenu>
                         <div class="empty">
@@ -75,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                <div onclick="Shell.run('command.com')">
+                <div onclick="Shell.run('command.com');Startmenu.hide();">
                     <img src="images/command/icon.png" />
                     <span>MS-DOS Prompt</span>
                 </div>
@@ -84,6 +81,12 @@
         <div class="folder">
             <img src="images/startmenu/item08.png" />
             <span>Favorites</span>
+            <div class="submenu">
+                <div>
+                    <img src="images/x16/iepage.png" />
+                    <span><a href="https://github.com/dd86k/win98sm" target="_blank">Github Page</a></span>
+                </div>
+            </div>
         </div>
         <div class="folder">
             <img src="images/startmenu/item07.png" />
@@ -101,12 +104,12 @@
             <img src="images/startmenu/item04.png" />
             <span>Help</span>
         </div>
-        <div onclick="Shell.run('shell:run')">
+        <div onclick="Shell.run('shell:run');Startmenu.hide();">
             <img src="images/startmenu/item03.png" />
             <span>Run...</span>
         </div>
         <div class="sep"></div>
-        <div onclick="Shell.run('shell:logoff')">
+        <div onclick="Shell.run('shell:logoff');Startmenu.hide();">
             <img src="images/startmenu/item02.png" />
             <span>Log Off...</span>
         </div>
