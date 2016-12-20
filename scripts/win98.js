@@ -17,7 +17,7 @@ var Project = {
     name: "Windows 98 WebSim",
     Version: {
         major: 0, minor: 7, revision: 0,
-        branch: "git", commit: 2,
+        branch: "git", commit: 3,
         get text () {
             var t = Project.Version.major + "." +
                 Project.Version.minor + "." +
@@ -35,13 +35,16 @@ var Project = {
     }
 };
 
-function start() {
+function boot() {
+    // win98.js
     Object.freeze(Project);
+    // win98dwm.js
+    Object.freeze(MessageBoxIcons);
     websimversion.innerText = Project.fullName;
     updateTime24h();
 }
 
-onload = start;
+onload = boot;
 
 /*
  * Time.
@@ -119,7 +122,7 @@ var Shell = {
      */
     run: function (file, args, console) {
         if (file != null && file.length > 0) {
-            if (/^(http)/i.test(file)) {
+            if (/^(http:\/\/)/i.test(file)) {
                 open(file);
             } else {
                 var s = file.split(" ", 128);
@@ -136,6 +139,10 @@ var Shell = {
                         var com = new Command();
                         com.con.form = f;
                         var s = com.node;
+
+                        f.node.onclick = function (e) {
+                            com.con.node.focus();
+                        };
 
                         f.addNode(divcmdmenu);
                         f.addNode(s);
@@ -364,12 +371,12 @@ var Shell = {
                         f.addNode(tbut);
 
                         var txt1 = document.createElement("textarea");
-                        txt1.defaultValue = "Title";
                         txt1.placeholder = "Title";
+                        txt1.defaultValue = "Title";
                         txt1.rows = 1;
                         var txt2 = document.createElement("textarea");
-                        txt2.defaultValue = "Message";
                         txt2.placeholder = "Message";
+                        txt2.defaultValue = "Message";
                         txt2.rows = 1;
 
                         var makecont = document.createElement("div");

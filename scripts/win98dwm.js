@@ -8,33 +8,60 @@
 var WindowZIndex = 0, activeForm = null;
 
 /**
+ * Enumerations
+ */
+
+var MessageBoxIcons = {
+    
+}
+
+/**
+ * Message dialog boxes.
+ */
+
+var MessageBox = {
+    show: function (title, msg, icon) {
+
+    },
+
+    showError: function (title, msg) {
+        var f = new Form();
+        f.title = title;
+        WindowManager.makeMsgBox(f, msg, 16);
+        f.show();
+        f.center();
+    },
+
+    showQuestion: function (title, msg) {
+        var f = new Form();
+        f.title = title;
+        WindowManager.makeMsgBox(f, msg, 32);
+        f.show();
+        f.center();
+    },
+
+    showWarning: function (title, msg) {
+        var f = new Form();
+        f.title = title;
+        WindowManager.makeMsgBox(f, msg, 48);
+        f.show();
+        f.center();
+    },
+
+    showInfo: function (title, msg) {
+        var f = new Form();
+        f.title = title;
+        WindowManager.makeMsgBox(f, msg, 64);
+        f.show();
+        f.center();
+    },
+}
+
+/**
  * Window Manager.
  */
 
 var WindowManager = {
-    showError: function (title, msg) {
-        var f = new Form(title);
-        WindowManager.makeMsgBox(f, msg, 16);
-        f.show();
-    },
-
-    showQuestion: function (title, msg) {
-        var f = new Form(title);
-        WindowManager.makeMsgBox(f, msg, 32);
-        f.show();
-    },
-
-    showWarning: function (title, msg) {
-        var f = new Form(title);
-        WindowManager.makeMsgBox(f, msg, 48);
-        f.show();
-    },
-
-    showInfo: function (title, msg) {
-        var f = new Form(title);
-        WindowManager.makeMsgBox(f, msg, 64);
-        f.show();
-    },
 
     /**
      * Makes the msgbox, internal use only.
@@ -45,7 +72,7 @@ var WindowManager = {
     makeMsgBox: function (f, msg, type) {
         f.removeMinAndMaxButtons();
         f.removeIcon();
-        f.setLocation(200, 100);
+        f.center();
         var divmsg = document.createElement("p");
         divmsg.className = "msgboxMsg";
 
@@ -100,10 +127,10 @@ var WindowManager = {
         }
 
         var icon = document.createElement("img");
-        icon.src = form.getIcon();
+        icon.src = form.iconPath;
 
         var text = document.createElement("span");
-        text.innerText = form.getTitle();
+        text.innerText = form.title;
 
         c.appendChild(icon);
         c.appendChild(text);
@@ -191,7 +218,7 @@ desktoparea.onmousedown = function (e) {
 
 /**
  * Creates a new Form.
- * @param {string} title Title.
+ * @class
  */
 function Form() {
     var tr = this.tref = this; // Object reference
@@ -199,10 +226,8 @@ function Form() {
     var node = this.node = document.createElement("div");
 
     node.className = "window";
-    node.style.visibility = "visible";
     node.style.left = "0px";
     node.style.top = "0px";
-    node.style.zIndex = ++WindowZIndex;
     node.style.display = "none";
     node.onmousedown = function () { tr.focus(); };
 
@@ -337,6 +362,12 @@ Form.prototype = {
     getTitle: function () {
         return this._title;
     },
+    set title (t) {
+        this.setTitle(t);
+    },
+    get title () {
+        return this._title;
+    },
 
     /* Form icon */
     setIcon: function (path) {
@@ -365,6 +396,15 @@ Form.prototype = {
         this.node.style.top = y + "px";
     },
 
+    center: function () {
+        var w = this.node.offsetWidth
+        var h = this.node.offsetHeight;
+        this.setLocation(
+            (innerWidth / 2) - (w / 2),
+            (innerHeight / 2) - (h / 2)
+        );
+    },
+
     /* Form functions */
     addNode: function (node) {
         this.windowAreaNode.appendChild(node);
@@ -372,10 +412,10 @@ Form.prototype = {
 
     show: function () {
         if (this.iconExists)
-            WindowManager.addTaskbarButton(this.tref);
-        activeForm = this.tref;
+            WindowManager.addTaskbarButton(this);
         this.node.style.display = "block";
         desktoparea.appendChild(this.node);
+        this.focus();
     },
     close: function () {
         this.node.remove();
@@ -383,12 +423,6 @@ Form.prototype = {
             this.taskbarButtonNode.remove();
     },
 
-    set title (t) {
-        this.setTitle(t);
-    },
-    get title () {
-        return this._title;
-    },
     set iconPath (path) {
         if (this.iconExists)
             this.node.childNodes[0].childNodes[0].src = path;
@@ -400,6 +434,10 @@ Form.prototype = {
     }
 }
 
+/**
+ * Constructs a new Button.
+ * @class
+ */
 function Button(text, width, height) {
     var b = this.node = document.createElement("div");
     b.className = "button";
@@ -431,6 +469,10 @@ Button.prototype = {
     }
 }
 
+/**
+ * Constructs a ProgressBar.
+ * @class
+ */
 function ProgressBar() {
 
 }
