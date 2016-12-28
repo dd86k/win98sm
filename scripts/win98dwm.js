@@ -315,7 +315,6 @@ Form.prototype = {
 
     /* Focus */
     focus: function () {
-        console.log("focus");
         if (activeForm != null)
             activeForm.unfocus();
         activeForm = this.tref;
@@ -325,7 +324,6 @@ Form.prototype = {
             this.taskbarButtonNode.className = "tb-focus";
     },
     unfocus: function () {
-        console.log("unfocus");
         this.titlebarNode.className = "ititlebar";
         activeForm = null;
         if (this.taskbarButtonNode != null)
@@ -347,22 +345,22 @@ Form.prototype = {
     getTitle: function () {
         return this._title;
     },
-    set title (t) {
-        this.setTitle(t);
-    },
     get title () {
         return this._title;
     },
+    set title (t) {
+        this.setTitle(t);
+    },
 
     /* Form icon */
-    setIcon: function (path) {
-        if (this.iconExists)
-            this.node.childNodes[0].childNodes[0].src = path;
-    },
     getIcon: function () {
         if (this.iconExists)
             return this.node.childNodes[0].childNodes[0].src;
         else return null;
+    },
+    setIcon: function (path) {
+        if (this.iconExists)
+            this.node.childNodes[0].childNodes[0].src = path;
     },
     hideIcon: function () {
         if (this.iconExists)
@@ -411,15 +409,15 @@ Form.prototype = {
             this.taskbarButtonNode.remove();
     },
 
-    set iconPath (path) {
-        if (this.iconExists)
-            this.node.childNodes[0].childNodes[0].src = path;
-    },
     get iconPath () {
         if (this.iconExists)
             return this.node.childNodes[0].childNodes[0].src;
         else return null;
-    }
+    },
+    set iconPath (path) {
+        if (this.iconExists)
+            this.node.childNodes[0].childNodes[0].src = path;
+    },
 }
 
 /**

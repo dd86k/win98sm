@@ -502,12 +502,89 @@ monetize it." + dnl +
                         desktop.appendChild(f.node);
                         return 0;
                     }
-                    case "mspaint":
-                    case "mspaint.exe": {
+                    case "mspaint": case "mspaint.exe": {
                         var f = new Form();
                         f.title = "untitled - Paint";
+                        f.iconPath = "images/x16/mspaint.png";
 
+                        function addClick(x, y, dragging) {
+                            clickX.push(x);
+                            clickY.push(y);
+                            clickDrag.push(dragging);
+                            clickColor.push(brushColor);
+                        }
 
+                        function redraw() {
+                            ca.clearRect(0, 0,
+                                ca.canvas.width, ca.canvas.height);
+                            
+                            //ca.strokeStyle = "#df4b26";
+                            //ca.strokeStyle = "black";
+                            //ca.lineJoin = "round";
+                            //ca.lineWidth = 1;
+                                        
+                            for (var i=0; i < clickX.length; i++) {		
+                                ca.beginPath();
+                                if (clickDrag[i] && i) {
+                                    ca.moveTo(clickX[i-1], clickY[i-1]);
+                                } else {
+                                    ca.moveTo(clickX[i]-1, clickY[i]);
+                                }
+                                ca.lineTo(clickX[i], clickY[i]);
+                                ca.closePath();
+                                ca.strokeStyle = clickColor[i];
+                                ca.stroke();
+                            }
+                        }
+
+                        var clickX = new Array();
+                        var clickY = new Array();
+                        var clickDrag = new Array();
+                        var clickColor = new Array();
+                        var painting = false;
+                        var brushColor = "black";
+                        var a = document.createElement("canvas");
+                        a.style.backgroundColor = "white";
+                        var ca = a.getContext("2d");
+
+                        a.onmousedown = function (e) {
+                            painting = true;
+                            addClick(e.layerX, e.layerY);
+                            redraw();
+                        };
+                        a.onmousemove = function (e) {
+                            if (painting) {
+                                addClick(e.layerX, e.layerY, true);
+                                redraw();
+                            }
+                        };
+                        a.onmouseup = function (e) {
+                            painting = false;
+                        };
+
+                        var colorPurple = document.createElement("div");
+                        colorPurple.style.backgroundColor = "purple";
+                        colorPurple.style.height = "13px";
+                        colorPurple.style.width = "13px";
+                        colorPurple.onclick = function () {
+                            brushColor = "purple";
+                        };
+
+                        f.addNode(a);
+                        f.addNode(colorPurple);
+                        f.show();
+                        return 0;
+                    }
+                    case "msinfo32": case "msinfo32.exe": {
+                        var f = new Form();
+                        f.title = "System Info";
+
+                        var s = document.createElement("span");
+                        s.innerHTML = 
+                            "OS: " + window.navigator.platform + "<br/>" +
+                            "Vendor: " + navigator.vendor;
+
+                        f.addNode(s);
 
                         f.show();
                         return 0;
