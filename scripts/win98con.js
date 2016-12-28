@@ -9,16 +9,15 @@
  * Creates a new Console screen. Inline only. Unicolor.
  */
 function Conhost() {
-    var tref = this.thisRef = this;
-    var o = this.node = document.createElement("textarea");
-    o.className = "conhost";
-    o.readOnly = true;
+    var t = this.tref = this;
+    var n = this.node = document.createElement("textarea");
+    n.className = "conhost";
+    n.readOnly = true;
 }
 
 Conhost.prototype = {
     version: "0.1.0",
-    // 'this', textarea, and form references.
-    thisRef: null, obj: null, form: null,
+    tref: null, node: null, form: null,
     stdin: "", stdout: "",
     echo: true,
 

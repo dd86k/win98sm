@@ -577,3 +577,28 @@ ProgressBar.prototype = {
 
 
 }
+
+/**
+ * Menu bar system.
+ */
+function Menu() {
+    var t = this.tref = this;
+
+}
+
+Menu.prototype = {
+    tref: null, node: null,
+
+
+}
+
+function MenuItem() {
+    var t = this.tref = this;
+    
+}
+
+MenuItem.prototype = {
+    tref: null, node: null,
+
+
+}

@@ -17,7 +17,7 @@ var Project = {
     name: "Windows 98 WebSim",
     Version: {
         major: 0, minor: 7, revision: 0,
-        branch: "git", commit: 5,
+        branch: "git", commit: 6,
         get text () {
             var t = Project.Version.major + "." +
                 Project.Version.minor + "." +
@@ -114,7 +114,7 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function () {
 
 var Shell = {
     /**
-     * Run a file. (Fake)
+     * Execute.
      * @param {string} path - The virtual path to the file.
      * @param {string} args - Command arguments.
      * @param {boolean} console - In console. 
@@ -122,8 +122,8 @@ var Shell = {
      */
     run: function (file, args, console) {
         if (file != null && file.length > 0) {
-            if (/^(http:\/\/)/i.test(file)) {
-                open(file);
+            if (/^(https?:\/\/)/i.test(file)) {
+                window.open(file);
             } else {
                 var s = file.split(" ", 128);
                 switch (s[0].toLowerCase()) {
@@ -500,6 +500,16 @@ monetize it." + dnl +
                         Startmenu.hide();
                         desktop.appendChild(bg);
                         desktop.appendChild(f.node);
+                        return 0;
+                    }
+                    case "mspaint":
+                    case "mspaint.exe": {
+                        var f = new Form();
+                        f.title = "untitled - Paint";
+
+
+
+                        f.show();
                         return 0;
                     }
                     default:
