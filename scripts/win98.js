@@ -17,7 +17,7 @@ var Project = {
     name: "Windows 98 WebSim",
     Version: {
         major: 0, minor: 7, revision: 0,
-        branch: "git", commit: 4,
+        branch: "git", commit: 5,
         get text () {
             var t = Project.Version.major + "." +
                 Project.Version.minor + "." +
@@ -39,7 +39,7 @@ function boot() {
     // win98.js
     Object.freeze(Project);
     // win98dwm.js
-    Object.freeze(MessageBoxIcons);
+    Object.freeze(MessageBoxIcon);
     websimversion.innerText = Project.fullName;
     updateTime24h();
 }
@@ -226,7 +226,7 @@ var Shell = {
 
                         var desc = document.createElement("p");
                         desc.innerText = "Type the name of a program, folder, \
-        document, or Internet resource, and Windows will open it for you.";
+document, or Internet resource, and Windows will open it for you.";
                         desc.style.fontSize = "12px";
                         desc.style.maxWidth = "280px";
                         desc.style.cssFloat = "right";
@@ -297,12 +297,12 @@ var Shell = {
                             Project.name + "<br/>\
                             Version " + Project.Version.text + dnl +
                             "A web-based Windows 98 simulator. Made from scratch using \
-        only HTML5, CSS3, and Javascript (ECMAScript 5.1). No libraries." + dnl +
+only HTML5, CSS3, and Javascript (ECMAScript 5.1). No libraries." + dnl +
                             "This is only a personal project, I do not plan to \
-        monetize it." + dnl +
+monetize it." + dnl +
                             "Copyright Microsoft (C) 1981-1998 for Windows 98" + dnl +
-                            "Everything written by DD~!<br/>You can contact me via \
-        <a href=\"mailto:devddstuff@gmail.com\">email</a>.";
+                            "Written by dd86k •️ \
+<a href=\"mailto:devddstuff@gmail.com\">Email</a>.";
                         lblAbout.style.textAlign = "center";
 
                         var bottomlayout = document.createElement("div");
@@ -325,6 +325,7 @@ var Shell = {
                         bottomlayout.appendChild(btnOK);
                         f.addNode(lblAbout);
                         f.addNode(bottomlayout);
+                        f.show();
                         return 0;
                     }
                     case "shell:tests": {
@@ -382,6 +383,7 @@ var Shell = {
                         var makecont = document.createElement("div");
 
                         var cb = new ComboBox();
+                        cb.addItem("None");
                         cb.addItem("Critical");
                         cb.addItem("Question");
                         cb.addItem("Error");
@@ -391,15 +393,18 @@ var Shell = {
                         btnMakeMsgBox.onclick = function () {
                             switch (cb.selectedIndex) {
                             case 0:
-                                MessageBox.showError(txt1.value, txt2.value);
+                                MessageBox.show(txt1.value, txt2.value, 0);
                                 break;
                             case 1:
-                                MessageBox.showQuestion(txt1.value, txt2.value);
+                                MessageBox.showError(txt1.value, txt2.value);
                                 break;
                             case 2:
-                                MessageBox.showWarning(txt1.value, txt2.value);
+                                MessageBox.showQuestion(txt1.value, txt2.value);
                                 break;
                             case 3:
+                                MessageBox.showWarning(txt1.value, txt2.value);
+                                break;
+                            case 4:
                                 MessageBox.showInfo(txt1.value, txt2.value);
                                 break;
                             default:

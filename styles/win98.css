@@ -506,6 +506,7 @@ input[type=checkbox] + label
     background-color: #000080;
     color: white;
 }
+
 #win98menu .submenu .submenu
 {
     margin: -5px 0 0 118px; /* Temporary */

@@ -7,53 +7,95 @@
 
 var WindowZIndex = 0, activeForm = null;
 
-/**
+/*
  * Enumerations
  */
 
-var MessageBoxIcons = {
-    
+var MessageBoxIcon = {
+    critical: 16,
+    question: 32,
+    exclamation: 48,
+    info: 64
 }
 
 /**
- * Message dialog boxes.
+ * Display a message window to the user.
  */
 
 var MessageBox = {
+    /**
+     * Displays a message box with a title, message, and icon.
+     */
     show: function (title, msg, icon) {
+        var f = new Form();
+        f.removeMinAndMaxButtons();
+        f.removeIcon();
+        f.title = title;
 
+        var divmsgicon = document.createElement("img");
+        divmsgicon.className = "msgboxIcon";
+
+        switch (icon) {
+            case MessageBoxIcon.critical:
+                divmsgicon.src = "images/msgbox/critical.png";
+                break;
+            case MessageBoxIcon.question:
+                divmsgicon.src = "images/msgbox/question.png";
+                break;
+            case MessageBoxIcon.exclamation:
+                divmsgicon.src = "images/msgbox/exclamation.png";
+                break;
+            case MessageBoxIcon.info:
+                divmsgicon.src = "images/msgbox/info.png";
+                break;
+        }
+
+        var divmsg = document.createElement("p");
+        divmsg.innerText = msg;
+        if (divmsgicon.src == "") {
+            divmsg.style.textAlign = "center";
+            divmsg.style.margin = "10px";
+            divmsg.style.maxWidth = "300px";
+            divmsg.style.wordWrap = "break-word";
+        }
+        else {
+            divmsg.className = "msgboxMsg";
+            f.addNode(divmsgicon);
+        }
+
+        var btnOk = new Button("OK").node;
+        btnOk.onclick = function () {
+            f.close();
+        };
+
+        var divcont = document.createElement("div");
+        divcont.style.margin = "12px 0 8px 0";
+        divcont.style.width = "100%";
+        divcont.style.textAlign = "center";
+
+        divcont.appendChild(btnOk);
+
+        f.addNode(divmsg);
+        f.addNode(divcont);
+
+        f.show();
+        f.center();
     },
 
     showError: function (title, msg) {
-        var f = new Form();
-        f.title = title;
-        WindowManager.makeMsgBox(f, msg, 16);
-        f.show();
-        f.center();
+        MessageBox.show(title, msg, MessageBoxIcon.critical);
     },
 
     showQuestion: function (title, msg) {
-        var f = new Form();
-        f.title = title;
-        WindowManager.makeMsgBox(f, msg, 32);
-        f.show();
-        f.center();
+        MessageBox.show(title, msg, MessageBoxIcon.question);
     },
 
     showWarning: function (title, msg) {
-        var f = new Form();
-        f.title = title;
-        WindowManager.makeMsgBox(f, msg, 48);
-        f.show();
-        f.center();
+        MessageBox.show(title, msg, MessageBoxIcon.exclamation);
     },
 
     showInfo: function (title, msg) {
-        var f = new Form();
-        f.title = title;
-        WindowManager.makeMsgBox(f, msg, 64);
-        f.show();
-        f.center();
+        MessageBox.show(title, msg, MessageBoxIcon.info);
     },
 }
 
@@ -63,56 +105,8 @@ var MessageBox = {
 
 var WindowManager = {
     /**
-     * Makes the msgbox, internal use only.
-     * @param {Object} f Form, passed by reference.
-     * @param {string} msg Message.
-     * @param {number} type MsgBox Type.
+     * Internal use.
      */
-    makeMsgBox: function (f, msg, type) {
-        f.removeMinAndMaxButtons();
-        f.removeIcon();
-        var divmsg = document.createElement("p");
-        divmsg.className = "msgboxMsg";
-
-        var divmsgtext = document.createTextNode(msg);
-        divmsg.appendChild(divmsgtext);
-
-        var divmsgicon = document.createElement("img");
-        divmsgicon.className = "msgboxIcon";
-
-        switch (type) {
-            case 16:
-                divmsgicon.src = "images/msgbox/critical.png";
-                break;
-            case 32:
-                divmsgicon.src = "images/msgbox/question.png";
-                break;
-            case 48:
-                divmsgicon.src = "images/msgbox/exclamation.png";
-                break;
-            case 64:
-                divmsgicon.src = "images/msgbox/info.png";
-                break;
-        }
-
-        var btnOk = new Button("OK").node;
-        btnOk.tabIndex = 25;
-        btnOk.addEventListener("click", function () {
-            f.close();
-        });
-
-        var divcont = document.createElement("div");
-        divcont.style.margin = "12px 0 8px 0";
-        divcont.style.width = "100%";
-        divcont.style.textAlign = "center";
-
-        divcont.appendChild(btnOk);
-
-        f.addNode(divmsgicon);
-        f.addNode(divmsg);
-        f.addNode(divcont);
-    },
-
     addTaskbarButton: function (form) {
         var c = maintoolbar.rows[0].insertCell(-1);
         c.className = "tb-focus";
@@ -136,13 +130,18 @@ var WindowManager = {
         form.taskbarButtonNode = c;
     },
 
+    /**
+     * Internal use.
+     */
     unfocusActiveWindow: function () {
         if (activeForm != null) {
             activeForm.unfocus();
         }
     },
 
-    // Mofified function from niente00, StackOverflow
+    /**
+     * Internal use.
+     */
     Drag: {
         move: function (node, x, y) {
             node.style.left = x + 'px';
@@ -171,30 +170,21 @@ var WindowManager = {
         },
 
         stop: function () { document.onmousemove = null; }
-    },
-
-    Systray: {
-
     }
 };
 
 /**
- * Start menu.
+ * Start menu. Internal use.
  */
 
 var Startmenu = {
     visible: false, // Faster than checking with DOM
 
     show: function () {
-        if (Startmenu.visible) {
-            win98menu.style.display = "none";
-            startbutton.src = 'images/startmenu/off.png';
-            Startmenu.visible = false;
-        } else {
-            win98menu.style.display = "block";;
-            startbutton.src = 'images/startmenu/on.png';
-            Startmenu.visible = true;
-        }
+        WindowManager.unfocusActiveWindow();
+        win98menu.style.display = "block";
+        startbutton.src = 'images/startmenu/on.png';
+        Startmenu.visible = true;
     },
 
     hide: function () {
@@ -247,29 +237,29 @@ function Form() {
     dicon.className = "windowicon";
 
     // Text
-    var dtitle = this.titleNode = document.createElement("span");
-    dtitle.className = "titlebartext";
-    dtitle.innerText = this._title = "Form";
+    var dtext = this.titleNode = document.createElement("span");
+    dtext.className = "titlebartext";
+    dtext.innerText = this._title = "Form";
 
     // Minimize
     var dmin = document.createElement("img");
     dmin.className = "ctrlboxbutton";
     dmin.src = "images/window/min.png";
-    /*divmin.onclick = function () {
+    /*dmin.onclick = function () {
         
     };
-    divmin.onmousedown = function () {
-        divmin.src = "images/window/minp.png";
+    dmin.onmousedown = function () {
+        dmin.src = "images/window/minp.png";
     };*/
 
     // Maximize
     var dmax = document.createElement("img");
     dmax.className = "ctrlboxbutton";
     dmax.src = "images/window/max.png";
-    /*divmax.onclick = function () {
+    /*dmax.onclick = function () {
         
     };
-    divmax.onmousedown = function () {
+    dmax.onmousedown = function () {
         divmin.src = "images/window/maxp.png";
     };*/
 
@@ -285,7 +275,7 @@ function Form() {
     };
 
     dtitle.appendChild(dicon);
-    dtitle.appendChild(dtitle);
+    dtitle.appendChild(dtext);
     dtitle.appendChild(dclose);
     dtitle.appendChild(dmax);
     dtitle.appendChild(dmin);
@@ -352,10 +342,7 @@ Form.prototype = {
 
     /* Form title */
     setTitle: function (text) {
-        if (this.titleNode != undefined)
-            this.titleNode.innerText = this._text = text;
-        else
-            this._title = text;
+        this.titleNode.innerText = this._text = text;
     },
     getTitle: function () {
         return this._title;
@@ -467,6 +454,20 @@ Button.prototype = {
     },
     get text () {
         return this.innerDiv.innerText;
+    },
+
+    get width () {
+        return this.style.width;
+    },
+    set width (w) {
+        this.node.style.width = w + 'px';
+    },
+
+    get height () {
+        return this.style.height;
+    },
+    set height (h) {
+        this.node.style.height = h + 'px';
     }
 }
 
