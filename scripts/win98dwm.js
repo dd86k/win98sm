@@ -62,7 +62,6 @@ var MessageBox = {
  */
 
 var WindowManager = {
-
     /**
      * Makes the msgbox, internal use only.
      * @param {Object} f Form, passed by reference.
@@ -72,7 +71,6 @@ var WindowManager = {
     makeMsgBox: function (f, msg, type) {
         f.removeMinAndMaxButtons();
         f.removeIcon();
-        f.center();
         var divmsg = document.createElement("p");
         divmsg.className = "msgboxMsg";
 
@@ -135,7 +133,7 @@ var WindowManager = {
         c.appendChild(icon);
         c.appendChild(text);
 
-        form.taskbarButtonObj = c;
+        form.taskbarButtonNode = c;
     },
 
     unfocusActiveWindow: function () {
@@ -221,42 +219,42 @@ desktoparea.onmousedown = function (e) {
  * @class
  */
 function Form() {
-    var tr = this.tref = this; // Object reference
+    var r = this.tref = this; // Object reference
     // Make the window, and make a reference.
-    var node = this.node = document.createElement("div");
+    var n = this.node = document.createElement("div");
 
-    node.className = "window";
-    node.style.left = "0px";
-    node.style.top = "0px";
-    node.style.display = "none";
-    node.onmousedown = function () { tr.focus(); };
+    n.className = "window";
+    n.style.left = "0px";
+    n.style.top = "0px";
+    n.style.display = "none";
+    n.onmousedown = function () { r.focus(); };
 
     // Titlebar
-    var divtitle = this.titlebarNode = document.createElement("div");
-    divtitle.className = "atitlebar";
-    divtitle.onmousedown = function (e) {
-        WindowManager.Drag.start(node, desktoparea, e);
+    var dtitle = this.titlebarNode = document.createElement("div");
+    dtitle.className = "atitlebar";
+    dtitle.onmousedown = function (e) {
+        WindowManager.Drag.start(n, desktoparea, e);
     };
-    divtitle.onmouseup = function () {
+    dtitle.onmouseup = function () {
         WindowManager.Drag.stop();
     };
 
     // Titlebar icon
-    var divtitleicon = document.createElement("img");
-    divtitleicon.src = "images/window/icon.png";
+    var dicon = document.createElement("img");
+    dicon.src = "images/window/icon.png";
 
     // Icon
-    divtitleicon.className = "windowicon";
+    dicon.className = "windowicon";
 
     // Text
-    var divtitletext = this.titleNode = document.createElement("span");
-    divtitletext.className = "titlebartext";
-    divtitletext.innerText = this._title = "Form";
+    var dtitle = this.titleNode = document.createElement("span");
+    dtitle.className = "titlebartext";
+    dtitle.innerText = this._title = "Form";
 
     // Minimize
-    var divmin = document.createElement("img");
-    divmin.className = "ctrlboxbutton";
-    divmin.src = "images/window/min.png";
+    var dmin = document.createElement("img");
+    dmin.className = "ctrlboxbutton";
+    dmin.src = "images/window/min.png";
     /*divmin.onclick = function () {
         
     };
@@ -265,9 +263,9 @@ function Form() {
     };*/
 
     // Maximize
-    var divmax = document.createElement("img");
-    divmax.className = "ctrlboxbutton";
-    divmax.src = "images/window/max.png";
+    var dmax = document.createElement("img");
+    dmax.className = "ctrlboxbutton";
+    dmax.src = "images/window/max.png";
     /*divmax.onclick = function () {
         
     };
@@ -276,28 +274,28 @@ function Form() {
     };*/
 
     // Close
-    var divclose = this.closeButtonObj = document.createElement("img");
-    divclose.className = "ctrlboxbuttonc";
-    divclose.src = "images/window/close.png";
-    divclose.onclick = function () {
-        tr.close();
+    var dclose = this.closeButtonObj = document.createElement("img");
+    dclose.className = "ctrlboxbuttonc";
+    dclose.src = "images/window/close.png";
+    dclose.onclick = function () {
+        r.close();
     };
-    divclose.onmousedown = function () {
-        divclose.src = "images/window/closep.png";
+    dclose.onmousedown = function () {
+        dclose.src = "images/window/closep.png";
     };
 
-    divtitle.appendChild(divtitleicon);
-    divtitle.appendChild(divtitletext);
-    divtitle.appendChild(divclose);
-    divtitle.appendChild(divmax);
-    divtitle.appendChild(divmin);
+    dtitle.appendChild(dicon);
+    dtitle.appendChild(dtitle);
+    dtitle.appendChild(dclose);
+    dtitle.appendChild(dmax);
+    dtitle.appendChild(dmin);
 
-    node.appendChild(divtitle);
+    n.appendChild(dtitle);
 
     // Form client area
-    var divwindowarea = this.windowAreaNode = document.createElement("div");
-    divwindowarea.className = "windowarea";
-    node.appendChild(divwindowarea);
+    var darea = this.windowAreaNode = document.createElement("div");
+    darea.className = "windowarea";
+    n.appendChild(darea);
 }
 
 Form.prototype = {
@@ -409,6 +407,9 @@ Form.prototype = {
     addNode: function (node) {
         this.windowAreaNode.appendChild(node);
     },
+    add: function (control) {
+        this.windowAreaNode.appendChild(control.node);
+    },
 
     show: function () {
         if (this.iconExists)
@@ -439,23 +440,23 @@ Form.prototype = {
  * @class
  */
 function Button(text, width, height) {
-    var b = this.node = document.createElement("div");
-    b.className = "button";
-    b.style.minWidth = (width === undefined ? 72 : width) + "px";
-    b.style.minHeight = (height === undefined ? 17 : height) + "px";
-    b.onmousedown = function () {
-        b.className = "buttondown";
+    var n = this.node = document.createElement("div");
+    n.className = "button";
+    n.style.minWidth = (width === undefined ? 72 : width) + "px";
+    n.style.minHeight = (height === undefined ? 17 : height) + "px";
+    n.onmousedown = function () {
+        n.className = "buttondown";
     };
-    b.onmouseup = function () {
-        b.className = "button";
+    n.onmouseup = function () {
+        n.className = "button";
     };
-    b.tabIndex = 0;
+    n.tabIndex = 0;
 
     var t = this.innerDiv = document.createElement("div");
     t.className = "innerbutton";
     t.innerText = text;
 
-    b.appendChild(t);
+    n.appendChild(t);
 }
 
 Button.prototype = {
@@ -470,6 +471,99 @@ Button.prototype = {
 }
 
 /**
+ * Constructs a ComboBox.
+ * @class
+ */
+function ComboBox() {
+    var r = this.tref = this;
+    var n = this.node = document.createElement("select");
+}
+
+ComboBox.prototype = {
+    tref: null, node: null,
+
+    addItem: function (item) {
+        var o = document.createElement("option");
+        o.text = item;
+        this.node.add(o);
+    },
+
+    insertItem: function (item, index) {
+        var o = document.createElement("option");
+        o.text = item;
+        this.node.add(o, this.node[index]);
+    },
+
+    removeItem: function (index) {
+        this.node.remove(index);
+    },
+
+    textAt: function (index) {
+        return this.node.options[index].text;
+    },
+
+    get options () {
+        return this.node.options;
+    },
+
+    get enabled () {
+        return !this.node.disabled;
+    },
+    set enabled (c) {
+        this.node.disabled = !c;
+    },
+    get disabled () {
+        return this.node.disabled;
+    },
+    set disabled (c) {
+        this.node.disabled = c;
+    },
+
+    get count () {
+        return this.node.length;
+    },
+
+    get name () {
+        return this.node.name;
+    },
+    set name (n) {
+        this.node.name = n;
+    },
+
+    get multiple () {
+        return this.node.multiple;
+    },
+    set multiple (c) {
+        this.node.multiple = c;
+    },
+
+    get selectedIndex () {
+        return this.node.selectedIndex;
+    },
+    set selectedIndex (i) {
+        this.node.selectedIndex = i;
+    },
+
+    get size () {
+        return this.node.size;
+    },
+    set size (s) {
+        this.node.size = s;
+    },
+
+    get type () {
+        return this.node.type;
+    },
+
+    get value () {
+        return this.node.value;
+    },
+    set value (v) {
+        this.node.value = v;
+    },
+}
+
+/**
  * Constructs a ProgressBar.
  * @class
  */
@@ -478,5 +572,7 @@ function ProgressBar() {
 }
 
 ProgressBar.prototype = {
+    tref: null, node: null,
+
 
 }

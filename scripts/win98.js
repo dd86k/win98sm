@@ -17,7 +17,7 @@ var Project = {
     name: "Windows 98 WebSim",
     Version: {
         major: 0, minor: 7, revision: 0,
-        branch: "git", commit: 3,
+        branch: "git", commit: 4,
         get text () {
             var t = Project.Version.major + "." +
                 Project.Version.minor + "." +
@@ -381,24 +381,35 @@ var Shell = {
 
                         var makecont = document.createElement("div");
 
-                        var btnMakeInfo = new Button("Create info").node;
-                        btnMakeInfo.style.marginRight = "4px";
-                        btnMakeInfo.onclick = function () {
-                            WindowManager.showInfo(txt1.value, txt2.value);
-                        }
-                        var btnMakeWarning = new Button("Create warning").node;
-                        btnMakeWarning.style.marginRight = "4px";
-                        btnMakeWarning.onclick = function () {
-                            WindowManager.showWarning(txt1.value, txt2.value);
-                        }
-                        var btnMakeError = new Button("Create error").node;
-                        btnMakeError.onclick = function () {
-                            WindowManager.showError(txt1.value, txt2.value);
+                        var cb = new ComboBox();
+                        cb.addItem("Critical");
+                        cb.addItem("Question");
+                        cb.addItem("Error");
+                        cb.addItem("Info");
+
+                        var btnMakeMsgBox = new Button("Create MsgBox").node;
+                        btnMakeMsgBox.onclick = function () {
+                            switch (cb.selectedIndex) {
+                            case 0:
+                                MessageBox.showError(txt1.value, txt2.value);
+                                break;
+                            case 1:
+                                MessageBox.showQuestion(txt1.value, txt2.value);
+                                break;
+                            case 2:
+                                MessageBox.showWarning(txt1.value, txt2.value);
+                                break;
+                            case 3:
+                                MessageBox.showInfo(txt1.value, txt2.value);
+                                break;
+                            default:
+                                MessageBox.showInfo("Hi", "Select a type");
+                                break;
+                            }
                         }
 
-                        makecont.appendChild(btnMakeInfo);
-                        makecont.appendChild(btnMakeWarning);
-                        makecont.appendChild(btnMakeError);
+                        makecont.appendChild(cb.node);
+                        makecont.appendChild(btnMakeMsgBox);
 
                         f.addNode(txt1);
                         f.addNode(txt2);
@@ -488,7 +499,7 @@ var Shell = {
                     }
                     default:
                         if (!console)
-                            WindowManager.showError(file,
+                            MessageBox.showError(file,
                                 "The file \"" + file + "\" (or one of its components) \
 cannot be found. Verify the path and the filename are correct, \
 and all the libraries required are available.");
@@ -497,7 +508,7 @@ and all the libraries required are available.");
             }
         } else {
             if (!console)
-                WindowManager.showError("Shell", "Empty command");
+                MessageBox.showError("Shell", "Empty command");
             return 2;
         }
 
