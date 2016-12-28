@@ -17,7 +17,7 @@ var Project = {
     name: "Windows 98 WebSim",
     Version: {
         major: 0, minor: 7, revision: 0,
-        branch: "git", commit: 6,
+        branch: "git", commit: 7,
         get text () {
             var t = Project.Version.major + "." +
                 Project.Version.minor + "." +
@@ -516,7 +516,7 @@ monetize it." + dnl +
 
                         function redraw() {
                             ca.clearRect(0, 0,
-                                ca.canvas.width, ca.canvas.height);
+                                ca.width, ca.height);
                             
                             //ca.strokeStyle = "#df4b26";
                             //ca.strokeStyle = "black";
@@ -544,6 +544,7 @@ monetize it." + dnl +
                         var painting = false;
                         var brushColor = "black";
                         var a = document.createElement("canvas");
+                        a.style.display = "block";
                         a.style.backgroundColor = "white";
                         var ca = a.getContext("2d");
 
@@ -562,16 +563,98 @@ monetize it." + dnl +
                             painting = false;
                         };
 
-                        var colorPurple = document.createElement("div");
-                        colorPurple.style.backgroundColor = "purple";
-                        colorPurple.style.height = "13px";
-                        colorPurple.style.width = "13px";
-                        colorPurple.onclick = function () {
+                        var rowc1 = document.createElement("div");
+                        rowc1.style.margin = "0";
+                        var rowc2 = document.createElement("div");
+                        rowc2.style.margin = "0";
+
+                        var cBlack = document.createElement("div");
+                        cBlack.style.backgroundColor = "black";
+                        cBlack.style.height = "13px";
+                        cBlack.style.width = "13px";
+                        cBlack.style.display = "inline-block";
+                        cBlack.onclick = function () {
+                            brushColor = "black";
+                        };
+                        var cGray = document.createElement("div");
+                        cGray.style.backgroundColor = "gray";
+                        cGray.style.height = "13px";
+                        cGray.style.width = "13px";
+                        cGray.style.display = "inline-block";
+                        cGray.onclick = function () {
+                            brushColor = "gray";
+                        };
+                        var cDarkRed = document.createElement("div");
+                        cDarkRed.style.backgroundColor = "darkred";
+                        cDarkRed.style.height = "13px";
+                        cDarkRed.style.width = "13px";
+                        cDarkRed.style.display = "inline-block";
+                        cDarkRed.onclick = function () {
+                            brushColor = "darkred";
+                        };
+                        var cOlive = document.createElement("div");
+                        cOlive.style.backgroundColor = "olive";
+                        cOlive.style.height = "13px";
+                        cOlive.style.width = "13px";
+                        cOlive.style.display = "inline-block";
+                        cOlive.onclick = function () {
+                            brushColor = "olive";
+                        };
+                        var cDarkGreen = document.createElement("div");
+                        cDarkGreen.style.backgroundColor = "darkgreen";
+                        cDarkGreen.style.height = "13px";
+                        cDarkGreen.style.width = "13px";
+                        cDarkGreen.style.display = "inline-block";
+                        cDarkGreen.onclick = function () {
+                            brushColor = "darkgreen";
+                        };
+                        var cDarkCyan = document.createElement("div");
+                        cDarkCyan.style.backgroundColor = "darkcyan";
+                        cDarkCyan.style.height = "13px";
+                        cDarkCyan.style.width = "13px";
+                        cDarkCyan.style.display = "inline-block";
+                        cDarkCyan.onclick = function () {
+                            brushColor = "darkcyan";
+                        };
+                        var cDarkBlue = document.createElement("div");
+                        cDarkBlue.style.backgroundColor = "darkblue";
+                        cDarkBlue.style.height = "13px";
+                        cDarkBlue.style.width = "13px";
+                        cDarkBlue.style.display = "inline-block";
+                        cDarkBlue.onclick = function () {
+                            brushColor = "darkblue";
+                        };
+                        var cPurple = document.createElement("div");
+                        cPurple.style.backgroundColor = "purple";
+                        cPurple.style.height = "13px";
+                        cPurple.style.width = "13px";
+                        cPurple.style.display = "inline-block";
+                        cPurple.onclick = function () {
                             brushColor = "purple";
                         };
+                        
+                        rowc1.appendChild(cBlack);
+                        rowc1.appendChild(cGray);
+                        rowc1.appendChild(cDarkRed);
+                        rowc1.appendChild(cOlive);
+                        rowc1.appendChild(cDarkGreen);
+                        rowc1.appendChild(cDarkCyan);
+                        rowc1.appendChild(cDarkBlue);
+                        rowc1.appendChild(cPurple);
+                        // ==
+                        var cWhite = document.createElement("div");
+                        cWhite.style.backgroundColor = "white";
+                        cWhite.style.height = "13px";
+                        cWhite.style.width = "13px";
+                        cPurple.style.display = "inline-block";
+                        cWhite.onclick = function () {
+                            brushColor = "white";
+                        };
+                        rowc2.appendChild(cWhite);
 
                         f.addNode(a);
-                        f.addNode(colorPurple);
+                        f.addNode(rowc1);
+                        f.addNode(rowc2);
                         f.show();
                         return 0;
                     }
@@ -579,9 +662,9 @@ monetize it." + dnl +
                         var f = new Form();
                         f.title = "System Info";
 
-                        var s = document.createElement("span");
+                        var s = document.createElement("p");
                         s.innerHTML = 
-                            "OS: " + window.navigator.platform + "<br/>" +
+                            "OS: " + navigator.platform + "<br/>" +
                             "Vendor: " + navigator.vendor;
 
                         f.addNode(s);
