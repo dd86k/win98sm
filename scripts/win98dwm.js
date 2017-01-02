@@ -392,7 +392,7 @@ Form.prototype = {
     addNode: function (node) {
         this.windowAreaNode.appendChild(node);
     },
-    add: function (control) {
+    addControl: function (control) {
         this.windowAreaNode.appendChild(control.node);
     },
 

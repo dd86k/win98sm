@@ -14,13 +14,17 @@ body
 {
     margin: 0;
     padding: 0;
-    background-color: #008080;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    cursor: default;
+    background-color: #008080;
     font: 12px "Arial";
+}
+
+*
+{
+    cursor: url('../images/cursor/default.png'), default;
 }
 
 /* IE Fixes */
@@ -45,7 +49,7 @@ img { border: 0; }
     bottom: 20px;
     right: 5px;
     z-index: -1;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 /*
@@ -435,6 +439,7 @@ input[type=checkbox] + label
 #win98menu span
 {
     position: relative;
+    display: inline-block;
     top: -25%;
     font-size: 11px;
 }
@@ -453,10 +458,11 @@ input[type=checkbox] + label
 
 #win98menu .submenu
 {
-    position: fixed;
+    position: absolute;
     display: none;
-    left: 172px; /* Temporary */
-    margin: -7px 0 0 0;
+    left: 100%;
+    min-width: 120px;
+    margin: -7px 0 0 -6px;
     padding: 3px 3px 4px;
     color: black;
     background:
@@ -509,7 +515,7 @@ input[type=checkbox] + label
 
 #win98menu .submenu .submenu
 {
-    margin: -5px 0 0 118px; /* Temporary */
+    margin: -5px 0 0 0;
 }
 
 /* OS Time */

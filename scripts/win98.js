@@ -17,7 +17,7 @@ var Project = {
     name: "Windows 98 WebSim",
     Version: {
         major: 0, minor: 7, revision: 0,
-        branch: "git", commit: 7,
+        branch: "git", commit: 8,
         get text () {
             var t = Project.Version.major + "." +
                 Project.Version.minor + "." +
@@ -507,36 +507,6 @@ monetize it." + dnl +
                         f.title = "untitled - Paint";
                         f.iconPath = "images/x16/mspaint.png";
 
-                        function addClick(x, y, dragging) {
-                            clickX.push(x);
-                            clickY.push(y);
-                            clickDrag.push(dragging);
-                            clickColor.push(brushColor);
-                        }
-
-                        function redraw() {
-                            ca.clearRect(0, 0,
-                                ca.width, ca.height);
-                            
-                            //ca.strokeStyle = "#df4b26";
-                            //ca.strokeStyle = "black";
-                            //ca.lineJoin = "round";
-                            //ca.lineWidth = 1;
-                                        
-                            for (var i=0; i < clickX.length; i++) {		
-                                ca.beginPath();
-                                if (clickDrag[i] && i) {
-                                    ca.moveTo(clickX[i-1], clickY[i-1]);
-                                } else {
-                                    ca.moveTo(clickX[i]-1, clickY[i]);
-                                }
-                                ca.lineTo(clickX[i], clickY[i]);
-                                ca.closePath();
-                                ca.strokeStyle = clickColor[i];
-                                ca.stroke();
-                            }
-                        }
-
                         var clickX = new Array();
                         var clickY = new Array();
                         var clickDrag = new Array();
@@ -545,8 +515,39 @@ monetize it." + dnl +
                         var brushColor = "black";
                         var a = document.createElement("canvas");
                         a.style.display = "block";
-                        a.style.backgroundColor = "white";
+                        //a.style.backgroundColor = "white";
                         var ca = a.getContext("2d");
+
+                        function addClick(x, y, dragging) {
+                            clickX.push(x);
+                            clickY.push(y);
+                            clickDrag.push(dragging);
+                            clickColor.push(brushColor);
+                        }
+
+                        function redraw() {
+                            ca.clearRect(0, 0, ca.width, ca.height);
+                                        
+                            for (var i = 0; i < clickX.length; i++) {		
+                                ca.beginPath();
+                                if (clickDrag[i] && i) {
+                                    ca.moveTo(clickX[i - 1], clickY[i - 1]);
+                                } else {
+                                    ca.moveTo(clickX[i] - 1, clickY[i]);
+                                }
+                                ca.lineTo(clickX[i], clickY[i]);
+                                ca.closePath();
+                                ca.strokeStyle = clickColor[i];
+                                ca.stroke();
+                            }
+                        }
+
+                        function fill(style) {
+                            ca.beginPath();
+                            ca.rect(0, 0, a.width, a.height);
+                            ca.fillStyle = style;
+                            ca.fill();
+                        }
 
                         a.onmousedown = function (e) {
                             painting = true;
@@ -563,11 +564,19 @@ monetize it." + dnl +
                             painting = false;
                         };
 
-                        var rowc1 = document.createElement("div");
-                        rowc1.style.margin = "0";
-                        var rowc2 = document.createElement("div");
-                        rowc2.style.margin = "0";
+                        var cpContainer = document.createElement("div");
+                        var cpMain = document.createElement("div");
+                        var cpSecond = document.createElement("div");
+                        
+                        cpContainer.appendChild(cpMain);
+                        cpContainer.appendChild(cpSecond);
 
+                        var rowc1 = document.createElement("div");
+                        var rowc2 = document.createElement("div");
+                        rowc2.style.margin = rowc1.style.margin = "0";
+                        rowc2.style.height = rowc1.style.height = "13px";
+
+                        // First color row
                         var cBlack = document.createElement("div");
                         cBlack.style.backgroundColor = "black";
                         cBlack.style.height = "13px";
@@ -577,60 +586,108 @@ monetize it." + dnl +
                             brushColor = "black";
                         };
                         var cGray = document.createElement("div");
-                        cGray.style.backgroundColor = "gray";
+                        cGray.style.backgroundColor = "#808080";
                         cGray.style.height = "13px";
                         cGray.style.width = "13px";
                         cGray.style.display = "inline-block";
                         cGray.onclick = function () {
-                            brushColor = "gray";
+                            brushColor = "#808080";
                         };
                         var cDarkRed = document.createElement("div");
-                        cDarkRed.style.backgroundColor = "darkred";
+                        cDarkRed.style.backgroundColor = "#800000";
                         cDarkRed.style.height = "13px";
                         cDarkRed.style.width = "13px";
                         cDarkRed.style.display = "inline-block";
                         cDarkRed.onclick = function () {
-                            brushColor = "darkred";
+                            brushColor = "#800000";
                         };
                         var cOlive = document.createElement("div");
-                        cOlive.style.backgroundColor = "olive";
+                        cOlive.style.backgroundColor = "#808000";
                         cOlive.style.height = "13px";
                         cOlive.style.width = "13px";
                         cOlive.style.display = "inline-block";
                         cOlive.onclick = function () {
-                            brushColor = "olive";
+                            brushColor = "#808000";
                         };
                         var cDarkGreen = document.createElement("div");
-                        cDarkGreen.style.backgroundColor = "darkgreen";
+                        cDarkGreen.style.backgroundColor = "#008000";
                         cDarkGreen.style.height = "13px";
                         cDarkGreen.style.width = "13px";
                         cDarkGreen.style.display = "inline-block";
                         cDarkGreen.onclick = function () {
-                            brushColor = "darkgreen";
+                            brushColor = "#008000";
                         };
-                        var cDarkCyan = document.createElement("div");
-                        cDarkCyan.style.backgroundColor = "darkcyan";
-                        cDarkCyan.style.height = "13px";
-                        cDarkCyan.style.width = "13px";
-                        cDarkCyan.style.display = "inline-block";
-                        cDarkCyan.onclick = function () {
-                            brushColor = "darkcyan";
+                        var cTeal = document.createElement("div");
+                        cTeal.style.backgroundColor = "#008080";
+                        cTeal.style.height = "13px";
+                        cTeal.style.width = "13px";
+                        cTeal.style.display = "inline-block";
+                        cTeal.onclick = function () {
+                            brushColor = "#008080";
                         };
                         var cDarkBlue = document.createElement("div");
-                        cDarkBlue.style.backgroundColor = "darkblue";
+                        cDarkBlue.style.backgroundColor = "#000080";
                         cDarkBlue.style.height = "13px";
                         cDarkBlue.style.width = "13px";
                         cDarkBlue.style.display = "inline-block";
                         cDarkBlue.onclick = function () {
-                            brushColor = "darkblue";
+                            brushColor = "#000080";
                         };
                         var cPurple = document.createElement("div");
-                        cPurple.style.backgroundColor = "purple";
+                        cPurple.style.backgroundColor = "#800080";
                         cPurple.style.height = "13px";
                         cPurple.style.width = "13px";
                         cPurple.style.display = "inline-block";
                         cPurple.onclick = function () {
-                            brushColor = "purple";
+                            brushColor = "#800080";
+                        };
+                        var cHighball = document.createElement("div");
+                        cHighball.style.backgroundColor = "#808040";
+                        cHighball.style.height = "13px";
+                        cHighball.style.width = "13px";
+                        cHighball.style.display = "inline-block";
+                        cHighball.onclick = function () {
+                            brushColor = "#808040";
+                        };
+                        var cCyprus = document.createElement("div");
+                        cCyprus.style.backgroundColor = "#004040";
+                        cCyprus.style.height = "13px";
+                        cCyprus.style.width = "13px";
+                        cCyprus.style.display = "inline-block";
+                        cCyprus.onclick = function () {
+                            brushColor = "#004040";
+                        };
+                        var cDodgerBlue = document.createElement("div");
+                        cDodgerBlue.style.backgroundColor = "#0080FF";
+                        cDodgerBlue.style.height = "13px";
+                        cDodgerBlue.style.width = "13px";
+                        cDodgerBlue.style.display = "inline-block";
+                        cDodgerBlue.onclick = function () {
+                            brushColor = "#0080FF";
+                        };
+                        var cDarkCerulean = document.createElement("div");
+                        cDarkCerulean.style.backgroundColor = "#004080";
+                        cDarkCerulean.style.height = "13px";
+                        cDarkCerulean.style.width = "13px";
+                        cDarkCerulean.style.display = "inline-block";
+                        cDarkCerulean.onclick = function () {
+                            brushColor = "#004080";
+                        };
+                        var cHanPurple = document.createElement("div");
+                        cHanPurple.style.backgroundColor = "#4000FF";
+                        cHanPurple.style.height = "13px";
+                        cHanPurple.style.width = "13px";
+                        cHanPurple.style.display = "inline-block";
+                        cHanPurple.onclick = function () {
+                            brushColor = "#4000FF";
+                        };
+                        var cBrown = document.createElement("div");
+                        cBrown.style.backgroundColor = "#804000";
+                        cBrown.style.height = "13px";
+                        cBrown.style.width = "13px";
+                        cBrown.style.display = "inline-block";
+                        cBrown.onclick = function () {
+                            brushColor = "#804000";
                         };
                         
                         rowc1.appendChild(cBlack);
@@ -638,23 +695,150 @@ monetize it." + dnl +
                         rowc1.appendChild(cDarkRed);
                         rowc1.appendChild(cOlive);
                         rowc1.appendChild(cDarkGreen);
-                        rowc1.appendChild(cDarkCyan);
+                        rowc1.appendChild(cTeal);
                         rowc1.appendChild(cDarkBlue);
                         rowc1.appendChild(cPurple);
-                        // ==
+                        rowc1.appendChild(cHighball);
+                        rowc1.appendChild(cCyprus);
+                        rowc1.appendChild(cDodgerBlue);
+                        rowc1.appendChild(cDarkCerulean);
+                        rowc1.appendChild(cHanPurple);
+                        rowc1.appendChild(cBrown);
+                        // Second color row
                         var cWhite = document.createElement("div");
                         cWhite.style.backgroundColor = "white";
                         cWhite.style.height = "13px";
                         cWhite.style.width = "13px";
-                        cPurple.style.display = "inline-block";
+                        cWhite.style.display = "inline-block";
                         cWhite.onclick = function () {
                             brushColor = "white";
                         };
+                        var cLightGray = document.createElement("div");
+                        cLightGray.style.backgroundColor = "#C0C0C0";
+                        cLightGray.style.height = "13px";
+                        cLightGray.style.width = "13px";
+                        cLightGray.style.display = "inline-block";
+                        cLightGray.onclick = function () {
+                            brushColor = "#C0C0C0";
+                        };
+                        var cRed = document.createElement("div");
+                        cRed.style.backgroundColor = "#FF0000";
+                        cRed.style.height = "13px";
+                        cRed.style.width = "13px";
+                        cRed.style.display = "inline-block";
+                        cRed.onclick = function () {
+                            brushColor = "#FF0000";
+                        };
+                        var cYellow = document.createElement("div");
+                        cYellow.style.backgroundColor = "#FFFF00";
+                        cYellow.style.height = "13px";
+                        cYellow.style.width = "13px";
+                        cYellow.style.display = "inline-block";
+                        cYellow.onclick = function () {
+                            brushColor = "#FFFF00";
+                        };
+                        var cLime = document.createElement("div");
+                        cLime.style.backgroundColor = "#00FF00";
+                        cLime.style.height = "13px";
+                        cLime.style.width = "13px";
+                        cLime.style.display = "inline-block";
+                        cLime.onclick = function () {
+                            brushColor = "#00FF00";
+                        };
+                        var cCyan = document.createElement("div");
+                        cCyan.style.backgroundColor = "#00FFFF";
+                        cCyan.style.height = "13px";
+                        cCyan.style.width = "13px";
+                        cCyan.style.display = "inline-block";
+                        cCyan.onclick = function () {
+                            brushColor = "#00FFFF";
+                        };
+                        var cBlue = document.createElement("div");
+                        cBlue.style.backgroundColor = "#0000FF";
+                        cBlue.style.height = "13px";
+                        cBlue.style.width = "13px";
+                        cBlue.style.display = "inline-block";
+                        cBlue.onclick = function () {
+                            brushColor = "#0000FF";
+                        };
+                        var cPink = document.createElement("div");
+                        cPink.style.backgroundColor = "#FF00FF";
+                        cPink.style.height = "13px";
+                        cPink.style.width = "13px";
+                        cPink.style.display = "inline-block";
+                        cPink.onclick = function () {
+                            brushColor = "#FF00FF";
+                        };
+                        var cWitchHaze = document.createElement("div");
+                        cWitchHaze.style.backgroundColor = "#FFFF80";
+                        cWitchHaze.style.height = "13px";
+                        cWitchHaze.style.width = "13px";
+                        cWitchHaze.style.display = "inline-block";
+                        cWitchHaze.onclick = function () {
+                            brushColor = "#FFFF80";
+                        };
+                        var cSpringGreen = document.createElement("div");
+                        cSpringGreen.style.backgroundColor = "#00FF80";
+                        cSpringGreen.style.height = "13px";
+                        cSpringGreen.style.width = "13px";
+                        cSpringGreen.style.display = "inline-block";
+                        cSpringGreen.onclick = function () {
+                            brushColor = "#00FF80";
+                        };
+                        var cElectricBlue = document.createElement("div");
+                        cElectricBlue.style.backgroundColor = "#80FFFF";
+                        cElectricBlue.style.height = "13px";
+                        cElectricBlue.style.width = "13px";
+                        cElectricBlue.style.display = "inline-block";
+                        cElectricBlue.onclick = function () {
+                            brushColor = "#80FFFF";
+                        };
+                        var cLightSlateBlue = document.createElement("div");
+                        cLightSlateBlue.style.backgroundColor = "#8080FF";
+                        cLightSlateBlue.style.height = "13px";
+                        cLightSlateBlue.style.width = "13px";
+                        cLightSlateBlue.style.display = "inline-block";
+                        cLightSlateBlue.onclick = function () {
+                            brushColor = "#8080FF";
+                        };
+                        var cDeepPink = document.createElement("div");
+                        cDeepPink.style.backgroundColor = "#FF0080";
+                        cDeepPink.style.height = "13px";
+                        cDeepPink.style.width = "13px";
+                        cDeepPink.style.display = "inline-block";
+                        cDeepPink.onclick = function () {
+                            brushColor = "#FF0080";
+                        };
+                        var cCoral = document.createElement("div");
+                        cCoral.style.backgroundColor = "#FF8040";
+                        cCoral.style.height = "13px";
+                        cCoral.style.width = "13px";
+                        cCoral.style.display = "inline-block";
+                        cCoral.onclick = function () {
+                            brushColor = "#FF8040";
+                        };
+
                         rowc2.appendChild(cWhite);
+                        rowc2.appendChild(cLightGray);
+                        rowc2.appendChild(cRed);
+                        rowc2.appendChild(cYellow);
+                        rowc2.appendChild(cLime);
+                        rowc2.appendChild(cCyan);
+                        rowc2.appendChild(cBlue);
+                        rowc2.appendChild(cPink);
+                        rowc2.appendChild(cWitchHaze);
+                        rowc2.appendChild(cSpringGreen);
+                        rowc2.appendChild(cElectricBlue);
+                        rowc2.appendChild(cLightSlateBlue);
+                        rowc2.appendChild(cDeepPink);
+                        rowc2.appendChild(cCoral);
+
+                        fill("white");
 
                         f.addNode(a);
                         f.addNode(rowc1);
                         f.addNode(rowc2);
+                        f.addNode(cpContainer);
                         f.show();
                         return 0;
                     }
