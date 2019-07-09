@@ -333,8 +333,7 @@ document, or Internet resource, and Windows will open it for you.";
 			Version " + Project.Version.text + dnl +
 			"A web-based Windows 98 simulator. Made from scratch using \
 only HTML5, CSS3, and Javascript (ECMAScript 5.1). No libraries." + dnl +
-			"This is only a personal project, I do not plan to \
-monetize it." + dnl +
+			"Made from boredom." + dnl +
 			"Copyright Microsoft (C) 1981-1998 for Windows 98" + dnl +
 			"Written by dd86k •️ \
 <a href=\"mailto:devddstuff@gmail.com\">Email</a>.";
