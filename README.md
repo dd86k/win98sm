@@ -1,19 +1,17 @@
 # win98sm
 
-Windows 98 Web Simulator is an in-development simulator made purely in HTML5, CSS3, and [ECMAScript 5.1](http://www.ecma-international.org/ecma-262/5.1/) without any libraries.
+[DEMO](https://dd86k.github.io/win98websim/win98.html)
 
-This project and myself are not associated nor affiliated with Microsoft and there will never be a plan to monetize this project. This project is mostly from my interest in operating systems (kernels) and programming practise purposes (in Javascript).
+Windows 98 Web Simulator is an in-development simulator made purely in HTML5,
+CSS3, and [ECMAScript 5.1](http://www.ecma-international.org/ecma-262/5.1/)
+without any libraries.
 
-| Version |
-|---------|
-| [git][dev] (Daily) |
-| [STABLE][stable] (Recommended, 0.6.0) |
-| [Old][old] (0.3.4.2.2015) |
+Made for fun.
 
-Copyright Microsoft (c) 1981-1998 for their Windows 98 product.
+The Windows(R) Operating System name is a registered trademark of Microsoft
+Corporation (Copyright (C) Microsoft 1981-1998) and is only used for
+educational, non-profit purposes. All Windows icons used follow the previous
+statement.
 
-Copyright Github Inc. (c) 2016 for the Github Mark.
-
-[dev]: http://cdn.skildust.com/osp/win98sm/win98.html
-[stable]: https://dd86k.github.io/win98websim/win98.html
-[old]: http://didi.wcantin.ca/pages/win98.html
+The Github Logo is owned by Github Incorporated and is used as indicated in
+the terms of use.
